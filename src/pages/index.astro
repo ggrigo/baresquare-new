@@ -186,11 +186,11 @@ import {
     {/* Dot grid overlay */}
     <div class="cta-footer-grid" aria-hidden="true"></div>
 
-    {/* CTA Content with integrated quote */}
+    {/* CTA Content with glass quote panel */}
     {isSectionEnabled('ctaFinal') && (
       <div class="cta-footer-content">
-        <div class="cta-text-wrapper">
-          {/* Quote section */}
+        {/* Glass panel for quote - 95%+ width */}
+        <div class="cta-glass-quote">
           <blockquote class="cta-quote">
             "{ctaFinalContent.quote}"
           </blockquote>
@@ -199,8 +199,10 @@ import {
             <span class="quote-title">{ctaFinalContent.quoteAuthorTitle}</span>
             <span class="quote-company">{ctaFinalContent.quoteCompany}</span>
           </div>
+        </div>
 
-          {/* CTA headline and button */}
+        {/* CTA headline and button */}
+        <div class="cta-text-wrapper">
           <h2 class="cta-headline">
             {ctaFinalContent.headline} <span class="text-mono">{ctaFinalContent.accentWord}</span>
           </h2>
@@ -337,10 +339,22 @@ import {
     position: relative;
     z-index: 3;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 320px;
-    padding: var(--space-lg) var(--gutter) var(--space-md);
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--gutter);
+  }
+
+  /* Glass panel for quote - 95%+ width */
+  .cta-glass-quote {
+    width: 96%;
+    max-width: 1400px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius-md);
+    padding: 48px;
+    text-align: center;
   }
 
   .cta-text-wrapper {
@@ -350,6 +364,7 @@ import {
     gap: 24px;
     text-align: center;
     max-width: 800px;
+    padding: var(--space-md) 0;
   }
 
   .cta-headline {
@@ -384,7 +399,6 @@ import {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 48px;
     font-size: var(--text-small);
     color: var(--text-muted);
   }
