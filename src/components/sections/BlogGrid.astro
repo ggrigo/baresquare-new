@@ -1,0 +1,178 @@
+---
+/**
+ * BlogGrid Section Component
+ * Responsive grid of blog post cards
+ *
+ * Verified from Webflow:
+ * - Desktop: 3 columns
+ * - Tablet: 2 columns
+ * - Mobile: 1 column
+ */
+
+import Container from '../base/Container.astro';
+import DotTitle from '../ui/DotTitle.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
+import BlogCard from '../ui/BlogCard.astro';
+
+interface BlogPost {
+  title: string;
+  excerpt?: string;
+  category?: string;
+  categoryColor?: 'white' | 'purple' | 'orange' | 'green' | 'gold';
+  image?: string;
+  imageAlt?: string;
+  href: string;
+  date?: string;
+}
+
+interface Props {
+  /**
+   * Section badge
+   */
+  badge?: string;
+
+  /**
+   * Section headline
+   */
+  headline?: string;
+
+  /**
+   * Blog posts to display
+   */
+  posts?: BlogPost[];
+
+  /**
+   * Show "View all" link
+   */
+  showViewAll?: boolean;
+
+  /**
+   * View all link URL
+   */
+  viewAllHref?: string;
+}
+
+const {
+  badge = 'Our Journal',
+  headline = 'Latest Insights',
+  posts = [
+    {
+      title: 'The Future of AI in Healthcare',
+      excerpt: 'Exploring how artificial intelligence is transforming patient care and medical research.',
+      category: 'Technology',
+      categoryColor: 'purple',
+      href: '/blog/ai-healthcare',
+      date: 'Dec 1, 2024'
+    },
+    {
+      title: 'Building Sustainable Business Models',
+      excerpt: 'How leading companies are integrating sustainability into their core strategies.',
+      category: 'Strategy',
+      categoryColor: 'green',
+      href: '/blog/sustainable-business',
+      date: 'Nov 28, 2024'
+    },
+    {
+      title: 'Innovation in Biotech',
+      excerpt: 'The latest breakthroughs shaping the future of biotechnology and life sciences.',
+      category: 'Research',
+      categoryColor: 'orange',
+      href: '/blog/biotech-innovation',
+      date: 'Nov 25, 2024'
+    }
+  ],
+  showViewAll = true,
+  viewAllHref = '/blog'
+} = Astro.props;
+---
+
+<section class="blog-section">
+  <Container>
+    <div class="blog-header">
+      <div class="blog-header-text">
+        <DotTitle label={badge} color="gold" />
+        <h2>{headline}</h2>
+      </div>
+      {showViewAll && (
+        <ArrowLink text="View all posts" href={viewAllHref} />
+      )}
+    </div>
+
+    <div class="blog-grid">
+      {posts.map((post) => (
+        <BlogCard
+          title={post.title}
+          excerpt={post.excerpt}
+          category={post.category}
+          categoryColor={post.categoryColor}
+          image={post.image}
+          imageAlt={post.imageAlt}
+          href={post.href}
+          date={post.date}
+        />
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .blog-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .blog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .blog-header-text h2 {
+    margin-top: var(--space-sm);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 991px) {
+    .blog-section {
+      padding: var(--space-lg) 0;
+    }
+
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .blog-header {
+      margin-bottom: var(--space-md);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+
+    .blog-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+  }
+
+  @media (max-width: 479px) {
+    .blog-section {
+      padding: var(--space-md) 0;
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

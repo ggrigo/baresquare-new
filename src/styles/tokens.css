@@ -1,0 +1,174 @@
+/*
+ * CSS Design Tokens
+ * Verified from Webflow live site: https://scion-template.webflow.io/home-3
+ */
+
+:root {
+  /* ===========================================
+     COLORS - Backgrounds
+     =========================================== */
+  --bg-primary: rgb(30, 30, 30);
+  --bg-dark: rgb(18, 18, 18);
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --bg-card-hover: rgba(255, 255, 255, 0.12);
+  --bg-accent: rgb(108, 88, 141);
+  --bg-glass-dark: rgba(0, 0, 0, 0.25);
+  --bg-glass-white: rgba(255, 255, 255, 0.15);
+
+  /* ===========================================
+     COLORS - Text
+     =========================================== */
+  --text-primary: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-subtle: rgba(255, 255, 255, 0.5);
+  --text-faded: rgba(255, 255, 255, 0.06);
+
+  /* ===========================================
+     COLORS - Brand Accents
+     =========================================== */
+  --accent-purple: #6c588d;
+  --accent-green: #a2b79f;
+  --accent-gold: #d8a373;
+  --accent-orange: #e0835c;
+
+  /* ===========================================
+     COLORS - Borders
+     =========================================== */
+  --border-light: rgba(255, 255, 255, 0.1);
+
+  /* ===========================================
+     TYPOGRAPHY - Font Families
+     =========================================== */
+  --font-primary: 'Inter', Arial, sans-serif;
+  --font-serif: 'Newsreader', 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+
+  /* ===========================================
+     TYPOGRAPHY - Font Sizes
+     =========================================== */
+  --text-display: 64px;
+  --text-h1: 51px;
+  --text-h2: 40px;
+  --text-h3: 32px;
+  --text-h4: 25px;
+  --text-h5: 20px;
+  --text-body: 16px;
+  --text-small: 13px;
+
+  /* ===========================================
+     TYPOGRAPHY - Line Heights
+     =========================================== */
+  --line-height-display: 1.1;
+  --line-height-h1: 1.15;
+  --line-height-h2: 1.2;
+  --line-height-h3: 1.2;
+  --line-height-h4: 1.25;
+  --line-height-h5: 1.35;
+  --line-height-body: 1.4;
+
+  /* ===========================================
+     SPACING
+     =========================================== */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 96px;
+  --space-2xl: 168px;
+
+  /* ===========================================
+     LAYOUT - Containers
+     =========================================== */
+  --container-max: 1248px;
+  --container-xl: 960px;
+  --container-lg: 768px;
+  --container-md: 576px;
+  --container-sm: 480px;
+  --container-xs: 384px;
+
+  /* ===========================================
+     LAYOUT - Component Sizes
+     =========================================== */
+  --wide-section-padding: 9px;
+  --navbar-height: 52px;
+  --gutter: 24px;
+
+  /* ===========================================
+     BORDERS & EFFECTS
+     =========================================== */
+  --radius-sm: 5px;
+  --radius-md: 10px;
+  --radius-full: 200px;
+  --blur-intense: 24px;
+
+  /* ===========================================
+     BUTTONS
+     =========================================== */
+  --button-height: 48px;
+  --button-padding-x: 54px;
+  --button-radius: 200px;
+
+  /* ===========================================
+     TRANSITIONS
+     =========================================== */
+  --ease-smooth: cubic-bezier(0.44, 0, 0.56, 1);
+  --ease-default: ease;
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.4s var(--ease-smooth);
+
+  /* ===========================================
+     HERO SIZES
+     =========================================== */
+  --hero-small: 480px;
+  --hero-default: 576px;
+  --hero-large: 768px;
+}
+
+/* ===========================================
+   RESPONSIVE TOKENS
+   =========================================== */
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) {
+  :root {
+    --wide-section-padding: 6px;
+    --text-display: 48px;
+    --text-h1: 40px;
+    --text-h2: 32px;
+    --text-h3: 28px;
+    --space-lg: 36px;
+    --space-xl: 64px;
+    --gutter: 20px;
+  }
+}
+
+/* Mobile (480px - 767px) */
+@media (max-width: 767px) {
+  :root {
+    --text-display: 40px;
+    --text-h1: 36px;
+    --text-h2: 28px;
+    --text-h3: 24px;
+    --text-h4: 20px;
+    --space-md: 18px;
+    --space-lg: 32px;
+    --space-xl: 48px;
+    --gutter: 16px;
+  }
+}
+
+/* Small Mobile (< 480px) */
+@media (max-width: 479px) {
+  :root {
+    --text-display: 36px;
+    --text-h1: 32px;
+    --text-h2: 26px;
+    --text-h3: 22px;
+    --text-h4: 18px;
+    --space-sm: 10px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 36px;
+    --gutter: 16px;
+  }
+}

@@ -1,0 +1,49 @@
+---
+/**
+ * GridOverlay Component
+ * Renders a dot grid pattern overlay
+ *
+ * Verified values from Figma (node 555:4082):
+ * - Background size: 48px 48px
+ * - z-index: 3 (below NoiseOverlay which is 4)
+ * - Default opacity: 0.8 (80%)
+ * - mix-blend-mode: overlay
+ * - pointer-events: none
+ */
+
+interface Props {
+  /**
+   * Opacity of the grid overlay
+   * @default 0.8
+   */
+  opacity?: number;
+
+  /**
+   * Additional CSS class
+   */
+  class?: string;
+}
+
+const { opacity = 0.8, class: className } = Astro.props;
+---
+
+<div
+  class:list={['grid-overlay', className]}
+  style={`opacity: ${opacity};`}
+  aria-hidden="true"
+></div>
+
+<style>
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    /* CSS-based dot grid pattern - Figma spec: 48px spacing */
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.4) 1.5px, transparent 1.5px);
+    background-size: 48px 48px;
+    background-repeat: repeat;
+    background-position: center;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+</style>

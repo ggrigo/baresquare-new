@@ -1,0 +1,80 @@
+---
+/**
+ * DotTitle Component
+ * Label badge with colored dot indicator
+ *
+ * Verified values from Webflow:
+ * - Dot size: 6px
+ * - Gap: 8px
+ * - Font size: 13px
+ * - Font weight: 600
+ * - Text transform: uppercase
+ * - Letter spacing: 0.05em
+ */
+
+interface Props {
+  /**
+   * Label text
+   */
+  label: string;
+
+  /**
+   * Dot color variant
+   * @default 'white'
+   */
+  color?: 'white' | 'purple' | 'orange' | 'green' | 'gold';
+
+  /**
+   * Additional CSS class
+   */
+  class?: string;
+}
+
+const { label, color = 'white', class: className } = Astro.props;
+---
+
+<div class:list={['dot-title', `dot-title--${color}`, className]}>
+  <span class="dot-title-dot" aria-hidden="true"></span>
+  <span class="dot-title-text">{label}</span>
+</div>
+
+<style>
+  .dot-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot-title-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+    flex-shrink: 0;
+  }
+
+  .dot-title-text {
+    font-size: var(--text-small);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  /* Color variants */
+  .dot-title--purple .dot-title-dot {
+    background-color: var(--accent-purple);
+  }
+
+  .dot-title--orange .dot-title-dot {
+    background-color: var(--accent-orange);
+  }
+
+  .dot-title--green .dot-title-dot {
+    background-color: var(--accent-green);
+  }
+
+  .dot-title--gold .dot-title-dot {
+    background-color: var(--accent-gold);
+  }
+</style>

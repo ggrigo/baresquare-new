@@ -1,0 +1,143 @@
+---
+/**
+ * WideSection Component
+ * Full-width section with accent background and texture overlays
+ *
+ * Verified values from Webflow:
+ * - Padding: 9px (6px on mobile)
+ * - Border-radius: 10px
+ * - Contains NoiseOverlay and GridOverlay
+ */
+
+import NoiseOverlay from '../base/NoiseOverlay.astro';
+import GridOverlay from '../base/GridOverlay.astro';
+
+interface Props {
+  /**
+   * Background color variant
+   * @default 'accent'
+   */
+  background?: 'accent' | 'dark';
+
+  /**
+   * Show noise overlay
+   * @default true
+   */
+  showNoise?: boolean;
+
+  /**
+   * Noise overlay opacity
+   * @default 0.7
+   */
+  noiseOpacity?: number;
+
+  /**
+   * Show grid overlay
+   * @default true
+   */
+  showGrid?: boolean;
+
+  /**
+   * Grid overlay opacity
+   * @default 0.8
+   */
+  gridOpacity?: number;
+
+  /**
+   * Show backdrop blur
+   * @default false
+   */
+  showBackdropBlur?: boolean;
+
+  /**
+   * Backdrop blur amount
+   * @default 60
+   */
+  backdropBlur?: number;
+
+  /**
+   * Section ID for anchor links
+   */
+  id?: string;
+
+  /**
+   * Additional CSS class
+   */
+  class?: string;
+
+  /**
+   * Min height of the section
+   */
+  height?: string;
+}
+
+const {
+  background = 'accent',
+  showNoise = true,
+  noiseOpacity = 0.7,
+  showGrid = true,
+  gridOpacity = 0.8,
+  showBackdropBlur = false,
+  backdropBlur = 60,
+  id,
+  class: className,
+  height
+} = Astro.props;
+---
+
+<div class="wide-section-wrapper">
+  <section
+    class:list={['wide-section', `wide-section--${background}`, className]}
+    id={id}
+    style={height ? `min-height: ${height};` : undefined}
+  >
+    {/* Layer order: blobs (0) -> blur (1) -> background (2) -> noise (3) -> grid (4) -> content (5) */}
+    <slot name="blobs" />
+    {showBackdropBlur && (
+      <div
+        class="backdrop-blur-layer"
+        style={`backdrop-filter: blur(${backdropBlur}px); -webkit-backdrop-filter: blur(${backdropBlur}px);`}
+        aria-hidden="true"
+      ></div>
+    )}
+    <slot name="background" />
+    {showNoise && <NoiseOverlay opacity={noiseOpacity} />}
+    {showGrid && <GridOverlay opacity={gridOpacity} />}
+    <div class="wide-section-content">
+      <slot />
+    </div>
+  </section>
+</div>
+
+<style>
+  .wide-section-wrapper {
+    padding: 0 var(--wide-section-padding);
+  }
+
+  .wide-section {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .wide-section--accent {
+    background-color: var(--bg-accent);
+  }
+
+  .wide-section--dark {
+    background-color: var(--bg-dark);
+  }
+
+  .wide-section-content {
+    position: relative;
+    z-index: 5;
+  }
+
+  .backdrop-blur-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+</style>

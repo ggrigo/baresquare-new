@@ -1,0 +1,407 @@
+---
+/**
+ * CTASection Component
+ * Full-featured CTA section matching Figma node 555-4323
+ *
+ * Features:
+ * - Height: 480px
+ * - Purple accent background
+ * - Animated color blobs (green, orange, gold)
+ * - Noise overlay (70% opacity)
+ * - Dot grid overlay (mix-blend-mode: overlay)
+ * - 64px headline with serif accent word
+ * - Dual action: glass button + arrow link
+ */
+
+import WideSection from '../layout/WideSection.astro';
+import Container from '../base/Container.astro';
+import NoiseOverlay from '../base/NoiseOverlay.astro';
+import GridOverlay from '../base/GridOverlay.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
+
+interface Props {
+  /**
+   * Headline text (main part)
+   */
+  headline?: string;
+
+  /**
+   * Accent word in serif font
+   */
+  accentWord?: string;
+
+  /**
+   * Supporting description text
+   */
+  description?: string;
+
+  /**
+   * Primary CTA button text
+   */
+  ctaText?: string;
+
+  /**
+   * Primary CTA button link
+   */
+  ctaHref?: string;
+
+  /**
+   * Secondary link text (arrow link)
+   */
+  secondaryText?: string;
+
+  /**
+   * Secondary link href
+   */
+  secondaryHref?: string;
+
+  /**
+   * Show color blobs
+   * @default true
+   */
+  showBlobs?: boolean;
+}
+
+const {
+  headline = 'From insight to',
+  accentWord = 'impact.',
+  description = 'Consulting that translates innovation into outcomes.',
+  ctaText = 'Get Started',
+  ctaHref = '/contact',
+  secondaryText = 'Get in touch',
+  secondaryHref = '/contact',
+  showBlobs = true
+} = Astro.props;
+---
+
+<section class="cta-section">
+  <div class="cta-wrapper">
+    <!-- Color blobs layer -->
+    {showBlobs && (
+      <div class="cta-blobs" aria-hidden="true">
+        <div class="blob blob--green"></div>
+        <div class="blob blob--orange"></div>
+        <div class="blob blob--gold"></div>
+      </div>
+    )}
+
+    <!-- Noise overlay -->
+    <div class="cta-noise" aria-hidden="true"></div>
+
+    <!-- Dot grid overlay -->
+    <div class="cta-grid" aria-hidden="true"></div>
+
+    <!-- Content -->
+    <div class="cta-content">
+      <Container size="lg">
+        <div class="cta-inner">
+          <div class="cta-text">
+            <h2 class="cta-headline">
+              {headline} <span class="text-mono">{accentWord}</span>
+            </h2>
+            {description && (
+              <p class="cta-description">{description}</p>
+            )}
+          </div>
+
+          <div class="cta-actions">
+            <a href={ctaHref} class="cta-button">
+              {ctaText}
+            </a>
+            <ArrowLink
+              text={secondaryText}
+              href={secondaryHref}
+              direction="up-right"
+              class="cta-arrow-link"
+            />
+          </div>
+        </div>
+      </Container>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding: 0 var(--wide-section-padding, 9px);
+  }
+
+  .cta-wrapper {
+    position: relative;
+    height: 480px;
+    background-color: var(--bg-accent);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Color blobs */
+  .cta-blobs {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+
+  /* Green blob - top left */
+  .blob--green {
+    width: 600px;
+    height: 500px;
+    background: var(--accent-green);
+    top: -100px;
+    left: -200px;
+    opacity: 0.9;
+    animation: blob-drift-1 30s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  /* Orange blob - bottom right */
+  .blob--orange {
+    width: 550px;
+    height: 450px;
+    background: var(--accent-orange);
+    bottom: -150px;
+    right: -100px;
+    opacity: 0.9;
+    animation: blob-drift-2 25s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  /* Gold blob - top right */
+  .blob--gold {
+    width: 500px;
+    height: 400px;
+    background: var(--accent-gold);
+    top: -150px;
+    right: 200px;
+    opacity: 0.85;
+    animation: blob-drift-3 35s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  @keyframes blob-drift-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, 30px) scale(1.05); }
+    100% { transform: translate(-20px, 50px) scale(0.95); }
+  }
+
+  @keyframes blob-drift-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-50px, -40px) scale(0.95); }
+    100% { transform: translate(30px, -20px) scale(1.05); }
+  }
+
+  @keyframes blob-drift-3 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-40px, 50px) scale(1.06); }
+    100% { transform: translate(60px, -30px) scale(0.94); }
+  }
+
+  /* Noise overlay */
+  .cta-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: url('/textures/noise-pattern.png');
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Dot grid overlay */
+  .cta-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-image: url('/textures/dot-grid.png');
+    background-repeat: repeat;
+    background-size: 48px 48px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* Content layer */
+  .cta-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    text-align: center;
+  }
+
+  .cta-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .cta-headline {
+    font-size: var(--text-display);
+    line-height: 1.1;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .cta-description {
+    font-size: var(--text-h4);
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin: 0;
+    max-width: 600px;
+  }
+
+  /* Dual action buttons */
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* Glass dark button */
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 54px;
+    font-family: var(--font-primary);
+    font-size: var(--text-small);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none;
+    border-radius: 2000px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .cta-button:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+
+  /* Arrow link styling override */
+  .cta-arrow-link {
+    font-size: var(--text-body);
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .cta-section {
+      padding: 0 6px;
+    }
+
+    .cta-wrapper {
+      height: 400px;
+    }
+
+    .cta-headline {
+      font-size: var(--text-h1);
+    }
+
+    .cta-description {
+      font-size: var(--text-h5);
+    }
+
+    .blob--green {
+      width: 450px;
+      height: 380px;
+    }
+
+    .blob--orange {
+      width: 400px;
+      height: 350px;
+    }
+
+    .blob--gold {
+      width: 380px;
+      height: 320px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .cta-wrapper {
+      height: 360px;
+    }
+
+    .cta-inner {
+      gap: 36px;
+    }
+
+    .cta-text {
+      gap: 18px;
+    }
+
+    .cta-headline {
+      font-size: var(--text-h2);
+    }
+
+    .cta-description {
+      font-size: var(--text-body);
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      gap: 18px;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .cta-wrapper {
+      height: 320px;
+    }
+
+    .cta-inner {
+      gap: 24px;
+      padding: 0 var(--space-sm);
+    }
+
+    .cta-headline {
+      font-size: var(--text-h3);
+    }
+
+    .cta-button {
+      padding: 0 36px;
+    }
+
+    .blob--green,
+    .blob--orange,
+    .blob--gold {
+      display: none;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .blob {
+      animation: none;
+    }
+  }
+</style>

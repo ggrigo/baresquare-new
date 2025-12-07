@@ -1,0 +1,76 @@
+---
+/**
+ * SmartLink Component
+ *
+ * A link wrapper that handles "Coming Soon" behavior at BUILD TIME.
+ *
+ * - If the route is available → renders as <a> tag
+ * - If the route is unavailable → renders as <button> with data attributes
+ *
+ * The decision is made at build time, so no runtime config fetching.
+ */
+
+import { isRouteAvailable, getComingSoonMessage } from '../../config/site.config';
+
+interface Props {
+  href: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+  [key: string]: any;
+}
+
+const { href, class: className, target, rel, ...rest } = Astro.props;
+
+// External links are always available
+const isExternal = href.startsWith('http') || href.startsWith('//') || target === '_blank';
+
+// Determine availability at BUILD TIME
+const available = isExternal || isRouteAvailable(href);
+const message = available ? '' : getComingSoonMessage(href);
+---
+
+{available ? (
+  <a
+    href={href}
+    class={className}
+    target={target}
+    rel={rel}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type="button"
+    class:list={['smart-link', className]}
+    data-coming-soon="true"
+    data-message={message}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}
+
+<style is:global>
+  /* Reset button styles to look like a link */
+  button.smart-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: inherit;
+    text-align: inherit;
+    display: inline;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+
+  button.smart-link:focus-visible {
+    outline: 2px solid var(--accent-purple, #8b5cf6);
+    outline-offset: 2px;
+  }
+</style>

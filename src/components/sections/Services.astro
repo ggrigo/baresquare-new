@@ -1,0 +1,373 @@
+---
+/**
+ * Services Section Component
+ * Horizontal scroll-on-vertical-scroll effect matching Framer demo
+ *
+ * Architecture:
+ * - Outer section: 300vh height (extended scroll space)
+ * - Inner sticky viewport: pins at top, 100vh height
+ * - Cards track: transforms horizontally based on scroll progress
+ */
+
+import Container from '../base/Container.astro';
+import ServiceCard from '../ui/ServiceCard.astro';
+
+interface Service {
+  title: string;
+  description: string;
+  icon?: string;
+  image?: string;
+  imageAlt?: string;
+  href?: string;
+}
+
+interface Props {
+  /**
+   * Intro headline (white text)
+   */
+  introHeadline?: string;
+
+  /**
+   * Intro description (muted text)
+   */
+  introDescription?: string;
+
+  /**
+   * Services to display (6 recommended)
+   */
+  services?: Service[];
+}
+
+const {
+  introHeadline = "We partner with science–led businesses that are building what's next.",
+  introDescription = "Our role is to make that work more possible, focused, and durable.",
+  services = [
+    {
+      title: 'Systems Strategy',
+      description: 'We design technical and organizational frameworks that help research, data, and decision-making move together—at speed and scale.',
+      icon: '/icons/abstract/shape-04.svg',
+      href: '/services/strategy'
+    },
+    {
+      title: 'Infrastructure Design',
+      description: 'From lab systems to computational pipelines, we architect the back-end that powers breakthroughs. Built to adapt, built to last.',
+      icon: '/icons/abstract/shape-07.svg',
+      href: '/services/infrastructure'
+    },
+    {
+      title: 'Execution Support',
+      description: "Whether you're stuck at the strategy stage or mid-build, we step in to diagnose, recalibrate, and bring momentum to your mission.",
+      icon: '/icons/abstract/shape-10.svg',
+      href: '/services/execution'
+    },
+    {
+      title: 'AI & Data Integration',
+      description: 'We help research teams harness AI responsibly—embedding intelligent tools into workflows where they actually drive impact.',
+      icon: '/icons/abstract/shape-08.svg',
+      href: '/services/ai-data'
+    },
+    {
+      title: 'Regulatory Guidance',
+      description: 'Our consultants guide product teams through scientific, technical, and regulatory alignment—so nothing stalls in translation.',
+      icon: '/icons/abstract/shape-09.svg',
+      href: '/services/regulatory'
+    },
+    {
+      title: 'Collaborative Ops',
+      description: 'We facilitate coordination between R&D, engineering, and leadership—helping complex teams think clearly and build cohesively.',
+      icon: '/icons/abstract/shape-03.svg',
+      href: '/services/ops'
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="services-section" id="services-section">
+  <!-- Sticky viewport that pins while scrolling through section -->
+  <div class="services-viewport">
+    <!-- Intro text -->
+    <div class="services-intro">
+      <p class="intro-text">
+        <span class="intro-headline">{introHeadline} </span>
+        <span class="intro-muted">{introDescription}</span>
+      </p>
+    </div>
+
+    <!-- Cards track that moves horizontally -->
+    <div class="services-track" id="services-track">
+      {services.map((service) => (
+        <ServiceCard
+          title={service.title}
+          description={service.description}
+          icon={service.icon}
+          image={service.image}
+          imageAlt={service.imageAlt}
+          href={service.href}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function initServicesScroll() {
+    const section = document.getElementById('services-section');
+    const track = document.getElementById('services-track');
+
+    if (!section || !track) return;
+
+    const mobileBreakpoint = 767;
+    let isEnabled = false;
+    let maxTranslate = 0;
+
+    // Calculate max translation (track width - viewport width + padding)
+    function getMaxTranslate() {
+      const trackWidth = track.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      return Math.max(0, trackWidth - viewportWidth + 48);
+    }
+
+    function updateTransform() {
+      if (!isEnabled) {
+        track.style.transform = 'none';
+        return;
+      }
+
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionHeight = section.offsetHeight;
+      const viewportHeight = window.innerHeight;
+
+      // Progress: 0 at section top, 1 at section end
+      const scrollDistance = sectionHeight - viewportHeight;
+      const scrolled = -sectionTop;
+
+      let progress = scrolled / scrollDistance;
+      progress = Math.max(0, Math.min(1, progress));
+
+      const translateX = progress * maxTranslate;
+      track.style.transform = `translateX(-${translateX}px)`;
+    }
+
+    function checkBreakpoint() {
+      const wasMobile = !isEnabled;
+      const isMobile = window.innerWidth <= mobileBreakpoint;
+      isEnabled = !isMobile;
+
+      if (isMobile) {
+        // Reset transform for native scroll
+        track.style.transform = 'none';
+      } else {
+        maxTranslate = getMaxTranslate();
+        updateTransform();
+      }
+    }
+
+    // Initial setup
+    checkBreakpoint();
+
+    // Throttled scroll handler
+    let scrollTicking = false;
+    function onScroll() {
+      if (!scrollTicking && isEnabled) {
+        requestAnimationFrame(() => {
+          updateTransform();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }
+
+    // Debounced resize handler
+    let resizeTimeout;
+    function onResize() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        checkBreakpoint();
+      }, 100);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initServicesScroll);
+  } else {
+    initServicesScroll();
+  }
+</script>
+
+<style>
+  /* Outer section - extended height for scroll distance */
+  .services-section {
+    height: 300vh;
+    position: relative;
+  }
+
+  /* Sticky viewport - pins to top while scrolling through section */
+  .services-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+    overflow: hidden;
+  }
+
+  /* Intro text */
+  .services-intro {
+    max-width: 960px;
+    margin-bottom: 96px;
+    padding-left: max(var(--gutter), calc((100vw - 1200px) / 2 + var(--gutter)));
+    padding-right: var(--gutter);
+  }
+
+  .intro-text {
+    font-size: var(--text-h2);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .intro-headline {
+    color: var(--text-primary);
+  }
+
+  .intro-muted {
+    color: var(--text-subtle);
+  }
+
+  /* Cards track */
+  .services-track {
+    display: flex;
+    gap: 24px;
+    padding-left: max(var(--gutter), calc((100vw - 1200px) / 2 + var(--gutter)));
+    padding-right: 48px;
+    will-change: transform;
+  }
+
+  .services-track > :global(*) {
+    flex-shrink: 0;
+  }
+
+  /* Tablet */
+  @media (max-width: 991px) {
+    .services-section {
+      height: 250vh;
+    }
+
+    .services-viewport {
+      padding: var(--space-lg) 0;
+    }
+
+    .services-intro {
+      margin-bottom: 48px;
+      padding-left: var(--gutter);
+    }
+
+    .intro-text {
+      font-size: var(--text-h3);
+    }
+
+    .services-track {
+      padding-left: var(--gutter);
+      gap: 18px;
+    }
+  }
+
+  /* Tablet - 2-column grid */
+  @media (max-width: 767px) {
+    .services-section {
+      height: auto;
+      padding: var(--space-lg) 0;
+    }
+
+    .services-viewport {
+      position: relative;
+      height: auto;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .services-intro {
+      margin-bottom: 36px;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    .intro-text {
+      font-size: var(--text-h4);
+    }
+
+    /* Switch to 2-column grid on tablet/mobile */
+    .services-track {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    .services-track > :global(*) {
+      width: 100%;
+    }
+  }
+
+  /* Small mobile - single column stack */
+  @media (max-width: 479px) {
+    .services-section {
+      padding: var(--space-md) 0;
+    }
+
+    .services-intro {
+      margin-bottom: 24px;
+    }
+
+    .services-track {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+  }
+
+  /* Reduced motion - use grid layout */
+  @media (prefers-reduced-motion: reduce) {
+    .services-section {
+      height: auto;
+      padding: var(--space-xl) 0;
+    }
+
+    .services-viewport {
+      position: relative;
+      height: auto;
+      overflow: visible;
+    }
+
+    .services-track {
+      transform: none !important;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    .services-track > :global(*) {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (max-width: 991px) {
+    .services-track {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (max-width: 479px) {
+    .services-track {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

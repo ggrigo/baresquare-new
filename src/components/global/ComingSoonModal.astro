@@ -1,0 +1,219 @@
+---
+/**
+ * Coming Soon Modal
+ *
+ * Global modal that displays when clicking links to unavailable pages.
+ * The modal uses client-side JavaScript for opening/closing,
+ * but which links trigger it is determined at BUILD TIME by SmartLink.
+ *
+ * Include this component once in your Layout.
+ */
+---
+
+<div
+  id="coming-soon-modal"
+  class="modal"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  aria-labelledby="modal-title"
+>
+  <div class="modal-backdrop" data-modal-close></div>
+  <div class="modal-content">
+    <button
+      class="modal-close"
+      aria-label="Close modal"
+      type="button"
+      data-modal-close
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="modal-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/>
+        <path d="M24 14v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24" cy="34" r="1.5" fill="currentColor"/>
+      </svg>
+    </div>
+
+    <h2 id="modal-title" class="modal-title">Coming Soon</h2>
+    <p id="modal-message" class="modal-message">This page is coming soon!</p>
+
+    <button class="modal-button" type="button" data-modal-close>
+      Got it
+    </button>
+  </div>
+</div>
+
+<script>
+  function initComingSoonModal() {
+    const modal = document.getElementById('coming-soon-modal');
+    const messageEl = document.getElementById('modal-message');
+
+    if (!modal || !messageEl) return;
+
+    function openModal(message: string) {
+      messageEl.textContent = message;
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('modal--open');
+      document.body.style.overflow = 'hidden';
+
+      // Focus the close button for accessibility
+      const closeBtn = modal.querySelector('.modal-close') as HTMLButtonElement;
+      closeBtn?.focus();
+    }
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.classList.remove('modal--open');
+      document.body.style.overflow = '';
+    }
+
+    // Listen for clicks on "coming soon" buttons (SmartLink renders these)
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const comingSoonBtn = target.closest('[data-coming-soon="true"]');
+
+      if (comingSoonBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const message = comingSoonBtn.getAttribute('data-message') || 'This page is coming soon!';
+        openModal(message);
+      }
+    });
+
+    // Close handlers
+    modal.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.hasAttribute('data-modal-close') || target.closest('[data-modal-close]')) {
+        closeModal();
+      }
+    });
+
+    // Escape key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('modal--open')) {
+        closeModal();
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initComingSoonModal);
+  } else {
+    initComingSoonModal();
+  }
+</script>
+
+<style>
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .modal--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    position: relative;
+    background: var(--bg-card, #1a1a1a);
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+    border-radius: var(--radius-lg, 16px);
+    padding: 48px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+  }
+
+  .modal--open .modal-content {
+    transform: scale(1);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted, #888);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--text-primary, #fff);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .modal-close:focus-visible {
+    outline: 2px solid var(--accent-purple, #8b5cf6);
+    outline-offset: 2px;
+  }
+
+  .modal-icon {
+    color: var(--accent-gold, #d4a853);
+    margin-bottom: 24px;
+  }
+
+  .modal-title {
+    font-size: var(--text-h3, 24px);
+    font-weight: 600;
+    color: var(--text-primary, #fff);
+    margin: 0 0 12px 0;
+  }
+
+  .modal-message {
+    color: var(--text-muted, #888);
+    margin: 0 0 32px 0;
+    line-height: 1.5;
+  }
+
+  .modal-button {
+    background: var(--accent-purple, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+
+  .modal-button:hover {
+    background: color-mix(in srgb, var(--accent-purple, #8b5cf6) 85%, white);
+  }
+
+  .modal-button:active {
+    transform: scale(0.98);
+  }
+
+  .modal-button:focus-visible {
+    outline: 2px solid var(--accent-purple, #8b5cf6);
+    outline-offset: 2px;
+  }
+</style>

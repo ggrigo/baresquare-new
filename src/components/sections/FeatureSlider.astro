@@ -1,0 +1,202 @@
+---
+/**
+ * FeatureGrid Section Component
+ * Fixed grid of square feature cards (3-4 items)
+ */
+
+import Container from '../base/Container.astro';
+import DotTitle from '../ui/DotTitle.astro';
+
+interface Feature {
+  title: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  href?: string;
+}
+
+interface Props {
+  /**
+   * Section badge
+   */
+  badge?: string;
+
+  /**
+   * Section headline
+   */
+  headline?: string;
+
+  /**
+   * Features to display (3-4 recommended)
+   */
+  features?: Feature[];
+}
+
+const {
+  badge = 'Featured Work',
+  headline = 'What we\'ve built',
+  features = [
+    {
+      title: 'Project Alpha',
+      description: 'Strategic transformation for a leading biotech company',
+      image: '/images/feature-1.svg',
+      imageAlt: 'Project Alpha showcase',
+      href: '/work/alpha'
+    },
+    {
+      title: 'Project Beta',
+      description: 'Digital innovation in healthcare delivery',
+      image: '/images/feature-2.svg',
+      imageAlt: 'Project Beta showcase',
+      href: '/work/beta'
+    },
+    {
+      title: 'Project Gamma',
+      description: 'Research-driven market expansion strategy',
+      image: '/images/feature-3.svg',
+      imageAlt: 'Project Gamma showcase',
+      href: '/work/gamma'
+    }
+  ]
+} = Astro.props;
+
+// Limit to 4 features max
+const displayFeatures = features.slice(0, 4);
+---
+
+<section class="feature-grid-section">
+  <Container>
+    <div class="feature-header">
+      <DotTitle label={badge} color="orange" />
+      <h2>{headline}</h2>
+    </div>
+
+    <div class="feature-grid">
+      {displayFeatures.map((feature) => (
+        <a href={feature.href || '#'} class="feature-card">
+          <div class="feature-card-image">
+            {feature.image && (
+              <img src={feature.image} alt={feature.imageAlt || ''} loading="lazy" />
+            )}
+          </div>
+          <div class="feature-card-content">
+            <h3 class="feature-card-title">{feature.title}</h3>
+            {feature.description && (
+              <p class="feature-card-description">{feature.description}</p>
+            )}
+          </div>
+        </a>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .feature-grid-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .feature-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .feature-header h2 {
+    margin-top: var(--space-sm);
+  }
+
+  /* Grid layout - fits 3-4 cards to width */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+  }
+
+  /* When only 3 items, they still fill width */
+  .feature-grid:has(:nth-child(3):last-child) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature-card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-dark);
+    transition: background-color var(--transition-fast);
+  }
+
+  .feature-card:hover {
+    background: var(--bg-card);
+  }
+
+  /* Square image container */
+  .feature-card-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+
+  .feature-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-medium);
+  }
+
+  .feature-card:hover .feature-card-image img {
+    transform: scale(1.05);
+  }
+
+  .feature-card-content {
+    padding: var(--space-md);
+  }
+
+  .feature-card-title {
+    font-size: var(--text-h5);
+    margin-bottom: var(--space-xs);
+    line-height: 1.3;
+  }
+
+  .feature-card-description {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Tablet: 2 columns */
+  @media (max-width: 991px) {
+    .feature-grid-section {
+      padding: var(--space-lg) 0;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-grid:has(:nth-child(3):last-child) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Mobile: 1 column */
+  @media (max-width: 479px) {
+    .feature-grid-section {
+      padding: var(--space-md) 0;
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+
+    .feature-grid:has(:nth-child(3):last-child) {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-card-title {
+      font-size: var(--text-body);
+    }
+  }
+</style>

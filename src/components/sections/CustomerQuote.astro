@@ -1,0 +1,186 @@
+---
+/**
+ * CustomerQuote Section Component
+ * Testimonial/quote from a customer
+ */
+
+import Container from '../base/Container.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
+
+interface Props {
+  /**
+   * Quote text
+   */
+  quote: string;
+
+  /**
+   * Author name
+   */
+  author?: string;
+
+  /**
+   * Author title/role
+   */
+  authorTitle?: string;
+
+  /**
+   * Company name
+   */
+  company?: string;
+
+  /**
+   * Company logo URL
+   */
+  companyLogo?: string;
+
+  /**
+   * Link text
+   */
+  linkText?: string;
+
+  /**
+   * Link URL
+   */
+  linkHref?: string;
+}
+
+const {
+  quote,
+  author,
+  authorTitle,
+  company,
+  companyLogo,
+  linkText,
+  linkHref
+} = Astro.props;
+---
+
+<section class="quote-section">
+  <Container size="md">
+    <div class="quote-content">
+      <blockquote class="quote-text">
+        <span class="quote-mark">"</span>
+        {quote}
+      </blockquote>
+
+      <div class="quote-attribution">
+        {companyLogo && (
+          <img src={companyLogo} alt={company || ''} class="quote-logo" />
+        )}
+        <div class="quote-author-info">
+          {author && <span class="quote-author">{author}</span>}
+          {authorTitle && <span class="quote-title">{authorTitle}</span>}
+          {company && !companyLogo && <span class="quote-company">{company}</span>}
+        </div>
+      </div>
+
+      {linkText && linkHref && (
+        <div class="quote-link">
+          <ArrowLink text={linkText} href={linkHref} />
+        </div>
+      )}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .quote-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .quote-content {
+    text-align: center;
+  }
+
+  .quote-text {
+    font-size: var(--text-h3);
+    line-height: 1.4;
+    font-style: italic;
+    font-family: var(--font-serif);
+    margin-bottom: var(--space-lg);
+    position: relative;
+  }
+
+  .quote-mark {
+    font-size: 4em;
+    line-height: 0;
+    position: absolute;
+    top: 0.3em;
+    left: -0.4em;
+    opacity: 0.2;
+    font-family: var(--font-primary);
+    font-style: normal;
+  }
+
+  .quote-attribution {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .quote-logo {
+    height: 32px;
+    width: auto;
+    opacity: 0.8;
+  }
+
+  .quote-author-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .quote-author {
+    font-weight: 500;
+  }
+
+  .quote-title,
+  .quote-company {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .quote-link {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 991px) {
+    .quote-section {
+      padding: var(--space-lg) 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .quote-text {
+      font-size: var(--text-h4);
+    }
+
+    .quote-mark {
+      font-size: 3em;
+      left: -0.3em;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .quote-section {
+      padding: var(--space-md) 0;
+    }
+
+    .quote-text {
+      font-size: var(--text-h5);
+      margin-bottom: var(--space-md);
+    }
+
+    .quote-mark {
+      display: none;
+    }
+
+    .quote-attribution {
+      margin-bottom: var(--space-sm);
+    }
+  }
+</style>

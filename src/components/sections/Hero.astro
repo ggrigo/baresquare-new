@@ -1,0 +1,438 @@
+---
+/**
+ * Hero Section Component
+ * Full hero matching Figma design exactly
+ *
+ * From Figma node 555-4074:
+ * - Background image with 30% opacity
+ * - Gradient blobs
+ * - Hero card with video + info panel at bottom
+ * - Lazy-loaded Vimeo embed for performance
+ */
+
+import WideSection from '../layout/WideSection.astro';
+import Container from '../base/Container.astro';
+import Button from '../ui/Button.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
+import DotTitle from '../ui/DotTitle.astro';
+
+interface Props {
+  badge?: string;
+  headline?: string;
+  accentWord?: string;
+  description?: string;
+  fadedText?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  secondaryText?: string;
+  secondaryHref?: string;
+  showBlobs?: boolean;
+  backgroundImage?: string;
+  videoId?: string;
+  videoThumbnail?: string;
+  videoThumbnailAlt?: string;
+  infoBadge?: string;
+  infoDescription?: string;
+}
+
+const {
+  badge = 'Meet Tywin',
+  headline = 'Agents that work',
+  accentWord = 'for you.',
+  description = 'The world\'s first autonomous eCommerce agent.',
+  fadedText = 'Monitor, analyze, and act on your data—60x faster than manual analysis.',
+  ctaText = 'Get started',
+  ctaHref = '/contact',
+  secondaryText = 'Learn more',
+  secondaryHref = '/about',
+  showBlobs = true,
+  backgroundImage = '/images/hero-background.jpg',
+  videoId = '956012005',
+  videoThumbnail = '/images/video-thumbnail.svg',
+  videoThumbnailAlt = 'Baresquare product demo',
+  infoBadge = 'Autonomous eCommerce Agent',
+  infoDescription = 'AI that monitors your campaigns, inventory, pricing, and competitors—then takes action automatically.'
+} = Astro.props;
+
+// Construct Vimeo embed URL
+const vimeoEmbedUrl = `https://player.vimeo.com/video/${videoId}?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&sidedock=0&controls=1&transparent=1&dnt=1&autoplay=1`;
+---
+
+<WideSection background="accent" class="hero-section" height="912px" showBackdropBlur={true} backdropBlur={60}>
+  <!-- Layer order: blobs (0) -> blur (1) -> background (2) -> noise (3) -> grid (4) -> content (5) -->
+
+  <!-- Blobs slot - z-index 0, furthest back -->
+  {showBlobs && (
+    <Fragment slot="blobs">
+      <div style="position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;" aria-hidden="true">
+        <div class="blob blob--green"></div>
+        <div class="blob blob--orange"></div>
+        <div class="blob blob--gold"></div>
+      </div>
+    </Fragment>
+  )}
+
+  <!-- Background image slot - z-index 2, after blur -->
+  <Fragment slot="background">
+    <div
+      style="position: absolute; inset: 0; z-index: 2; opacity: 0.3; overflow: hidden;"
+      aria-hidden="true"
+    >
+      <img
+        src={backgroundImage}
+        alt=""
+        loading="eager"
+        style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
+      />
+    </div>
+  </Fragment>
+
+  <div style="position: relative; z-index: 5; width: 100%; min-height: 816px; display: flex; flex-direction: column; padding: 48px 0;">
+    <!-- Headline area - flex-1 to take remaining space, centered vertically -->
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+      <Container size="lg">
+        <div style="text-align: center;">
+          <h1 style="font-size: 64px; line-height: 1.1; margin: 0; color: white;">
+            {headline} <span class="text-serif">{accentWord}</span>
+          </h1>
+        </div>
+      </Container>
+    </div>
+
+    <!-- Hero bottom card: Video + Info panel - at bottom -->
+    <Container size="lg">
+      <div class="hero-bottom-card">
+        <div class="hero-video-wrapper" id="hero-video-wrapper" data-vimeo-url={vimeoEmbedUrl}>
+          <!-- Thumbnail shown before video loads -->
+          <div class="video-thumbnail" id="video-thumbnail">
+            <img
+              src={videoThumbnail}
+              alt={videoThumbnailAlt}
+              loading="eager"
+            />
+            <button
+              class="play-button"
+              aria-label="Play video"
+              type="button"
+              id="video-play-btn"
+            >
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <path d="M26 20L46 32L26 44V20Z" fill="white"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Iframe injected here on play -->
+        </div>
+        <div class="hero-info-panel">
+          <DotTitle label={infoBadge} color="white" />
+          <p class="info-description">{infoDescription}</p>
+        </div>
+      </div>
+    </Container>
+  </div>
+</WideSection>
+
+<script>
+  // Lazy-load Vimeo iframe on play button click
+  function initVideoLazyLoad() {
+    const wrapper = document.getElementById('hero-video-wrapper');
+    const thumbnail = document.getElementById('video-thumbnail');
+    const playBtn = document.getElementById('video-play-btn');
+
+    if (!wrapper || !thumbnail || !playBtn) return;
+
+    const vimeoUrl = wrapper.dataset.vimeoUrl;
+    if (!vimeoUrl) return;
+
+    function loadVideo() {
+      // Create iframe
+      const iframe = document.createElement('iframe');
+      iframe.src = vimeoUrl;
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media');
+      iframe.setAttribute('title', 'Video player');
+      iframe.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%;';
+
+      // Hide thumbnail and show iframe
+      thumbnail.style.display = 'none';
+      wrapper.appendChild(iframe);
+    }
+
+    // Click handler
+    playBtn.addEventListener('click', loadVideo);
+
+    // Keyboard accessibility
+    playBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        loadVideo();
+      }
+    });
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVideoLazyLoad);
+  } else {
+    initVideoLazyLoad();
+  }
+</script>
+
+<style>
+  .hero-section {
+    min-height: 912px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Background image layer */
+  .hero-bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.3;
+    overflow: hidden;
+  }
+
+  .hero-bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px 0;
+  }
+
+  .hero-content {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-headline {
+    font-size: var(--text-display);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  /* Hero bottom card layout - matching Figma exactly */
+  .hero-bottom-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-bottom: 48px;
+  }
+
+  .hero-video-wrapper {
+    position: relative;
+    width: 320px;
+    aspect-ratio: 320 / 180;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 48px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+    background: var(--bg-dark);
+  }
+
+  /* Video thumbnail container */
+  .video-thumbnail {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    z-index: 2;
+  }
+
+  .play-button svg {
+    display: block;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  }
+
+  .play-button:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .play-button:hover svg circle {
+    fill: rgba(0, 0, 0, 0.7);
+  }
+
+  .play-button:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 4px;
+    border-radius: 32px;
+  }
+
+  .hero-info-panel {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    width: 403px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .info-description {
+    font-size: var(--text-body);
+    line-height: 1.4;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Animated blobs - matching Figma vectors */
+  .hero-blobs {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+
+  .blob--green {
+    width: 1092px;
+    height: 982px;
+    background: var(--accent-green);
+    top: -69px;
+    left: -648px;
+    opacity: 0.85;
+    /* Smooth easing with alternate reversal */
+    animation: blob-float-1 25s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  .blob--orange {
+    width: 1047px;
+    height: 935px;
+    background: var(--accent-orange);
+    top: 562px;
+    right: 384px;
+    opacity: 0.85;
+    animation: blob-float-2 20s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  .blob--gold {
+    width: 972px;
+    height: 868px;
+    background: var(--accent-gold);
+    top: 399px;
+    right: -398px;
+    opacity: 0.8;
+    animation: blob-float-3 28s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  /* Keyframes for alternate animation - goes to end state, then reverses back */
+  @keyframes blob-float-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    30% { transform: translate(50px, 30px) scale(1.02); }
+    60% { transform: translate(-30px, 60px) scale(0.98); }
+    100% { transform: translate(40px, -20px) scale(1.01); }
+  }
+
+  @keyframes blob-float-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-40px, -30px) scale(1.02); }
+    100% { transform: translate(30px, 40px) scale(0.97); }
+  }
+
+  @keyframes blob-float-3 {
+    0% { transform: translate(0, 0) scale(1); }
+    35% { transform: translate(60px, -40px) scale(0.98); }
+    70% { transform: translate(-20px, -60px) scale(1.03); }
+    100% { transform: translate(-50px, 30px) scale(1); }
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .hero-section {
+      min-height: 700px;
+    }
+
+    .hero-headline {
+      font-size: var(--text-h1);
+    }
+
+    .hero-bottom-card {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hero-video-wrapper {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .hero-info-panel {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .hero-section {
+      min-height: 600px;
+    }
+
+    .hero-blobs {
+      display: none;
+    }
+
+    .hero-headline {
+      font-size: 32px;
+    }
+
+    .hero-inner {
+      padding: 24px 0;
+    }
+
+    .hero-info-panel {
+      gap: 24px;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .blob {
+      animation: none;
+    }
+  }
+</style>

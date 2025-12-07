@@ -1,0 +1,25 @@
+{
+  "name": "baresquare-new",
+  "version": "1.0.0",
+  "description": "Baresquare website - AI-powered eCommerce agents and strategic consulting",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggrigo/baresquare-new.git"
+  },
+  "keywords": ["baresquare", "ai-agents", "ecommerce", "astro", "landing-page"],
+  "author": "Baresquare",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ggrigo/baresquare-new/issues"
+  },
+  "homepage": "https://github.com/ggrigo/baresquare-new#readme",
+  "dependencies": {
+    "astro": "^5.16.4"
+  }
+}

@@ -1,0 +1,191 @@
+---
+/**
+ * Baresquare Homepage
+ *
+ * This page uses config-driven section visibility.
+ * All content is imported from src/content/home/.
+ * Section visibility is controlled by src/config/site.config.ts.
+ *
+ * IMPORTANT: Sections are rendered at BUILD TIME.
+ * Disabled sections produce NO HTML output (not hidden, excluded entirely).
+ */
+
+// Layout and Navigation
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import ComingSoonModal from '../components/global/ComingSoonModal.astro';
+
+// Section Components
+import Hero from '../components/sections/Hero.astro';
+import FeatureSlider from '../components/sections/FeatureSlider.astro';
+import TwoColumnGrid from '../components/sections/TwoColumnGrid.astro';
+import Stats from '../components/sections/Stats.astro';
+import Services from '../components/sections/Services.astro';
+import ProcessSteps from '../components/sections/ProcessSteps.astro';
+import CustomerQuote from '../components/sections/CustomerQuote.astro';
+import BlogGrid from '../components/sections/BlogGrid.astro';
+import CTASection from '../components/sections/CTASection.astro';
+
+// Configuration
+import { siteConfig } from '../config/site.config';
+
+// Content
+import {
+  heroContent,
+  featureSliderContent,
+  aboutContent,
+  approachContent,
+  statsContent,
+  servicesContent,
+  processContent,
+  testimonialContent,
+  blogContent,
+  ctaMidContent,
+  ctaFinalContent,
+} from '../content/home';
+
+// Destructure section config for cleaner conditionals
+const { sections } = siteConfig;
+---
+
+<Layout
+  title="Baresquare - AI-Powered eCommerce Agents"
+  description="AI that monitors your campaigns, inventory, pricing, and competitors—then takes action automatically."
+>
+  <Navbar slot="navbar" />
+
+  {/* Hero Section */}
+  {sections.hero && (
+    <Hero
+      badge={heroContent.badge}
+      headline={heroContent.headline}
+      accentWord={heroContent.accentWord}
+      backgroundImage={heroContent.backgroundImage}
+      videoId={heroContent.videoId}
+      videoThumbnailAlt={heroContent.videoThumbnailAlt}
+      infoBadge={heroContent.infoBadge}
+      infoDescription={heroContent.infoDescription}
+    />
+  )}
+
+  {/* Feature Slider */}
+  {sections.featureSlider && (
+    <FeatureSlider
+      badge={featureSliderContent.badge}
+      headline={featureSliderContent.headline}
+      features={featureSliderContent.features}
+    />
+  )}
+
+  {/* About Section (TwoColumnGrid) */}
+  {sections.about && (
+    <TwoColumnGrid
+      badge={aboutContent.badge}
+      headline={aboutContent.headline}
+      description={aboutContent.description}
+      fadedText={aboutContent.fadedText}
+      image={aboutContent.image}
+      imageAlt={aboutContent.imageAlt}
+      linkText={aboutContent.linkText}
+      linkHref={aboutContent.linkHref}
+      badgeColor={aboutContent.badgeColor}
+    />
+  )}
+
+  {/* Approach Section (TwoColumnGrid, reversed) */}
+  {sections.approach && (
+    <TwoColumnGrid
+      badge={approachContent.badge}
+      headline={approachContent.headline}
+      description={approachContent.description}
+      image={approachContent.image}
+      imageAlt={approachContent.imageAlt}
+      linkText={approachContent.linkText}
+      linkHref={approachContent.linkHref}
+      reversed={approachContent.reversed}
+      badgeColor={approachContent.badgeColor}
+    />
+  )}
+
+  {/* Stats Section */}
+  {sections.stats && (
+    <Stats
+      badge={statsContent.badge}
+      headline={statsContent.headline}
+      stats={statsContent.stats}
+    />
+  )}
+
+  {/* Services Section */}
+  {sections.services && (
+    <Services
+      introHeadline={servicesContent.introHeadline}
+      introDescription={servicesContent.introDescription}
+      services={servicesContent.services}
+    />
+  )}
+
+  {/* Process Steps */}
+  {sections.process && (
+    <ProcessSteps
+      badge={processContent.badge}
+      headline={processContent.headline}
+      steps={processContent.steps}
+    />
+  )}
+
+  {/* Customer Quote / Testimonial */}
+  {sections.testimonial && (
+    <CustomerQuote
+      quote={testimonialContent.quote}
+      author={testimonialContent.author}
+      authorTitle={testimonialContent.authorTitle}
+      company={testimonialContent.company}
+      linkText={testimonialContent.linkText}
+      linkHref={testimonialContent.linkHref}
+    />
+  )}
+
+  {/* Mid-Page CTA */}
+  {sections.ctaMid && (
+    <CTASection
+      headline={ctaMidContent.headline}
+      accentWord={ctaMidContent.accentWord}
+      description={ctaMidContent.description}
+      ctaText={ctaMidContent.ctaText}
+      ctaHref={ctaMidContent.ctaHref}
+      secondaryText={ctaMidContent.secondaryText}
+      secondaryHref={ctaMidContent.secondaryHref}
+    />
+  )}
+
+  {/* Blog Grid */}
+  {sections.blog && (
+    <BlogGrid
+      badge={blogContent.badge}
+      headline={blogContent.headline}
+      posts={blogContent.posts}
+      showViewAll={blogContent.showViewAll}
+      viewAllHref={blogContent.viewAllHref}
+    />
+  )}
+
+  {/* Final CTA */}
+  {sections.ctaFinal && (
+    <CTASection
+      headline={ctaFinalContent.headline}
+      accentWord={ctaFinalContent.accentWord}
+      description={ctaFinalContent.description}
+      ctaText={ctaFinalContent.ctaText}
+      ctaHref={ctaFinalContent.ctaHref}
+      secondaryText={ctaFinalContent.secondaryText}
+      secondaryHref={ctaFinalContent.secondaryHref}
+    />
+  )}
+
+  <Footer slot="footer" />
+
+  {/* Global Coming Soon Modal */}
+  <ComingSoonModal />
+</Layout>

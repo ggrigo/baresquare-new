@@ -1,0 +1,212 @@
+---
+/**
+ * Button Component
+ * Pill-shaped button with glass effect
+ *
+ * Uses SmartLink for "Coming Soon" handling at build time.
+ *
+ * Verified values from Webflow:
+ * - Height: 48px
+ * - Padding: 0 54px
+ * - Border-radius: 200px
+ * - Background: rgba(255, 255, 255, 0.06)
+ * - Hover: rgba(255, 255, 255, 0.12)
+ * - Transition: background-color 0.2s ease
+ */
+
+import SmartLink from '../global/SmartLink.astro';
+
+interface Props {
+  /**
+   * Button variant
+   * @default 'primary'
+   */
+  variant?: 'primary' | 'secondary' | 'arrow';
+
+  /**
+   * Render as a link
+   */
+  href?: string;
+
+  /**
+   * Button type (when not a link)
+   * @default 'button'
+   */
+  type?: 'button' | 'submit' | 'reset';
+
+  /**
+   * Disabled state
+   */
+  disabled?: boolean;
+
+  /**
+   * Arrow direction for arrow variant
+   */
+  direction?: 'left' | 'right';
+
+  /**
+   * Accessible label for icon-only buttons
+   */
+  'aria-label'?: string;
+
+  /**
+   * Additional CSS class
+   */
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  disabled = false,
+  direction = 'right',
+  'aria-label': ariaLabel,
+  class: className
+} = Astro.props;
+
+const isArrow = variant === 'arrow';
+const buttonClasses = ['button', `button--${variant}`, className, { 'button--disabled': disabled }];
+---
+
+{href ? (
+  <SmartLink
+    class:list={buttonClasses}
+    href={href}
+    aria-label={isArrow ? ariaLabel : undefined}
+    aria-disabled={disabled ? 'true' : undefined}
+  >
+    {isArrow ? (
+      <svg
+        class="button-arrow"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        {direction === 'left' ? (
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        ) : (
+          <path
+            d="M6 12L10 8L6 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        )}
+      </svg>
+    ) : (
+      <slot />
+    )}
+  </SmartLink>
+) : (
+  <button
+    class:list={buttonClasses}
+    type={type}
+    disabled={disabled}
+    aria-label={isArrow ? ariaLabel : undefined}
+    aria-disabled={disabled ? 'true' : undefined}
+  >
+    {isArrow ? (
+      <svg
+        class="button-arrow"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        {direction === 'left' ? (
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        ) : (
+          <path
+            d="M6 12L10 8L6 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        )}
+      </svg>
+    ) : (
+      <slot />
+    )}
+  </button>
+)}
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--button-height);
+    padding: 0 var(--button-padding-x);
+    font-family: var(--font-primary);
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    border: none;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+  }
+
+  .button:hover {
+    background-color: var(--bg-card-hover);
+  }
+
+  .button:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+
+  .button:active {
+    transform: scale(0.98);
+  }
+
+  /* Arrow variant */
+  .button--arrow {
+    width: var(--button-height);
+    height: var(--button-height);
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .button-arrow {
+    flex-shrink: 0;
+  }
+
+  /* Secondary variant */
+  .button--secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-light);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--bg-card);
+  }
+
+  /* Disabled state */
+  .button--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+</style>
