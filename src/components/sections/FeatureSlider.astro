@@ -160,6 +160,10 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     width: 100%;
   }
 
+  .feature-card:hover {
+    background: var(--bg-card);
+  }
+
   .feature-card:focus-visible {
     outline: 2px solid var(--accent-purple);
     outline-offset: 2px;
@@ -199,20 +203,23 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     z-index: 5; /* Above noise (3) and grid (4) overlays */
   }
 
+  .feature-card:hover .feature-brand-logo,
   .feature-card.is-active .feature-brand-logo {
     opacity: 1;
   }
 
+  .feature-card:hover .feature-card-image > img:first-child,
   .feature-card.is-active .feature-card-image > img:first-child {
     transform: scale(1.05);
     filter: grayscale(0);
   }
 
-  /* Grid overlay fade when active */
+  /* Grid overlay fade on hover/active - keep noise, fade dots */
   .feature-card .grid-overlay {
     transition: opacity var(--transition-medium);
   }
 
+  .feature-card:hover .grid-overlay,
   .feature-card.is-active .grid-overlay {
     opacity: 0 !important;
   }
