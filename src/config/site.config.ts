@@ -89,20 +89,20 @@ export const siteConfig: SiteConfig = {
         href: '/contact',
       },
       items: [
-        { label: 'Home', href: '/', enabled: true },
-        { label: 'About', href: '/about', enabled: true },
+        { label: 'Home', href: '/', enabled: false },
+        { label: 'About', href: '/about', enabled: false },
         {
           label: 'Services',
           href: '/services',
-          enabled: true,
+          enabled: false,
           children: [
-            { label: 'Strategy', href: '/services/strategy', enabled: true },
-            { label: 'Infrastructure', href: '/services/infrastructure', enabled: true },
-            { label: 'AI & Data', href: '/services/ai-data', enabled: true },
+            { label: 'Strategy', href: '/services/strategy', enabled: false },
+            { label: 'Infrastructure', href: '/services/infrastructure', enabled: false },
+            { label: 'AI & Data', href: '/services/ai-data', enabled: false },
           ],
         },
-        { label: 'Blog', href: '/blog', enabled: false }, // Hide until blog ready
-        { label: 'Contact', href: '/contact', enabled: true },
+        { label: 'Blog', href: '/blog', enabled: false },
+        { label: 'Contact', href: '/contact', enabled: false },
       ],
     },
     footer: {
