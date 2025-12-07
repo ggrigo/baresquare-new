@@ -97,7 +97,7 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
         <SmartLink href={feature.href || '#'} class="feature-card">
           <div class="feature-card-image">
             {feature.image && (
-              <img src={feature.image} alt={feature.imageAlt || ''} loading="lazy" />
+              <img src={feature.image} alt={feature.imageAlt || ''} loading="lazy" class="feature-main-image" />
             )}
             <NoiseOverlay opacity={0.4} />
             <GridOverlay opacity={0.5} />
@@ -182,7 +182,7 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     position: relative;
   }
 
-  .feature-card-image > img:first-child {
+  .feature-main-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -208,8 +208,8 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     opacity: 1;
   }
 
-  .feature-card:hover .feature-card-image > img:first-child,
-  .feature-card.is-active .feature-card-image > img:first-child {
+  .feature-card:hover .feature-main-image,
+  .feature-card.is-active .feature-main-image {
     transform: scale(1.05);
     filter: grayscale(0);
   }
