@@ -185,10 +185,21 @@ import {
     {/* Dot grid overlay */}
     <div class="cta-footer-grid" aria-hidden="true"></div>
 
-    {/* CTA Content */}
+    {/* CTA Content with integrated quote */}
     {isSectionEnabled('ctaFinal') && (
       <div class="cta-footer-content">
         <div class="cta-text-wrapper">
+          {/* Quote section */}
+          <blockquote class="cta-quote">
+            "{ctaFinalContent.quote}"
+          </blockquote>
+          <div class="cta-quote-attribution">
+            <span class="quote-author">{ctaFinalContent.quoteAuthor}</span>
+            <span class="quote-title">{ctaFinalContent.quoteAuthorTitle}</span>
+            <span class="quote-company">{ctaFinalContent.quoteCompany}</span>
+          </div>
+
+          {/* CTA headline and button */}
           <h2 class="cta-headline">
             {ctaFinalContent.headline} <span class="text-mono">{ctaFinalContent.accentWord}</span>
           </h2>
@@ -353,6 +364,39 @@ import {
     color: var(--text-primary);
     margin: 0;
     max-width: 600px;
+  }
+
+  /* Integrated quote in CTA */
+  .cta-quote {
+    font-family: var(--font-primary);
+    font-size: var(--text-h4);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+    max-width: 800px;
+  }
+
+  .cta-quote-attribution {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 48px;
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .cta-quote-attribution .quote-author {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .cta-quote-attribution .quote-title::before,
+  .cta-quote-attribution .quote-company::before {
+    content: '·';
+    margin-right: 8px;
   }
 
   .cta-actions {
