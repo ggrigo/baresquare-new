@@ -197,7 +197,7 @@ export const siteConfig: SiteConfig = {
   routes: {
     // Main pages
     '/': { available: true },
-    '/contact': { available: true },
+    '/contact': { available: false, message: 'Contact page coming soon!' },
     '/about': { available: false, message: 'Our About page is coming soon!' },
 
     // Services

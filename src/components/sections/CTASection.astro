@@ -18,6 +18,7 @@ import Container from '../base/Container.astro';
 import NoiseOverlay from '../base/NoiseOverlay.astro';
 import GridOverlay from '../base/GridOverlay.astro';
 import ArrowLink from '../ui/ArrowLink.astro';
+import SmartLink from '../global/SmartLink.astro';
 
 interface Props {
   /**
@@ -105,15 +106,17 @@ const {
           </div>
 
           <div class="cta-actions">
-            <a href={ctaHref} class="cta-button">
+            <SmartLink href={ctaHref} class="cta-button">
               {ctaText}
-            </a>
-            <ArrowLink
-              text={secondaryText}
-              href={secondaryHref}
-              direction="up-right"
-              class="cta-arrow-link"
-            />
+            </SmartLink>
+            {secondaryText && (
+              <ArrowLink
+                text={secondaryText}
+                href={secondaryHref}
+                direction="up-right"
+                class="cta-arrow-link"
+              />
+            )}
           </div>
         </div>
       </Container>
