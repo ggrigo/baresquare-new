@@ -13,7 +13,7 @@ export const featureSliderContent: FeatureSliderContent = {
       id: 'vogue-ecommerce',
       title: '+4% Revenue',
       description: 'AI-powered ecommerce optimization driving additional revenue through intelligent insights and automated decision-making.',
-      image: 'https://commercialobserver.com/wp-content/uploads/sites/3/2020/02/1wtccostar.jpg?quality=80&w=640&h=427&crop=1',
+      image: 'https://zajc.pl/upload/inspirations/1920-siedziba-vogue-polska-h-34-1682292161.webp',
       imageAlt: 'VOGUE ecommerce project',
       brandLogo: '/images/brands/vogue-logo.svg',
       href: '/work/vogue',
