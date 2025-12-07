@@ -13,7 +13,7 @@ export const featureSliderContent: FeatureSliderContent = {
       id: 'genetic-insights',
       title: 'Unlocking new genetic and health discovery insights',
       description: 'Strategic transformation for a leading biotech company',
-      image: '/images/feature-1.svg',
+      image: '/images/feature-work-1.jpg',
       imageAlt: 'Genetic research project',
       href: '/work/genetic-insights',
     },
