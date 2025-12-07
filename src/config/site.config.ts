@@ -1,48 +1,199 @@
 /**
- * Site Configuration
+ * Site Configuration v2
  *
  * This file controls:
- * 1. Which sections appear on the homepage (build-time static)
- * 2. Which routes are available (for "Coming Soon" modal behavior)
+ * 1. Section visibility and sub-element visibility (build-time static)
+ * 2. Navigation structure (header & footer)
+ * 3. Social media links
+ * 4. Office locations
+ * 5. Route availability ("Coming Soon" behavior)
  *
  * IMPORTANT: All configuration is resolved at BUILD TIME.
- * Disabled sections are NOT included in the output HTML.
+ * Disabled sections/elements are NOT included in the output HTML.
  */
 
-import type { SiteConfig, RouteConfig } from './types';
+import type { SiteConfig, RouteConfig, SectionConfig } from './types';
 
 export const siteConfig: SiteConfig = {
-  /**
-   * Section visibility
-   * - true: Section is rendered in the HTML output
-   * - false: Section is completely excluded from the build
-   *
-   * To temporarily hide a section, set it to false.
-   * This produces smaller, optimized HTML with no unused content.
-   */
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SECTIONS - Homepage section visibility and element control
+  // ═══════════════════════════════════════════════════════════════════════════
   sections: {
-    hero: true,
-    featureSlider: true,
-    about: true,
-    approach: true,
-    stats: true,
-    services: true,
-    process: true,
-    testimonial: true,
-    ctaMid: true,
-    blog: false,        // Disabled until blog content is ready
-    ctaFinal: true,
+    hero: {
+      enabled: true,
+      elements: {
+        video: { enabled: false },        // Hide video for now
+        infoBanner: { enabled: false },   // Hide "Autonomous eCommerce Agent" banner
+      },
+    },
+    featureSlider: {
+      enabled: true,
+      limit: 3,                           // Show only 3 features (4th ready for later)
+    },
+    about: {
+      enabled: true,
+      elements: {
+        ctaLink: { enabled: false },      // Hide "Learn about us" link
+      },
+    },
+    approach: {
+      enabled: true,
+      elements: {
+        ctaLink: { enabled: true },
+      },
+    },
+    stats: {
+      enabled: true,
+      elements: {
+        measurableOutcomes: { enabled: false }, // Hide this stat
+        clientRetention: { enabled: true },
+        projectsDelivered: { enabled: true },
+        avgROI: { enabled: true },
+      },
+    },
+    services: {
+      enabled: true,
+    },
+    process: {
+      enabled: true,
+    },
+    testimonial: {
+      enabled: true,
+    },
+    ctaMid: {
+      enabled: false,                     // Only use final CTA
+    },
+    blog: {
+      enabled: false,                     // Disabled until blog content is ready
+    },
+    ctaFinal: {
+      enabled: true,
+    },
   },
 
-  /**
-   * Route availability
-   * Controls "Coming Soon" behavior for links.
-   *
-   * - available: true → Normal link behavior
-   * - available: false → Link triggers "Coming Soon" modal
-   *
-   * Supports exact paths and wildcards (ending with /*)
-   */
+  // ═══════════════════════════════════════════════════════════════════════════
+  // NAVIGATION - Header and footer structure
+  // ═══════════════════════════════════════════════════════════════════════════
+  navigation: {
+    header: {
+      enabled: true,
+      logo: {
+        src: '/images/baresquare-logo.svg',
+        alt: 'Baresquare',
+        width: 140,
+        height: 20,
+      },
+      cta: {
+        enabled: true,
+        label: 'Get in touch',
+        href: '/contact',
+      },
+      items: [
+        { label: 'Home', href: '/', enabled: true },
+        { label: 'About', href: '/about', enabled: true },
+        {
+          label: 'Services',
+          href: '/services',
+          enabled: true,
+          children: [
+            { label: 'Strategy', href: '/services/strategy', enabled: true },
+            { label: 'Infrastructure', href: '/services/infrastructure', enabled: true },
+            { label: 'AI & Data', href: '/services/ai-data', enabled: true },
+          ],
+        },
+        { label: 'Blog', href: '/blog', enabled: false }, // Hide until blog ready
+        { label: 'Contact', href: '/contact', enabled: true },
+      ],
+    },
+    footer: {
+      enabled: true,
+      logo: {
+        src: '/images/baresquare-logo.svg',
+        alt: 'Baresquare',
+        width: 140,
+        height: 20,
+      },
+      tagline: 'Shaping the invisible structures that power visible breakthroughs.',
+      columns: [
+        {
+          title: 'Company',
+          enabled: true,
+          links: [
+            { label: 'About', href: '/about', enabled: true },
+            { label: 'Careers', href: '/careers', enabled: false },
+            { label: 'Contact', href: '/contact', enabled: true },
+          ],
+        },
+        {
+          title: 'Services',
+          enabled: true,
+          links: [
+            { label: 'Strategy', href: '/services/strategy', enabled: true },
+            { label: 'Infrastructure', href: '/services/infrastructure', enabled: true },
+            { label: 'AI & Data', href: '/services/ai-data', enabled: true },
+          ],
+        },
+        {
+          title: 'Resources',
+          enabled: true,
+          links: [
+            { label: 'Blog', href: '/blog', enabled: false },
+            { label: 'Case Studies', href: '/case-studies', enabled: true },
+            { label: 'Press', href: '/press', enabled: false },
+          ],
+        },
+      ],
+      legal: [
+        { label: 'Privacy Policy', href: '/privacy', enabled: true },
+        { label: 'Terms of Service', href: '/terms', enabled: true },
+      ],
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SOCIAL - Social media links
+  // ═══════════════════════════════════════════════════════════════════════════
+  social: {
+    twitter: {
+      enabled: true,
+      url: 'https://twitter.com/baresquare',
+      label: 'Follow us on Twitter',
+    },
+    linkedin: {
+      enabled: true,
+      url: 'https://linkedin.com/company/baresquare',
+      label: 'Connect on LinkedIn',
+    },
+    instagram: {
+      enabled: false,
+      url: '',
+      label: 'Follow us on Instagram',
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // OFFICES - Office locations (displayed in footer)
+  // ═══════════════════════════════════════════════════════════════════════════
+  offices: {
+    london: {
+      enabled: true,
+      city: 'London',
+      country: 'United Kingdom',
+      address: 'White Collar Factory, 1 Old Street Yard',
+      fullAddress: 'White Collar Factory, 1 Old Street Yard, London EC1Y 8AF, United Kingdom',
+    },
+    thessaloniki: {
+      enabled: true,
+      city: 'Thessaloniki',
+      country: 'Greece',
+      address: 'Kathigitou Nikolaou Papadaki 19',
+      fullAddress: 'Kathigitou Nikolaou Papadaki 19, Thessaloniki 542 48',
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ROUTES - Coming Soon behavior for links
+  // ═══════════════════════════════════════════════════════════════════════════
   routes: {
     // Main pages
     '/': { available: true },
@@ -73,6 +224,15 @@ export const siteConfig: SiteConfig = {
     '/case-studies': { available: false, message: 'Case Studies coming soon!' },
     '/press': { available: false, message: 'Press page coming soon!' },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DEFAULTS - Default messages
+  // ═══════════════════════════════════════════════════════════════════════════
+  defaults: {
+    comingSoonTitle: 'Coming Soon',
+    comingSoonMessage: 'This page is coming soon!',
+    comingSoonButtonText: 'Got it',
+  },
 };
 
 // =============================================================================
@@ -81,19 +241,38 @@ export const siteConfig: SiteConfig = {
 
 /**
  * Check if a section is enabled
- * @param sectionId - The section identifier
- * @returns boolean - Whether the section should be rendered
  */
 export function isSectionEnabled(sectionId: keyof typeof siteConfig.sections): boolean {
-  return siteConfig.sections[sectionId] ?? false;
+  return siteConfig.sections[sectionId]?.enabled ?? false;
+}
+
+/**
+ * Get section config
+ */
+export function getSectionConfig(sectionId: keyof typeof siteConfig.sections): SectionConfig {
+  return siteConfig.sections[sectionId];
+}
+
+/**
+ * Check if a section element is enabled
+ */
+export function isElementEnabled(
+  sectionId: keyof typeof siteConfig.sections,
+  elementId: string
+): boolean {
+  const section = siteConfig.sections[sectionId];
+  return section?.elements?.[elementId]?.enabled ?? true; // Default to true if not specified
+}
+
+/**
+ * Get section limit (for item lists)
+ */
+export function getSectionLimit(sectionId: keyof typeof siteConfig.sections): number | undefined {
+  return siteConfig.sections[sectionId]?.limit;
 }
 
 /**
  * Check if a route is available (not "Coming Soon")
- * Supports exact matches and wildcard patterns (e.g., '/work/*')
- *
- * @param path - The route path to check
- * @returns boolean - Whether the route is available
  */
 export function isRouteAvailable(path: string): boolean {
   // Check exact match first
@@ -117,8 +296,6 @@ export function isRouteAvailable(path: string): boolean {
 
 /**
  * Get the "Coming Soon" message for a route
- * @param path - The route path
- * @returns string - The message to display in the modal
  */
 export function getComingSoonMessage(path: string): string {
   // Check exact match
@@ -131,18 +308,16 @@ export function getComingSoonMessage(path: string): string {
     if (routePath.endsWith('/*')) {
       const basePath = routePath.slice(0, -2);
       if (path.startsWith(basePath + '/')) {
-        return siteConfig.routes[routePath].message || 'This page is coming soon!';
+        return siteConfig.routes[routePath].message || siteConfig.defaults.comingSoonMessage;
       }
     }
   }
 
-  return 'This page is coming soon!';
+  return siteConfig.defaults.comingSoonMessage;
 }
 
 /**
  * Get route config for a path
- * @param path - The route path
- * @returns RouteConfig or undefined
  */
 export function getRouteConfig(path: string): RouteConfig | undefined {
   if (path in siteConfig.routes) {
@@ -160,4 +335,47 @@ export function getRouteConfig(path: string): RouteConfig | undefined {
   }
 
   return undefined;
+}
+
+/**
+ * Get enabled navigation items (filters by enabled flag)
+ */
+export function getEnabledNavItems() {
+  return siteConfig.navigation.header.items.filter(item => item.enabled);
+}
+
+/**
+ * Get enabled footer columns
+ */
+export function getEnabledFooterColumns() {
+  return siteConfig.navigation.footer.columns
+    .filter(col => col.enabled)
+    .map(col => ({
+      ...col,
+      links: col.links.filter(link => link.enabled),
+    }));
+}
+
+/**
+ * Get enabled social links
+ */
+export function getEnabledSocialLinks() {
+  return Object.entries(siteConfig.social)
+    .filter(([_, config]) => config?.enabled)
+    .map(([platform, config]) => ({
+      platform,
+      ...config!,
+    }));
+}
+
+/**
+ * Get enabled office locations
+ */
+export function getEnabledOffices() {
+  return Object.entries(siteConfig.offices)
+    .filter(([_, config]) => config.enabled)
+    .map(([id, config]) => ({
+      id,
+      ...config,
+    }));
 }

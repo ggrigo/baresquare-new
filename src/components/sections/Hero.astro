@@ -8,6 +8,10 @@
  * - Gradient blobs
  * - Hero card with video + info panel at bottom
  * - Lazy-loaded Vimeo embed for performance
+ *
+ * Config-controlled elements:
+ * - video: Show/hide video player
+ * - infoBanner: Show/hide info panel
  */
 
 import WideSection from '../layout/WideSection.astro';
@@ -15,6 +19,11 @@ import Container from '../base/Container.astro';
 import Button from '../ui/Button.astro';
 import ArrowLink from '../ui/ArrowLink.astro';
 import DotTitle from '../ui/DotTitle.astro';
+import { isElementEnabled } from '../../config/site.config';
+
+// Read element visibility from config
+const showVideo = isElementEnabled('hero', 'video');
+const showInfoBanner = isElementEnabled('hero', 'infoBanner');
 
 interface Props {
   badge?: string;
@@ -100,36 +109,43 @@ const vimeoEmbedUrl = `https://player.vimeo.com/video/${videoId}?badge=0&autopau
     </div>
 
     <!-- Hero bottom card: Video + Info panel - at bottom -->
-    <Container size="lg">
-      <div class="hero-bottom-card">
-        <div class="hero-video-wrapper" id="hero-video-wrapper" data-vimeo-url={vimeoEmbedUrl}>
-          <!-- Thumbnail shown before video loads -->
-          <div class="video-thumbnail" id="video-thumbnail">
-            <img
-              src={videoThumbnail}
-              alt={videoThumbnailAlt}
-              loading="eager"
-            />
-            <button
-              class="play-button"
-              aria-label="Play video"
-              type="button"
-              id="video-play-btn"
-            >
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
-                <path d="M26 20L46 32L26 44V20Z" fill="white"/>
-              </svg>
-            </button>
-          </div>
-          <!-- Iframe injected here on play -->
+    <!-- Only render if at least one element is enabled -->
+    {(showVideo || showInfoBanner) && (
+      <Container size="lg">
+        <div class="hero-bottom-card">
+          {showVideo && (
+            <div class="hero-video-wrapper" id="hero-video-wrapper" data-vimeo-url={vimeoEmbedUrl}>
+              <!-- Thumbnail shown before video loads -->
+              <div class="video-thumbnail" id="video-thumbnail">
+                <img
+                  src={videoThumbnail}
+                  alt={videoThumbnailAlt}
+                  loading="eager"
+                />
+                <button
+                  class="play-button"
+                  aria-label="Play video"
+                  type="button"
+                  id="video-play-btn"
+                >
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                    <path d="M26 20L46 32L26 44V20Z" fill="white"/>
+                  </svg>
+                </button>
+              </div>
+              <!-- Iframe injected here on play -->
+            </div>
+          )}
+          {showInfoBanner && (
+            <div class="hero-info-panel">
+              <DotTitle label={infoBadge} color="white" />
+              <p class="info-description">{infoDescription}</p>
+            </div>
+          )}
         </div>
-        <div class="hero-info-panel">
-          <DotTitle label={infoBadge} color="white" />
-          <p class="info-description">{infoDescription}</p>
-        </div>
-      </div>
-    </Container>
+      </Container>
+    )}
   </div>
 </WideSection>
 

@@ -364,3 +364,155 @@ This specification consolidates all extracted data from:
 7. Test responsive breakpoints
 8. Optimize for performance
 9. Deploy to Netlify
+
+---
+
+## Configuration System v2
+
+### Overview
+
+The configuration system controls all visibility, navigation, and content at **build time**. No runtime JavaScript for toggling.
+
+### Section Config Schema
+
+```typescript
+interface SectionConfig {
+  enabled: boolean;                              // Render section?
+  elements?: Record<string, { enabled: boolean }>; // Sub-element visibility
+  limit?: number;                                // Max items to show
+}
+
+// Example
+sections: {
+  hero: {
+    enabled: true,
+    elements: {
+      video: { enabled: false },
+      infoBanner: { enabled: false },
+    },
+  },
+  featureSlider: {
+    enabled: true,
+    limit: 3,
+  },
+  stats: {
+    enabled: true,
+    elements: {
+      measurableOutcomes: { enabled: false },
+    },
+  },
+}
+```
+
+### Navigation Config Schema
+
+```typescript
+interface NavigationConfig {
+  header: {
+    enabled: boolean;
+    logo: { src: string; alt: string; width: number; height: number };
+    cta: { enabled: boolean; label: string; href: string };
+    items: Array<{
+      label: string;
+      href: string;
+      enabled: boolean;
+      children?: NavItem[];
+    }>;
+  };
+  footer: {
+    enabled: boolean;
+    logo: { src: string; alt: string; width: number; height: number };
+    tagline: string;
+    columns: Array<{
+      title: string;
+      enabled: boolean;
+      links: Array<{ label: string; href: string; enabled: boolean }>;
+    }>;
+    legal: Array<{ label: string; href: string; enabled: boolean }>;
+  };
+}
+```
+
+### Social Config Schema
+
+```typescript
+interface SocialConfig {
+  [platform: string]: {
+    enabled: boolean;
+    url: string;
+    label?: string;
+  };
+}
+
+// Example
+social: {
+  twitter: { enabled: true, url: 'https://twitter.com/baresquare' },
+  linkedin: { enabled: true, url: 'https://linkedin.com/company/baresquare' },
+  instagram: { enabled: false, url: '' },
+}
+```
+
+### Office Locations Schema
+
+```typescript
+interface OfficeConfig {
+  [locationId: string]: {
+    enabled: boolean;
+    city: string;
+    country: string;
+    address: string;
+    fullAddress: string;
+  };
+}
+
+// Baresquare Offices
+offices: {
+  london: {
+    enabled: true,
+    city: 'London',
+    country: 'United Kingdom',
+    address: 'White Collar Factory, 1 Old Street Yard',
+    fullAddress: 'White Collar Factory, 1 Old Street Yard, London EC1Y 8AF, United Kingdom',
+  },
+  thessaloniki: {
+    enabled: true,
+    city: 'Thessaloniki',
+    country: 'Greece',
+    address: 'Kathigitou Nikolaou Papadaki 19',
+    fullAddress: 'Kathigitou Nikolaou Papadaki 19, Thessaloniki 542 48',
+  },
+}
+```
+
+### Footer Layout
+
+Office addresses display below logo/tagline in brand section:
+```
+BARESQUARE (logo)
+Tagline text...
+
+London, UK
+White Collar Factory, 1 Old Street Yard
+
+Thessaloniki, Greece
+Kathigitou Nikolaou Papadaki 19
+
+[Social icons]
+```
+
+### Full SiteConfig Interface
+
+```typescript
+interface SiteConfig {
+  sections: Record<string, SectionConfig>;
+  navigation: NavigationConfig;
+  social: SocialConfig;
+  offices: OfficeConfig;
+  routes: Record<string, RouteConfig>;
+  defaults: {
+    comingSoonTitle: string;
+    comingSoonMessage: string;
+    comingSoonButtonText: string;
+  };
+}
+```

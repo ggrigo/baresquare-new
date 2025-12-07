@@ -28,7 +28,7 @@ import BlogGrid from '../components/sections/BlogGrid.astro';
 import CTASection from '../components/sections/CTASection.astro';
 
 // Configuration
-import { siteConfig } from '../config/site.config';
+import { isSectionEnabled } from '../config/site.config';
 
 // Content
 import {
@@ -44,9 +44,6 @@ import {
   ctaMidContent,
   ctaFinalContent,
 } from '../content/home';
-
-// Destructure section config for cleaner conditionals
-const { sections } = siteConfig;
 ---
 
 <Layout
@@ -56,7 +53,7 @@ const { sections } = siteConfig;
   <Navbar slot="navbar" />
 
   {/* Hero Section */}
-  {sections.hero && (
+  {isSectionEnabled('hero') && (
     <Hero
       badge={heroContent.badge}
       headline={heroContent.headline}
@@ -70,7 +67,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Feature Slider */}
-  {sections.featureSlider && (
+  {isSectionEnabled('featureSlider') && (
     <FeatureSlider
       badge={featureSliderContent.badge}
       headline={featureSliderContent.headline}
@@ -79,7 +76,7 @@ const { sections } = siteConfig;
   )}
 
   {/* About Section (TwoColumnGrid) */}
-  {sections.about && (
+  {isSectionEnabled('about') && (
     <TwoColumnGrid
       badge={aboutContent.badge}
       headline={aboutContent.headline}
@@ -94,7 +91,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Approach Section (TwoColumnGrid, reversed) */}
-  {sections.approach && (
+  {isSectionEnabled('approach') && (
     <TwoColumnGrid
       badge={approachContent.badge}
       headline={approachContent.headline}
@@ -109,7 +106,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Stats Section */}
-  {sections.stats && (
+  {isSectionEnabled('stats') && (
     <Stats
       badge={statsContent.badge}
       headline={statsContent.headline}
@@ -118,7 +115,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Services Section */}
-  {sections.services && (
+  {isSectionEnabled('services') && (
     <Services
       introHeadline={servicesContent.introHeadline}
       introDescription={servicesContent.introDescription}
@@ -127,7 +124,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Process Steps */}
-  {sections.process && (
+  {isSectionEnabled('process') && (
     <ProcessSteps
       badge={processContent.badge}
       headline={processContent.headline}
@@ -136,7 +133,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Customer Quote / Testimonial */}
-  {sections.testimonial && (
+  {isSectionEnabled('testimonial') && (
     <CustomerQuote
       quote={testimonialContent.quote}
       author={testimonialContent.author}
@@ -148,7 +145,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Mid-Page CTA */}
-  {sections.ctaMid && (
+  {isSectionEnabled('ctaMid') && (
     <CTASection
       headline={ctaMidContent.headline}
       accentWord={ctaMidContent.accentWord}
@@ -161,7 +158,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Blog Grid */}
-  {sections.blog && (
+  {isSectionEnabled('blog') && (
     <BlogGrid
       badge={blogContent.badge}
       headline={blogContent.headline}
@@ -172,7 +169,7 @@ const { sections } = siteConfig;
   )}
 
   {/* Final CTA */}
-  {sections.ctaFinal && (
+  {isSectionEnabled('ctaFinal') && (
     <CTASection
       headline={ctaFinalContent.headline}
       accentWord={ctaFinalContent.accentWord}

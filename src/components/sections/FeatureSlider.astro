@@ -2,12 +2,19 @@
 /**
  * FeatureGrid Section Component
  * Fixed grid of square feature cards (3-4 items)
+ *
+ * Config-controlled:
+ * - limit: Maximum number of features to display (from featureSlider.limit)
+ * - enabled: Item-level enabled flag filters features at build time
  */
 
 import Container from '../base/Container.astro';
 import DotTitle from '../ui/DotTitle.astro';
+import { getSectionLimit } from '../../config/site.config';
 
 interface Feature {
+  enabled?: boolean;
+  id?: string;
   title: string;
   description?: string;
   image?: string;
@@ -37,6 +44,8 @@ const {
   headline = 'What we\'ve built',
   features = [
     {
+      enabled: true,
+      id: 'alpha',
       title: 'Project Alpha',
       description: 'Strategic transformation for a leading biotech company',
       image: '/images/feature-1.svg',
@@ -44,6 +53,8 @@ const {
       href: '/work/alpha'
     },
     {
+      enabled: true,
+      id: 'beta',
       title: 'Project Beta',
       description: 'Digital innovation in healthcare delivery',
       image: '/images/feature-2.svg',
@@ -51,6 +62,8 @@ const {
       href: '/work/beta'
     },
     {
+      enabled: true,
+      id: 'gamma',
       title: 'Project Gamma',
       description: 'Research-driven market expansion strategy',
       image: '/images/feature-3.svg',
@@ -60,8 +73,12 @@ const {
   ]
 } = Astro.props;
 
-// Limit to 4 features max
-const displayFeatures = features.slice(0, 4);
+// Get limit from config (defaults to 4 if not specified)
+const configLimit = getSectionLimit('featureSlider') ?? 4;
+
+// Filter by enabled flag, then apply limit
+const enabledFeatures = features.filter(f => f.enabled !== false);
+const displayFeatures = enabledFeatures.slice(0, configLimit);
 ---
 
 <section class="feature-grid-section">

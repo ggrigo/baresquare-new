@@ -4,6 +4,7 @@
  * Sticky navigation with glass effect and notch corners
  *
  * Uses SmartLink for "Coming Soon" handling at build time.
+ * Navigation items are read from site config at build time.
  *
  * Verified values from Webflow:
  * - Height: 52px (CSS var)
@@ -14,7 +15,13 @@
 
 import SmartLink from '../global/SmartLink.astro';
 import Button from '../ui/Button.astro';
+import { siteConfig, getEnabledNavItems } from '../../config/site.config';
 
+// Get navigation config
+const headerConfig = siteConfig.navigation.header;
+const navItems = getEnabledNavItems();
+
+// Transform config items to component format
 interface NavItem {
   label: string;
   href: string;
@@ -25,50 +32,33 @@ interface NavItem {
   }[];
 }
 
-interface Props {
-  /**
-   * Navigation items
-   */
-  items?: NavItem[];
+// Map config items to NavItem format (handle children as dropdown)
+const items: NavItem[] = navItems.map(item => ({
+  label: item.label,
+  href: item.href,
+  dropdown: item.children?.filter(child => child.enabled).map(child => ({
+    label: child.label,
+    href: child.href,
+  }))
+}));
 
-  /**
-   * CTA button text
-   */
-  ctaText?: string;
+// CTA config
+const showCta = headerConfig.cta.enabled;
+const ctaText = headerConfig.cta.label;
+const ctaHref = headerConfig.cta.href;
 
-  /**
-   * CTA button link
-   */
-  ctaHref?: string;
-}
-
-const {
-  items = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    {
-      label: 'Services',
-      href: '/services',
-      dropdown: [
-        { label: 'Strategic Consulting', href: '/services/consulting', description: 'Navigate complex challenges' },
-        { label: 'Research & Analysis', href: '/services/research', description: 'Data-driven insights' },
-        { label: 'Digital Transformation', href: '/services/digital', description: 'Modernize operations' },
-        { label: 'Innovation Strategy', href: '/services/innovation', description: 'Build breakthrough products' }
-      ]
-    },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Contact', href: '/contact' }
-  ],
-  ctaText = 'Get in touch',
-  ctaHref = '/contact'
-} = Astro.props;
+// Logo config
+const logoSrc = headerConfig.logo.src;
+const logoAlt = headerConfig.logo.alt;
+const logoWidth = headerConfig.logo.width;
+const logoHeight = headerConfig.logo.height;
 ---
 
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <div class="navbar-inner">
     <!-- Logo -->
-    <a href="/" class="navbar-logo" aria-label="Baresquare - Home">
-      <img src="/images/baresquare-logo.svg" alt="Baresquare" width="140" height="20" />
+    <a href="/" class="navbar-logo" aria-label={`${logoAlt} - Home`}>
+      <img src={logoSrc} alt={logoAlt} width={logoWidth} height={logoHeight} />
     </a>
 
     <!-- Desktop Navigation -->
@@ -100,9 +90,11 @@ const {
     </div>
 
     <!-- CTA Button -->
-    <div class="navbar-cta">
-      <Button href={ctaHref}>{ctaText}</Button>
-    </div>
+    {showCta && (
+      <div class="navbar-cta">
+        <Button href={ctaHref}>{ctaText}</Button>
+      </div>
+    )}
 
     <!-- Mobile Menu Button -->
     <button
@@ -126,8 +118,8 @@ const {
 <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
   <div class="mobile-menu-inner">
     <div class="mobile-menu-header">
-      <a href="/" class="mobile-menu-logo" aria-label="Baresquare - Home">
-        <img src="/images/baresquare-logo.svg" alt="Baresquare" width="140" height="20" />
+      <a href="/" class="mobile-menu-logo" aria-label={`${logoAlt} - Home`}>
+        <img src={logoSrc} alt={logoAlt} width={logoWidth} height={logoHeight} />
       </a>
       <button class="mobile-menu-close" aria-label="Close menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -142,9 +134,11 @@ const {
         </SmartLink>
       ))}
     </nav>
-    <div class="mobile-menu-cta">
-      <Button href={ctaHref} variant="primary">{ctaText}</Button>
-    </div>
+    {showCta && (
+      <div class="mobile-menu-cta">
+        <Button href={ctaHref} variant="primary">{ctaText}</Button>
+      </div>
+    )}
   </div>
 </div>
 

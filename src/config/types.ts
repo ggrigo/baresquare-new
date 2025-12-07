@@ -1,11 +1,137 @@
 /**
  * TypeScript interfaces for site configuration and content
- * All content types are defined here for type safety
+ * v2: Enhanced with element visibility, navigation, social, offices
  */
 
 // =============================================================================
-// SECTION CONFIGURATION
+// CONFIGURATION TYPES (v2)
 // =============================================================================
+
+/**
+ * Element visibility within a section
+ */
+export interface ElementConfig {
+  enabled: boolean;
+}
+
+/**
+ * Section configuration with optional element visibility and item limits
+ */
+export interface SectionConfig {
+  enabled: boolean;
+  elements?: Record<string, ElementConfig>;
+  limit?: number;
+}
+
+/**
+ * Navigation item (header menu)
+ */
+export interface NavItem {
+  label: string;
+  href: string;
+  enabled: boolean;
+  children?: NavItem[];
+}
+
+/**
+ * Footer link
+ */
+export interface FooterLink {
+  label: string;
+  href: string;
+  enabled: boolean;
+}
+
+/**
+ * Footer column
+ */
+export interface FooterColumn {
+  title: string;
+  enabled: boolean;
+  links: FooterLink[];
+}
+
+/**
+ * Logo configuration
+ */
+export interface LogoConfig {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * Header navigation configuration
+ */
+export interface HeaderConfig {
+  enabled: boolean;
+  logo: LogoConfig;
+  cta: {
+    enabled: boolean;
+    label: string;
+    href: string;
+  };
+  items: NavItem[];
+}
+
+/**
+ * Footer navigation configuration
+ */
+export interface FooterConfig {
+  enabled: boolean;
+  logo: LogoConfig;
+  tagline: string;
+  columns: FooterColumn[];
+  legal: FooterLink[];
+}
+
+/**
+ * Full navigation configuration
+ */
+export interface NavigationConfig {
+  header: HeaderConfig;
+  footer: FooterConfig;
+}
+
+/**
+ * Social media link configuration
+ */
+export interface SocialLinkConfig {
+  enabled: boolean;
+  url: string;
+  label?: string;
+}
+
+/**
+ * Social media configuration
+ */
+export interface SocialConfig {
+  twitter?: SocialLinkConfig;
+  linkedin?: SocialLinkConfig;
+  instagram?: SocialLinkConfig;
+  youtube?: SocialLinkConfig;
+  facebook?: SocialLinkConfig;
+  [key: string]: SocialLinkConfig | undefined;
+}
+
+/**
+ * Office location configuration
+ */
+export interface OfficeLocationConfig {
+  enabled: boolean;
+  city: string;
+  country: string;
+  address: string;
+  fullAddress: string;
+}
+
+/**
+ * Offices configuration
+ */
+export interface OfficesConfig {
+  [locationId: string]: OfficeLocationConfig;
+}
 
 /**
  * Route availability for "Coming Soon" feature
@@ -13,28 +139,56 @@
 export interface RouteConfig {
   available: boolean;
   message?: string;
+  redirect?: string;
+  external?: boolean;
 }
 
 /**
- * Site-wide configuration
+ * Default messages configuration
+ */
+export interface DefaultsConfig {
+  comingSoonTitle: string;
+  comingSoonMessage: string;
+  comingSoonButtonText: string;
+}
+
+/**
+ * Section IDs for the homepage
+ */
+export type SectionId =
+  | 'hero'
+  | 'featureSlider'
+  | 'about'
+  | 'approach'
+  | 'stats'
+  | 'services'
+  | 'process'
+  | 'testimonial'
+  | 'ctaMid'
+  | 'blog'
+  | 'ctaFinal';
+
+/**
+ * Sections configuration map
+ */
+export type SectionsConfig = Record<SectionId, SectionConfig>;
+
+/**
+ * Site-wide configuration (v2)
  */
 export interface SiteConfig {
-  /** Section visibility - true = rendered at build time, false = excluded from HTML */
-  sections: {
-    hero: boolean;
-    featureSlider: boolean;
-    about: boolean;
-    approach: boolean;
-    stats: boolean;
-    services: boolean;
-    process: boolean;
-    testimonial: boolean;
-    ctaMid: boolean;
-    blog: boolean;
-    ctaFinal: boolean;
-  };
+  /** Section visibility and element control */
+  sections: SectionsConfig;
+  /** Navigation structure (header & footer) */
+  navigation: NavigationConfig;
+  /** Social media links */
+  social: SocialConfig;
+  /** Office locations */
+  offices: OfficesConfig;
   /** Route availability map - controls Coming Soon behavior */
   routes: Record<string, RouteConfig>;
+  /** Default messages */
+  defaults: DefaultsConfig;
 }
 
 // =============================================================================
@@ -66,6 +220,8 @@ export interface HeroContent {
  * Feature item for FeatureSlider
  */
 export interface FeatureItem {
+  enabled: boolean;
+  id?: string;
   title: string;
   description: string;
   image: string;
@@ -99,6 +255,8 @@ export interface TwoColumnContent {
  * Stats section content
  */
 export interface StatItem {
+  enabled?: boolean;
+  id: string;
   value: string;
   label: string;
   description?: string;
@@ -114,6 +272,8 @@ export interface StatsContent {
  * Services section content
  */
 export interface ServiceItem {
+  enabled: boolean;
+  id?: string;
   title: string;
   description: string;
   icon?: string;
@@ -160,6 +320,8 @@ export interface TestimonialContent {
  * Blog post item
  */
 export interface BlogPostItem {
+  enabled: boolean;
+  id?: string;
   title: string;
   excerpt: string;
   category: string;

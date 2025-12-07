@@ -2,12 +2,19 @@
 /**
  * Stats Section Component
  * Display key metrics/statistics with large numbers
+ *
+ * Config-controlled elements:
+ * - Each stat can be enabled/disabled via config (stats.elements.{statId})
+ * - Stats are filtered at build time based on both content `enabled` and config visibility
  */
 
 import Container from '../base/Container.astro';
 import DotTitle from '../ui/DotTitle.astro';
+import { isElementEnabled } from '../../config/site.config';
 
 interface Stat {
+  id: string;
+  enabled?: boolean;
   value: string;
   label: string;
   description?: string;
@@ -34,11 +41,20 @@ const {
   badge = 'By the Numbers',
   headline = 'Measurable impact',
   stats = [
-    { value: '32%', label: 'Average ROI increase', description: 'for our strategic consulting clients' },
-    { value: '150+', label: 'Projects delivered', description: 'across healthcare, biotech, and tech' },
-    { value: '98%', label: 'Client satisfaction', description: 'based on post-engagement surveys' }
+    { id: 'avgROI', enabled: true, value: '32%', label: 'Average ROI increase', description: 'for our strategic consulting clients' },
+    { id: 'projectsDelivered', enabled: true, value: '150+', label: 'Projects delivered', description: 'across healthcare, biotech, and tech' },
+    { id: 'clientRetention', enabled: true, value: '98%', label: 'Client satisfaction', description: 'based on post-engagement surveys' }
   ]
 } = Astro.props;
+
+// Filter stats based on content enabled flag AND config element visibility
+const enabledStats = stats.filter(stat => {
+  // Check content-level enabled flag (defaults to true if not specified)
+  const contentEnabled = stat.enabled !== false;
+  // Check config-level element visibility
+  const configEnabled = isElementEnabled('stats', stat.id);
+  return contentEnabled && configEnabled;
+});
 ---
 
 <section class="stats-section">
@@ -49,7 +65,7 @@ const {
     </div>
 
     <div class="stats-grid">
-      {stats.map((stat) => (
+      {enabledStats.map((stat) => (
         <div class="stat-item">
           <span class="stat-value">{stat.value}</span>
           <span class="stat-label">{stat.label}</span>
