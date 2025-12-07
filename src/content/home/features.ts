@@ -15,7 +15,7 @@ export const featureSliderContent: FeatureSliderContent = {
       description: 'AI-powered ecommerce optimization driving additional revenue through intelligent insights and automated decision-making.',
       image: 'https://zajc.pl/upload/inspirations/1920-siedziba-vogue-polska-h-34-1682292161.webp',
       imageAlt: 'VOGUE ecommerce project',
-      brandLogo: '/images/brands/vogue-logo.svg',
+      // brandLogo: '/images/brands/vogue-logo.svg',
       href: '/work/vogue',
     },
     {
@@ -25,7 +25,7 @@ export const featureSliderContent: FeatureSliderContent = {
       description: 'Since 2018, delivering AI-driven results: 40% decrease on SEO budget, 90% reduction in 404 errors.',
       image: 'https://www.fdtimes.com/wp-content/uploads/2016/08/DSC04429-725x483@2x.jpg',
       imageAlt: 'SONY partnership project',
-      brandLogo: '/images/brands/sony-logo.svg',
+      // brandLogo: '/images/brands/sony-logo.svg',
       href: '/work/sony',
     },
     {
@@ -35,7 +35,7 @@ export const featureSliderContent: FeatureSliderContent = {
       description: 'First GenAI cross-department and global HR solution at adidas—reaching 30,000 users on their enterprise cloud.',
       image: 'https://images.ft.com/v3/image/raw/ftcms%3Aa205f306-bea5-11e9-9381-78bab8a70848?source=next-article&fit=scale-down&quality=highest&width=700&dpr=2',
       imageAlt: 'adidas GenAI project',
-      brandLogo: '/images/brands/adidas-logo.svg',
+      // brandLogo: '/images/brands/adidas-logo.svg',
       href: '/work/adidas',
     },
     {
