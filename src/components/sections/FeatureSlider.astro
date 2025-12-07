@@ -11,6 +11,8 @@
 import Container from '../base/Container.astro';
 import DotTitle from '../ui/DotTitle.astro';
 import SmartLink from '../global/SmartLink.astro';
+import NoiseOverlay from '../base/NoiseOverlay.astro';
+import GridOverlay from '../base/GridOverlay.astro';
 import { getSectionLimit } from '../../config/site.config';
 
 interface Feature {
@@ -97,6 +99,8 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
             {feature.image && (
               <img src={feature.image} alt={feature.imageAlt || ''} loading="lazy" />
             )}
+            <NoiseOverlay opacity={0.4} />
+            <GridOverlay opacity={0.5} />
             {feature.brandLogo && (
               <img src={feature.brandLogo} alt="" class="feature-brand-logo" loading="lazy" />
             )}
@@ -180,7 +184,7 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     transition: transform var(--transition-medium);
   }
 
-  /* Brand logo - bottom left of image */
+  /* Brand logo - bottom left of image, above overlays */
   .feature-brand-logo {
     position: absolute;
     bottom: 20px;
@@ -190,6 +194,7 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     opacity: 0.95;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
     transition: opacity var(--transition-fast);
+    z-index: 5; /* Above noise (3) and grid (4) overlays */
   }
 
   .feature-card:hover .feature-brand-logo {
