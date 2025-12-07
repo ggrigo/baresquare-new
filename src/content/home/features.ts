@@ -11,7 +11,7 @@ export const featureSliderContent: FeatureSliderContent = {
     {
       enabled: true,
       id: 'vogue-ecommerce',
-      title: '+4% Revenue',
+      title: '4% Incremental Revenue',
       description: 'AI-powered ecommerce optimization driving additional revenue through intelligent insights and automated decision-making.',
       image: 'https://zajc.pl/upload/inspirations/1920-siedziba-vogue-polska-h-34-1682292161.webp',
       imageAlt: 'VOGUE ecommerce project',

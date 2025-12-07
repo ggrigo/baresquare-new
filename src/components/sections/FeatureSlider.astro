@@ -286,58 +286,55 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
 </style>
 
 <script>
-  // Scroll-based card highlighting
+  // Scroll-based card highlighting using IntersectionObserver
   function initFeatureCardHighlight() {
     const cards = document.querySelectorAll('.feature-card');
     if (!cards.length) return;
 
-    let currentActiveIndex = 0;
+    let currentActiveIndex = -1;
 
-    // Set first card as active initially
-    cards[0]?.classList.add('is-active');
+    // Observer to detect when cards are in viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const card = entry.target as HTMLElement;
+        const index = Array.from(cards).indexOf(card);
 
-    function updateActiveCard() {
-      const viewportCenter = window.innerHeight / 2;
-      let closestIndex = 0;
-      let closestDistance = Infinity;
-
-      cards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(cardCenter - viewportCenter);
-
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          // Only activate if not already active or if this card is more visible
+          if (currentActiveIndex !== index) {
+            // Remove active from previous
+            if (currentActiveIndex >= 0) {
+              cards[currentActiveIndex]?.classList.remove('is-active');
+            }
+            // Add active to current
+            card.classList.add('is-active');
+            currentActiveIndex = index;
+          }
         }
       });
-
-      if (closestIndex !== currentActiveIndex) {
-        cards[currentActiveIndex]?.classList.remove('is-active');
-        cards[closestIndex]?.classList.add('is-active');
-        currentActiveIndex = closestIndex;
-      }
-    }
-
-    // Throttled scroll handler
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveCard();
-          ticking = false;
-        });
-        ticking = true;
-      }
+    }, {
+      threshold: [0.5],
+      rootMargin: '-20% 0px -20% 0px' // Only consider middle 60% of viewport
     });
 
-    // Initial check
-    updateActiveCard();
+    // Observe all cards
+    cards.forEach((card) => observer.observe(card));
+
+    // Set first card as active initially when section is visible
+    const section = document.querySelector('.feature-grid-section');
+    if (section) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && currentActiveIndex === -1) {
+          cards[0]?.classList.add('is-active');
+          currentActiveIndex = 0;
+        }
+      }, { threshold: 0.1 });
+      sectionObserver.observe(section);
+    }
   }
 
   // Run on page load
   document.addEventListener('DOMContentLoaded', initFeatureCardHighlight);
-  // Also run immediately in case DOM is already ready
   if (document.readyState !== 'loading') {
     initFeatureCardHighlight();
   }
