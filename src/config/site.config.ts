@@ -84,8 +84,8 @@ export const siteConfig: SiteConfig = {
         height: 20,
       },
       cta: {
-        enabled: true,
-        label: 'Get in touch',
+        enabled: false,
+        label: 'Contact us',
         href: '/contact',
       },
       items: [
