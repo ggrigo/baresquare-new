@@ -342,13 +342,12 @@ import {
     flex-direction: column;
     align-items: center;
     gap: var(--space-lg);
-    padding: 43px var(--gutter); /* 5px less top */
+    padding: 5px 5px var(--space-lg) 5px; /* Only 5px top/left/right */
   }
 
-  /* Glass panel for quote */
+  /* Glass panel for quote - nearly full width */
   .cta-glass-quote {
-    width: calc(100% - 10px); /* 5px left + 5px right */
-    max-width: 1400px;
+    width: 100%;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
