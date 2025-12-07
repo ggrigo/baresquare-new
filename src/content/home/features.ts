@@ -22,7 +22,7 @@ export const featureSliderContent: FeatureSliderContent = {
       id: 'innovation-platform',
       title: 'Powering breakthrough innovation',
       description: 'Digital platform enabling next-generation research',
-      image: '/images/feature-2.svg',
+      image: '/images/feature-work-2.jpg',
       imageAlt: 'Innovation platform project',
       href: '/work/innovation-platform',
     },
