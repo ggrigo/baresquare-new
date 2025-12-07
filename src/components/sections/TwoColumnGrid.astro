@@ -7,6 +7,7 @@
 import Container from '../base/Container.astro';
 import DotTitle from '../ui/DotTitle.astro';
 import ArrowLink from '../ui/ArrowLink.astro';
+import NoiseOverlay from '../base/NoiseOverlay.astro';
 
 interface Props {
   /**
@@ -91,6 +92,7 @@ const {
       </div>
       <div class="two-column-image">
         {image && <img src={image} alt={imageAlt} loading="lazy" />}
+        <NoiseOverlay opacity={0.4} />
       </div>
     </div>
   </Container>
@@ -132,6 +134,7 @@ const {
   }
 
   .two-column-image {
+    position: relative;
     border-radius: var(--radius-md);
     overflow: hidden;
   }

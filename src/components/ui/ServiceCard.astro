@@ -113,7 +113,7 @@ const {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-    width: 384px;
+    width: 280px;
     flex-shrink: 0;
     transition: transform 0.15s ease;
     -webkit-tap-highlight-color: transparent;
@@ -173,19 +173,19 @@ const {
   }
 
   .blob--orange {
-    width: 367px;
-    height: 329px;
+    width: 275px;
+    height: 247px;
     background: var(--accent-orange);
-    top: 97px;
-    left: -144px;
+    top: 73px;
+    left: -108px;
   }
 
   .blob--green {
-    width: 510px;
-    height: 459px;
+    width: 383px;
+    height: 344px;
     background: var(--accent-green);
-    top: -312px;
-    right: -31px;
+    top: -234px;
+    right: -23px;
   }
 
   /* Show blobs on hover */
@@ -196,8 +196,8 @@ const {
   .service-box-icon {
     position: relative;
     z-index: 5;
-    width: 96px;
-    height: 96px;
+    width: 72px;
+    height: 72px;
     object-fit: contain;
   }
 
@@ -251,17 +251,22 @@ const {
 
   @media (max-width: 991px) {
     .service-card {
-      width: 320px;
+      width: 256px;
+    }
+
+    .service-box-icon {
+      width: 60px;
+      height: 60px;
     }
 
     .blob--orange {
-      width: 250px;
-      height: 220px;
+      width: 188px;
+      height: 165px;
     }
 
     .blob--green {
-      width: 340px;
-      height: 300px;
+      width: 255px;
+      height: 225px;
     }
   }
 
