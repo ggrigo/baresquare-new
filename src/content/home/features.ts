@@ -16,6 +16,7 @@ export const featureSliderContent: FeatureSliderContent = {
       image: '/images/feature-work-1.jpg',
       imageAlt: 'Genetic research project',
       href: '/work/genetic-insights',
+      brandLogo: '/images/brands/vogue-logo.svg',
     },
     {
       enabled: true,
@@ -25,6 +26,7 @@ export const featureSliderContent: FeatureSliderContent = {
       image: '/images/feature-work-2.jpg',
       imageAlt: 'Innovation platform project',
       href: '/work/innovation-platform',
+      brandLogo: '/images/brands/sony-logo.svg',
     },
     {
       enabled: true,
@@ -34,6 +36,7 @@ export const featureSliderContent: FeatureSliderContent = {
       image: '/images/feature-work-3.jpg',
       imageAlt: 'Clinical discoveries project',
       href: '/work/clinical-ai',
+      brandLogo: '/images/brands/adidas-logo.svg',
     },
     {
       enabled: true,

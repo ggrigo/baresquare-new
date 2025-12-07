@@ -227,6 +227,7 @@ export interface FeatureItem {
   image: string;
   imageAlt: string;
   href: string;
+  brandLogo?: string;
 }
 
 export interface FeatureSliderContent {
