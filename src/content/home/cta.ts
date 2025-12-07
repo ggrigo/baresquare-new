@@ -24,8 +24,6 @@ export const ctaFinalContent: CTAContent = {
   headline: 'Ready to shape the',
   accentWord: 'future?',
   description: "Let's discuss how Baresquare can help accelerate your vision.",
-  ctaText: 'Get Started',
+  ctaText: 'Contact us',
   ctaHref: '/contact',
-  secondaryText: 'Get in touch',
-  secondaryHref: '/contact',
 };
