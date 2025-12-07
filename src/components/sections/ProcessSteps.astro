@@ -1,11 +1,19 @@
 ---
 /**
  * ProcessSteps Section Component
- * Numbered process/methodology steps
+ * Simplified numbered process steps matching Figma node 640-3379
+ *
+ * Features:
+ * - 72px gap between items
+ * - Top border separator (white 15% opacity)
+ * - Square dot + number badge
+ * - Bold title + muted description
+ * - Arrow link at bottom
  */
 
 import Container from '../base/Container.astro';
 import DotTitle from '../ui/DotTitle.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
 
 interface Step {
   number: string;
@@ -28,6 +36,16 @@ interface Props {
    * Steps to display
    */
   steps?: Step[];
+
+  /**
+   * Arrow link text
+   */
+  linkText?: string;
+
+  /**
+   * Arrow link href
+   */
+  linkHref?: string;
 }
 
 const {
@@ -36,25 +54,22 @@ const {
   steps = [
     {
       number: '01',
-      title: 'Discovery',
-      description: 'We begin by deeply understanding your challenges, goals, and the landscape in which you operate.'
+      title: 'Human intelligence first',
+      description: 'We start by mapping the problem with your team—understanding the real challenges before any technology enters the conversation.'
     },
     {
       number: '02',
-      title: 'Analysis',
-      description: 'Our team conducts rigorous research and analysis to identify opportunities and develop insights.'
+      title: 'AI where it matters',
+      description: 'We automate only what humans already understand. AI amplifies expertise—it doesn\'t replace the thinking that got you here.'
     },
     {
       number: '03',
-      title: 'Strategy',
-      description: 'We craft actionable strategies that align with your vision and drive measurable outcomes.'
-    },
-    {
-      number: '04',
-      title: 'Implementation',
-      description: 'We work alongside your team to execute the strategy and ensure successful delivery.'
+      title: 'Metrics that move the business',
+      description: 'We measure what your stakeholders actually care about—outcomes tied to growth, efficiency, and strategic goals.'
     }
-  ]
+  ],
+  linkText,
+  linkHref = '/about'
 } = Astro.props;
 ---
 
@@ -63,19 +78,26 @@ const {
     <div class="process-layout">
       <div class="process-header">
         <DotTitle label={badge} color="purple" />
-        <h2>{headline}</h2>
+        <h2 class="process-headline">{headline}</h2>
       </div>
 
-      <div class="process-steps">
+      <div class="process-items">
         {steps.map((step) => (
-          <div class="process-step">
-            <span class="step-number">{step.number}</span>
-            <div class="step-content">
-              <h3 class="step-title">{step.title}</h3>
-              <p class="step-description">{step.description}</p>
+          <div class="process-item">
+            <div class="process-item-number">
+              <span class="number-dot"></span>
+              <span class="number-text">{step.number}</span>
+            </div>
+            <div class="process-item-content">
+              <h3 class="process-item-title">{step.title}</h3>
+              <p class="process-item-description">{step.description}</p>
             </div>
           </div>
         ))}
+
+        {linkText && (
+          <ArrowLink text={linkText} href={linkHref} direction="down-right" />
+        )}
       </div>
     </div>
   </Container>
@@ -88,7 +110,7 @@ const {
 
   .process-layout {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-xl);
   }
 
@@ -98,52 +120,73 @@ const {
     align-self: start;
   }
 
-  .process-header h2 {
+  .process-headline {
     margin-top: var(--space-sm);
+    font-size: var(--text-h2);
+    line-height: 1.1;
   }
 
-  .process-steps {
+  /* Process items list */
+  .process-items {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
+    gap: 72px;
   }
 
-  .process-step {
+  /* Individual process item */
+  .process-item {
     display: flex;
-    gap: var(--space-md);
-    padding: var(--space-lg);
-    background: var(--bg-dark);
-    border-radius: var(--radius-md);
-    transition: background-color var(--transition-fast);
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  .process-step:hover {
-    background: var(--bg-card);
+  /* Number badge with dot */
+  .process-item-number {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
-  .step-number {
-    font-size: var(--text-h2);
+  .number-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--text-primary);
+  }
+
+  .number-text {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  /* Content */
+  .process-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .process-item-title {
+    font-size: 16px;
     font-weight: 500;
-    color: var(--accent-purple);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 60px;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin: 0;
   }
 
-  .step-content {
-    flex: 1;
+  .process-item-description {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    margin: 0;
   }
 
-  .step-title {
-    font-size: var(--text-h4);
-    margin-bottom: var(--space-xs);
-  }
-
-  .step-description {
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
+  /* Tablet */
   @media (max-width: 991px) {
     .process-section {
       padding: var(--space-lg) 0;
@@ -158,40 +201,49 @@ const {
       position: static;
     }
 
-    .process-steps {
-      gap: var(--space-md);
-    }
-
-    .process-step {
-      padding: var(--space-md);
+    .process-items {
+      gap: 48px;
     }
   }
 
+  /* Mobile */
   @media (max-width: 767px) {
-    .step-number {
+    .process-headline {
       font-size: var(--text-h3);
-      width: 48px;
     }
 
-    .step-title {
-      font-size: var(--text-h5);
+    .process-items {
+      gap: 36px;
+    }
+
+    .process-item {
+      gap: 18px;
+      padding-top: 18px;
     }
   }
 
+  /* Small mobile */
   @media (max-width: 479px) {
     .process-section {
       padding: var(--space-md) 0;
     }
 
-    .process-step {
-      flex-direction: column;
-      gap: var(--space-sm);
-      padding: var(--space-sm);
+    .process-headline {
+      font-size: var(--text-h4);
     }
 
-    .step-number {
-      font-size: var(--text-h4);
-      width: auto;
+    .process-items {
+      gap: 24px;
+    }
+
+    .process-item {
+      gap: 12px;
+      padding-top: 12px;
+    }
+
+    .process-item-title,
+    .process-item-description {
+      font-size: 14px;
     }
   }
 </style>

@@ -1,47 +1,48 @@
 /**
  * Services Section Content
+ * Updated to match Baresquare 2026 presentation
  */
 
 import type { ServicesContent } from '../../config/types';
 
 export const servicesContent: ServicesContent = {
-  introHeadline: "We partner with science-led businesses that are building what's next.",
-  introDescription: 'Our role is to make that work more possible, focused, and durable.',
+  introHeadline: "Four ways we turn AI into business outcomes.",
+  introDescription: 'Not demos. Not pilots. Real automation running at scale today.',
   services: [
     {
       enabled: true,
-      id: 'strategy',
-      title: 'Systems Strategy',
-      description: 'We design technical and organizational frameworks that help research, data, and decision-making move together—at speed and scale.',
+      id: 'revenue-performance',
+      title: 'Revenue Performance',
+      description: "Don't leave money on the table. Intelligent automation that forecasts, explains, and optimizes—capturing value you're currently missing.",
       icon: '/icons/abstract/shape-04.svg',
-      href: '/services/strategy',
+      href: '/services/revenue-performance',
     },
     {
       enabled: true,
-      id: 'infrastructure',
-      title: 'Infrastructure Design',
-      description: 'From lab systems to computational pipelines, we architect the back-end that powers breakthroughs. Built to adapt, built to last.',
+      id: 'ai-search-marketing',
+      title: 'AI Search & Marketing',
+      description: 'Be found in the AI era. Adapt to AI-driven discovery, agentic commerce, and win the citation war against competitors.',
       icon: '/icons/abstract/shape-07.svg',
-      href: '/services/infrastructure',
+      href: '/services/ai-search-marketing',
     },
     {
       enabled: true,
-      id: 'execution',
-      title: 'Execution Support',
-      description: "Whether you're stuck at the strategy stage or mid-build, we step in to diagnose, recalibrate, and bring momentum to your mission.",
+      id: 'data-operations',
+      title: 'Data & Operations',
+      description: 'Automation that eliminates manual processes and fixes friction. Connecting your existing infrastructure to unlock efficiency.',
       icon: '/icons/abstract/shape-10.svg',
-      href: '/services/execution',
+      href: '/services/data-operations',
     },
     {
       enabled: true,
-      id: 'ai-data',
-      title: 'AI & Data Integration',
-      description: 'We help research teams harness AI responsibly—embedding intelligent tools into workflows where they actually drive impact.',
+      id: 'learning-development',
+      title: 'Learning & Development',
+      description: 'Empower every employee. AI-powered learning matched to roles, skill gaps, and career paths—deployed on enterprise infrastructure.',
       icon: '/icons/abstract/shape-08.svg',
-      href: '/services/ai-data',
+      href: '/services/learning-development',
     },
     {
-      enabled: true,
+      enabled: false,
       id: 'regulatory',
       title: 'Regulatory Guidance',
       description: 'Our consultants guide product teams through scientific, technical, and regulatory alignment—so nothing stalls in translation.',
@@ -49,7 +50,7 @@ export const servicesContent: ServicesContent = {
       href: '/services/regulatory',
     },
     {
-      enabled: true,
+      enabled: false,
       id: 'ops',
       title: 'Collaborative Ops',
       description: 'We facilitate coordination between R&D, engineering, and leadership—helping complex teams think clearly and build cohesively.',

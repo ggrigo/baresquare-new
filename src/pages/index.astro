@@ -129,6 +129,8 @@ import {
       badge={processContent.badge}
       headline={processContent.headline}
       steps={processContent.steps}
+      linkText={processContent.linkText}
+      linkHref={processContent.linkHref}
     />
   )}
 
@@ -168,21 +170,365 @@ import {
     />
   )}
 
-  {/* Final CTA */}
-  {isSectionEnabled('ctaFinal') && (
-    <CTASection
-      headline={ctaFinalContent.headline}
-      accentWord={ctaFinalContent.accentWord}
-      description={ctaFinalContent.description}
-      ctaText={ctaFinalContent.ctaText}
-      ctaHref={ctaFinalContent.ctaHref}
-      secondaryText={ctaFinalContent.secondaryText}
-      secondaryHref={ctaFinalContent.secondaryHref}
-    />
-  )}
+  {/* Final CTA + Quote Glass Panel - colored gradient with glass quote panel */}
+  <div class="cta-quote-wrapper">
+    {/* Color blobs layer */}
+    <div class="cta-footer-blobs" aria-hidden="true">
+      <div class="blob blob--green"></div>
+      <div class="blob blob--orange"></div>
+      <div class="blob blob--gold"></div>
+    </div>
 
+    {/* Noise overlay */}
+    <div class="cta-footer-noise" aria-hidden="true"></div>
+
+    {/* Dot grid overlay */}
+    <div class="cta-footer-grid" aria-hidden="true"></div>
+
+    {/* CTA Content */}
+    {isSectionEnabled('ctaFinal') && (
+      <div class="cta-footer-content">
+        <div class="cta-text-wrapper">
+          <h2 class="cta-headline">
+            {ctaFinalContent.headline} <span class="text-mono">{ctaFinalContent.accentWord}</span>
+          </h2>
+          <p class="cta-description">{ctaFinalContent.description}</p>
+          <div class="cta-actions">
+            <a href={ctaFinalContent.ctaHref} class="cta-button">{ctaFinalContent.ctaText}</a>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Glass Quote Panel only */}
+    <div class="quote-glass-panel">
+      <div class="quote-glass-inner">
+        <blockquote class="quote-text">
+          "{ctaFinalContent.quote}"
+        </blockquote>
+        <div class="quote-attribution">
+          <span class="quote-author">{ctaFinalContent.quoteAuthor}</span>
+          <span class="quote-title">{ctaFinalContent.quoteAuthorTitle}</span>
+          <span class="quote-company">{ctaFinalContent.quoteCompany}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Regular dark footer */}
   <Footer slot="footer" />
 
   {/* Global Coming Soon Modal */}
   <ComingSoonModal />
 </Layout>
+
+<style>
+  /* CTA + Quote Wrapper - colored gradient with glass quote panel at bottom */
+  .cta-quote-wrapper {
+    position: relative;
+    background-color: var(--bg-accent);
+    margin: 0 4px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* Color blobs */
+  .cta-footer-blobs {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+
+  .blob--green {
+    width: 600px;
+    height: 500px;
+    background: var(--accent-green);
+    top: -100px;
+    left: -200px;
+    opacity: 0.9;
+    animation: blob-drift-1 30s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  .blob--orange {
+    width: 550px;
+    height: 450px;
+    background: var(--accent-orange);
+    bottom: -150px;
+    right: -100px;
+    opacity: 0.9;
+    animation: blob-drift-2 25s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  .blob--gold {
+    width: 500px;
+    height: 400px;
+    background: var(--accent-gold);
+    top: -150px;
+    right: 200px;
+    opacity: 0.85;
+    animation: blob-drift-3 35s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  @keyframes blob-drift-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, 30px) scale(1.05); }
+    100% { transform: translate(-20px, 50px) scale(0.95); }
+  }
+
+  @keyframes blob-drift-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-50px, -40px) scale(0.95); }
+    100% { transform: translate(30px, -20px) scale(1.05); }
+  }
+
+  @keyframes blob-drift-3 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-40px, 50px) scale(1.06); }
+    100% { transform: translate(60px, -30px) scale(0.94); }
+  }
+
+  /* Noise overlay */
+  .cta-footer-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: url('/textures/noise-pattern.png');
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Dot grid overlay */
+  .cta-footer-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-image: url('/textures/dot-grid.png');
+    background-repeat: repeat;
+    background-size: 48px 48px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* CTA Content */
+  .cta-footer-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: var(--space-xl) var(--gutter);
+  }
+
+  .cta-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .cta-headline {
+    font-size: var(--text-display);
+    line-height: 1.1;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .cta-description {
+    font-size: var(--text-h4);
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin: 0;
+    max-width: 600px;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 54px;
+    font-family: var(--font-primary);
+    font-size: var(--text-small);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none;
+    border-radius: 2000px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  /* Glass Quote Panel */
+  .quote-glass-panel {
+    position: relative;
+    z-index: 3;
+    padding: 0 var(--gutter) var(--space-lg);
+  }
+
+  .quote-glass-inner {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: var(--radius-md);
+    padding: 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .quote-text {
+    font-size: var(--text-h4);
+    font-family: var(--font-mono);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-md) 0;
+  }
+
+  .quote-attribution {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .quote-author {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .quote-title::before,
+  .quote-company::before {
+    content: '·';
+    margin-right: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .cta-quote-wrapper {
+      margin: 0 3px;
+    }
+
+    .cta-footer-content {
+      min-height: 350px;
+    }
+
+    .cta-headline {
+      font-size: var(--text-h1);
+    }
+
+    .cta-description {
+      font-size: var(--text-h5);
+    }
+
+    .blob--green {
+      width: 450px;
+      height: 380px;
+    }
+
+    .blob--orange {
+      width: 400px;
+      height: 350px;
+    }
+
+    .blob--gold {
+      width: 380px;
+      height: 320px;
+    }
+
+    .quote-glass-inner {
+      padding: 36px;
+    }
+
+    .quote-text {
+      font-size: var(--text-h5);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .cta-footer-content {
+      min-height: 300px;
+      padding: var(--space-lg) var(--gutter);
+    }
+
+    .cta-headline {
+      font-size: var(--text-h2);
+    }
+
+    .cta-description {
+      font-size: var(--text-body);
+    }
+
+    .quote-glass-inner {
+      padding: 24px;
+    }
+
+    .quote-attribution {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .cta-footer-content {
+      min-height: 260px;
+    }
+
+    .cta-headline {
+      font-size: var(--text-h3);
+    }
+
+    .cta-button {
+      padding: 0 36px;
+    }
+
+    .blob--green,
+    .blob--orange,
+    .blob--gold {
+      display: none;
+    }
+
+    .quote-glass-inner {
+      padding: 18px;
+    }
+
+    .quote-text {
+      font-size: var(--text-body);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob {
+      animation: none;
+    }
+  }
+</style>

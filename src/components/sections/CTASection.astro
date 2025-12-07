@@ -61,6 +61,7 @@ interface Props {
    * @default true
    */
   showBlobs?: boolean;
+
 }
 
 const {
@@ -71,7 +72,7 @@ const {
   ctaHref = '/contact',
   secondaryText,
   secondaryHref = '/contact',
-  showBlobs = true
+  showBlobs = true,
 } = Astro.props;
 ---
 
@@ -131,11 +132,12 @@ const {
 
   .cta-wrapper {
     position: relative;
-    height: 480px;
+    min-height: 480px;
     background-color: var(--bg-accent);
     border-radius: var(--radius-md);
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }

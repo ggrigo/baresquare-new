@@ -14,6 +14,7 @@ import ServiceCard from '../ui/ServiceCard.astro';
 import { isElementEnabled } from '../../config/site.config';
 
 interface Service {
+  enabled?: boolean;
   title: string;
   description: string;
   icon?: string;
@@ -96,16 +97,18 @@ const {
 
     <!-- Cards track that moves horizontally -->
     <div class="services-track" id="services-track">
-      {services.map((service) => (
-        <ServiceCard
-          title={service.title}
-          description={service.description}
-          icon={service.icon}
-          image={service.image}
-          imageAlt={service.imageAlt}
-          href={service.href}
-          showLink={isElementEnabled('services', 'learnMore')}
-        />
+      {services.filter(s => s.enabled !== false).map((service, index) => (
+        <div class="service-card-wrapper" data-card-index={index}>
+          <ServiceCard
+            title={service.title}
+            description={service.description}
+            icon={service.icon}
+            image={service.image}
+            imageAlt={service.imageAlt}
+            href={service.href}
+            showLink={isElementEnabled('services', 'learnMore')}
+          />
+        </div>
       ))}
     </div>
   </div>
@@ -121,6 +124,12 @@ const {
     const mobileBreakpoint = 767;
     let isEnabled = false;
     let maxTranslate = 0;
+    let cardWrappers: HTMLElement[] = [];
+    let currentActiveIndex = -1;
+
+    // Get all card wrappers
+    cardWrappers = Array.from(track.querySelectorAll('.service-card-wrapper'));
+    const totalCards = cardWrappers.length;
 
     // Calculate max translation (track width - viewport width + padding)
     function getMaxTranslate() {
@@ -129,9 +138,39 @@ const {
       return Math.max(0, trackWidth - viewportWidth + 48);
     }
 
+    // Update which card is active based on scroll progress
+    function updateActiveCard(progress: number) {
+      if (totalCards === 0) return;
+
+      // Map progress to card index
+      // Progress 0 = card 0, progress 1 = last card
+      const activeIndex = Math.min(
+        Math.floor(progress * totalCards),
+        totalCards - 1
+      );
+
+      // Only update if index changed
+      if (activeIndex !== currentActiveIndex) {
+        // Remove active from previous
+        if (currentActiveIndex >= 0 && currentActiveIndex < totalCards) {
+          cardWrappers[currentActiveIndex].classList.remove('scroll-active');
+        }
+        // Add active to new
+        cardWrappers[activeIndex].classList.add('scroll-active');
+        currentActiveIndex = activeIndex;
+      }
+    }
+
+    // Clear all active states
+    function clearActiveStates() {
+      cardWrappers.forEach(wrapper => wrapper.classList.remove('scroll-active'));
+      currentActiveIndex = -1;
+    }
+
     function updateTransform() {
       if (!isEnabled) {
         track.style.transform = 'none';
+        clearActiveStates();
         return;
       }
 
@@ -149,6 +188,9 @@ const {
 
       const translateX = progress * maxTranslate;
       track.style.transform = `translateX(-${translateX}px)`;
+
+      // Update active card highlight
+      updateActiveCard(progress);
     }
 
     function checkBreakpoint() {
@@ -159,6 +201,7 @@ const {
       if (isMobile) {
         // Reset transform for native scroll
         track.style.transform = 'none';
+        clearActiveStates();
       } else {
         maxTranslate = getMaxTranslate();
         updateTransform();
@@ -181,7 +224,7 @@ const {
     }
 
     // Debounced resize handler
-    let resizeTimeout;
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     function onResize() {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
@@ -253,6 +296,20 @@ const {
 
   .services-track > :global(*) {
     flex-shrink: 0;
+  }
+
+  /* Card wrapper for scroll-based highlight */
+  .service-card-wrapper {
+    flex-shrink: 0;
+  }
+
+  /* Scroll-active state - mimics hover effect */
+  .service-card-wrapper.scroll-active :global(.service-box--dark) {
+    background-color: rgb(35, 35, 35);
+  }
+
+  .service-card-wrapper.scroll-active :global(.blob) {
+    opacity: 1;
   }
 
   /* Tablet */

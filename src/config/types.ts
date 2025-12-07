@@ -302,6 +302,8 @@ export interface ProcessContent {
   badge: string;
   headline: string;
   steps: ProcessStep[];
+  linkText?: string;
+  linkHref?: string;
 }
 
 /**
@@ -352,4 +354,9 @@ export interface CTAContent {
   ctaHref: string;
   secondaryText?: string;
   secondaryHref?: string;
+  // Embedded quote panel (appears inside colored section)
+  quote?: string;
+  quoteAuthor?: string;
+  quoteAuthorTitle?: string;
+  quoteCompany?: string;
 }

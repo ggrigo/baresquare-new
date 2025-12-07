@@ -7,26 +7,23 @@ import type { ProcessContent } from '../../config/types';
 export const processContent: ProcessContent = {
   badge: 'Our Process',
   headline: 'How we work',
+  // linkText: 'Learn more about us',  // Disabled for now
+  // linkHref: '/about',
   steps: [
     {
       number: '01',
-      title: 'Discovery',
-      description: 'We begin by deeply understanding your challenges, goals, and the landscape in which you operate.',
+      title: 'Human intelligence first',
+      description: 'We start by mapping the problem with your team—understanding the real challenges before any technology enters the conversation.',
     },
     {
       number: '02',
-      title: 'Analysis',
-      description: 'Our team conducts rigorous research and analysis to identify opportunities and develop insights.',
+      title: 'AI where it matters',
+      description: 'We automate only what humans already understand. AI amplifies expertise—it doesn\'t replace the thinking that got you here.',
     },
     {
       number: '03',
-      title: 'Strategy',
-      description: 'We craft actionable strategies that align with your vision and drive measurable outcomes.',
-    },
-    {
-      number: '04',
-      title: 'Implementation',
-      description: 'We work alongside your team to execute the strategy and ensure successful delivery.',
+      title: 'Metrics that move the business',
+      description: 'We measure what your stakeholders actually care about—outcomes tied to growth, efficiency, and strategic goals.',
     },
   ],
 };
