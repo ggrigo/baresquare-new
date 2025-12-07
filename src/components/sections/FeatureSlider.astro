@@ -160,13 +160,14 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     width: 100%;
   }
 
-  .feature-card:hover {
-    background: var(--bg-card);
-  }
-
   .feature-card:focus-visible {
     outline: 2px solid var(--accent-purple);
     outline-offset: 2px;
+  }
+
+  /* Active state for scroll-based highlighting */
+  .feature-card.is-active {
+    background: var(--bg-card);
   }
 
   /* Square image container */
@@ -198,21 +199,21 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     z-index: 5; /* Above noise (3) and grid (4) overlays */
   }
 
-  .feature-card:hover .feature-brand-logo {
+  .feature-card.is-active .feature-brand-logo {
     opacity: 1;
   }
 
-  .feature-card:hover .feature-card-image > img:first-child {
+  .feature-card.is-active .feature-card-image > img:first-child {
     transform: scale(1.05);
     filter: grayscale(0);
   }
 
-  /* Grid overlay fade on hover */
+  /* Grid overlay fade when active */
   .feature-card .grid-overlay {
     transition: opacity var(--transition-medium);
   }
 
-  .feature-card:hover .grid-overlay {
+  .feature-card.is-active .grid-overlay {
     opacity: 0 !important;
   }
 
@@ -283,3 +284,61 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     }
   }
 </style>
+
+<script>
+  // Scroll-based card highlighting
+  function initFeatureCardHighlight() {
+    const cards = document.querySelectorAll('.feature-card');
+    if (!cards.length) return;
+
+    let currentActiveIndex = 0;
+
+    // Set first card as active initially
+    cards[0]?.classList.add('is-active');
+
+    function updateActiveCard() {
+      const viewportCenter = window.innerHeight / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      if (closestIndex !== currentActiveIndex) {
+        cards[currentActiveIndex]?.classList.remove('is-active');
+        cards[closestIndex]?.classList.add('is-active');
+        currentActiveIndex = closestIndex;
+      }
+    }
+
+    // Throttled scroll handler
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveCard();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Initial check
+    updateActiveCard();
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', initFeatureCardHighlight);
+  // Also run immediately in case DOM is already ready
+  if (document.readyState !== 'loading') {
+    initFeatureCardHighlight();
+  }
+</script>
