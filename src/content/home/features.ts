@@ -31,7 +31,7 @@ export const featureSliderContent: FeatureSliderContent = {
       id: 'clinical-ai',
       title: 'Accelerating clinical discoveries',
       description: 'AI-driven analysis for faster patient outcomes',
-      image: '/images/feature-3.svg',
+      image: '/images/feature-work-3.jpg',
       imageAlt: 'Clinical discoveries project',
       href: '/work/clinical-ai',
     },
