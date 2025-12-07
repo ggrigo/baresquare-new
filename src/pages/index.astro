@@ -342,12 +342,12 @@ import {
     flex-direction: column;
     align-items: center;
     gap: var(--space-lg);
-    padding: var(--space-lg) var(--gutter);
+    padding: 43px var(--gutter); /* 5px less top */
   }
 
-  /* Glass panel for quote - 95%+ width */
+  /* Glass panel for quote */
   .cta-glass-quote {
-    width: 96%;
+    width: calc(100% - 10px); /* 5px left + 5px right */
     max-width: 1400px;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
@@ -355,6 +355,9 @@ import {
     border-radius: var(--radius-md);
     padding: 48px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .cta-text-wrapper {
@@ -391,7 +394,8 @@ import {
     line-height: 1.4;
     color: var(--text-primary);
     margin: 0 0 16px 0;
-    max-width: 800px;
+    max-width: 620px; /* Narrower to force 4 lines */
+    text-align: center;
   }
 
   .cta-quote-attribution {
