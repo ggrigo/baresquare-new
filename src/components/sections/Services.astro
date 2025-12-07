@@ -11,6 +11,7 @@
 
 import Container from '../base/Container.astro';
 import ServiceCard from '../ui/ServiceCard.astro';
+import { isElementEnabled } from '../../config/site.config';
 
 interface Service {
   title: string;
@@ -103,6 +104,7 @@ const {
           image={service.image}
           imageAlt={service.imageAlt}
           href={service.href}
+          showLink={isElementEnabled('services', 'learnMore')}
         />
       ))}
     </div>

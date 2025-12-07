@@ -9,6 +9,4 @@ export const testimonialContent: TestimonialContent = {
   author: 'Sarah Chen',
   authorTitle: 'Chief Strategy Officer',
   company: 'Meridian Health Systems',
-  linkText: 'Read the case study',
-  linkHref: '/work/meridian',
 };

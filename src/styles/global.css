@@ -113,6 +113,11 @@ h5 {
   line-height: var(--line-height-h5);
 }
 
+/* Balanced text wrapping for headlines - prevents orphans */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
 p {
   margin-bottom: 1em;
 }
@@ -136,6 +141,11 @@ p:last-child {
 .text-faded {
   color: var(--text-subtle);
 }
+
+/* Text wrapping utilities */
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+.nowrap { white-space: nowrap; }
 
 /* ===========================================
    FOCUS STYLES

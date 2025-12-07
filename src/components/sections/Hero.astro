@@ -421,6 +421,11 @@ const vimeoEmbedUrl = `https://player.vimeo.com/video/${videoId}?badge=0&autopau
       width: 100%;
       max-width: 400px;
     }
+
+    /* Keep accent phrase together on tablet/mobile */
+    h1 .text-serif {
+      white-space: nowrap;
+    }
   }
 
   @media (max-width: 479px) {

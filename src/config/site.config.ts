@@ -39,11 +39,11 @@ export const siteConfig: SiteConfig = {
     approach: {
       enabled: true,
       elements: {
-        ctaLink: { enabled: true },
+        ctaLink: { enabled: false },
       },
     },
     stats: {
-      enabled: true,
+      enabled: false,
       elements: {
         measurableOutcomes: { enabled: false }, // Hide this stat
         clientRetention: { enabled: true },
@@ -53,6 +53,9 @@ export const siteConfig: SiteConfig = {
     },
     services: {
       enabled: true,
+      elements: {
+        learnMore: { enabled: false },      // Hide "Learn more" links on service cards
+      },
     },
     process: {
       enabled: true,

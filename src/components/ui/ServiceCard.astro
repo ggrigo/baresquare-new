@@ -46,6 +46,12 @@ interface Props {
   href?: string;
 
   /**
+   * Show the "Learn more" link
+   * @default true
+   */
+  showLink?: boolean;
+
+  /**
    * Background color variant for icon box
    * @default 'dark'
    */
@@ -64,6 +70,7 @@ const {
   image,
   imageAlt = '',
   href = '#',
+  showLink = true,
   background = 'dark',
   class: className
 } = Astro.props;
@@ -93,9 +100,11 @@ const {
   <div class="service-card-content">
     <h3 class="service-card-title">{title}</h3>
     <p class="service-card-description">{description}</p>
-    <div class="service-card-link">
-      <ArrowLink text="Learn more" href={href} />
-    </div>
+    {showLink && (
+      <div class="service-card-link">
+        <ArrowLink text="Learn more" href={href} />
+      </div>
+    )}
   </div>
 </article>
 

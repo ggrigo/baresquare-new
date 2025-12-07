@@ -28,7 +28,7 @@ import BlogGrid from '../components/sections/BlogGrid.astro';
 import CTASection from '../components/sections/CTASection.astro';
 
 // Configuration
-import { isSectionEnabled } from '../config/site.config';
+import { isSectionEnabled, isElementEnabled } from '../config/site.config';
 
 // Content
 import {
@@ -84,7 +84,7 @@ import {
       fadedText={aboutContent.fadedText}
       image={aboutContent.image}
       imageAlt={aboutContent.imageAlt}
-      linkText={aboutContent.linkText}
+      linkText={isElementEnabled('about', 'ctaLink') ? aboutContent.linkText : undefined}
       linkHref={aboutContent.linkHref}
       badgeColor={aboutContent.badgeColor}
     />
@@ -98,7 +98,7 @@ import {
       description={approachContent.description}
       image={approachContent.image}
       imageAlt={approachContent.imageAlt}
-      linkText={approachContent.linkText}
+      linkText={isElementEnabled('approach', 'ctaLink') ? approachContent.linkText : undefined}
       linkHref={approachContent.linkHref}
       reversed={approachContent.reversed}
       badgeColor={approachContent.badgeColor}
