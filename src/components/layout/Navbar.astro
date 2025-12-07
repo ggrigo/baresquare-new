@@ -284,9 +284,9 @@ const logoHeight = headerConfig.logo.height;
     flex-shrink: 0;
   }
 
-  /* Mobile hamburger */
+  /* Mobile hamburger - DEACTIVATED */
   .navbar-hamburger {
-    display: none;
+    display: none !important;
     flex-direction: column;
     justify-content: center;
     gap: 4px;
@@ -305,8 +305,9 @@ const logoHeight = headerConfig.logo.height;
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
-  /* Mobile menu - slide in from right */
+  /* Mobile menu - DEACTIVATED */
   .mobile-menu {
+    display: none !important;
     position: fixed;
     inset: 0;
     z-index: 100000000;
