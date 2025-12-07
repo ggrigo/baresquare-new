@@ -10,6 +10,7 @@
 
 import Container from '../base/Container.astro';
 import DotTitle from '../ui/DotTitle.astro';
+import SmartLink from '../global/SmartLink.astro';
 import { getSectionLimit } from '../../config/site.config';
 
 interface Feature {
@@ -90,7 +91,7 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
 
     <div class="feature-grid">
       {displayFeatures.map((feature) => (
-        <a href={feature.href || '#'} class="feature-card">
+        <SmartLink href={feature.href || '#'} class="feature-card">
           <div class="feature-card-image">
             {feature.image && (
               <img src={feature.image} alt={feature.imageAlt || ''} loading="lazy" />
@@ -102,7 +103,7 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
               <p class="feature-card-description">{feature.description}</p>
             )}
           </div>
-        </a>
+        </SmartLink>
       ))}
     </div>
   </Container>
@@ -142,10 +143,22 @@ const displayFeatures = enabledFeatures.slice(0, configLimit);
     overflow: hidden;
     background: var(--bg-dark);
     transition: background-color var(--transition-fast);
+    /* Reset button styles when SmartLink renders as button */
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    text-align: left;
+    width: 100%;
   }
 
   .feature-card:hover {
     background: var(--bg-card);
+  }
+
+  .feature-card:focus-visible {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
   }
 
   /* Square image container */
