@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Roadmap - Baresquare</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #141414;
+      --border: #2a2a2a;
+      --text: #ffffff;
+      --muted: #888888;
+      --green: #00ff88;
+      --yellow: #ffd700;
+      --red: #ff4757;
+      --purple: #8b5cf6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .score-overview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .score-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .score-value {
+      font-size: 48px;
+      font-weight: 700;
+      font-family: 'SF Mono', monospace;
+    }
+
+    .score-value.green { color: var(--green); }
+    .score-value.yellow { color: var(--yellow); }
+    .score-value.red { color: var(--red); }
+
+    .score-label {
+      color: var(--muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--purple);
+      border-radius: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .page-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .page-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-name {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .page-path {
+      color: var(--muted);
+      font-size: 13px;
+      font-family: 'SF Mono', monospace;
+    }
+
+    .page-score {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .page-score.complete { background: rgba(0, 255, 136, 0.15); color: var(--green); }
+    .page-score.partial { background: rgba(255, 215, 0, 0.15); color: var(--yellow); }
+    .page-score.missing { background: rgba(255, 71, 87, 0.15); color: var(--red); }
+
+    .page-content {
+      padding: 24px;
+    }
+
+    .content-section {
+      margin-bottom: 20px;
+    }
+
+    .content-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .content-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .requirement {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .requirement:last-child {
+      border-bottom: none;
+    }
+
+    .req-status {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .req-status.done { background: rgba(0, 255, 136, 0.2); color: var(--green); }
+    .req-status.partial { background: rgba(255, 215, 0, 0.2); color: var(--yellow); }
+    .req-status.missing { background: rgba(255, 71, 87, 0.2); color: var(--red); }
+
+    .req-text {
+      flex: 1;
+    }
+
+    .req-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .narrative-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .narrative-flow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .narrative-step {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .narrative-step h4 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .narrative-step p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .narrative-arrow {
+      color: var(--purple);
+      font-size: 24px;
+    }
+
+    .issues-list {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .issue {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .issue:last-child {
+      border-bottom: none;
+    }
+
+    .issue-priority {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    .issue-priority.high { background: var(--red); }
+    .issue-priority.medium { background: var(--yellow); }
+    .issue-priority.low { background: var(--green); }
+
+    .issue-content h4 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .issue-content p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .legend {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 1024px) {
+      .page-grid { grid-template-columns: 1fr; }
+      .score-overview { grid-template-columns: repeat(2, 1fr); }
+      .narrative-flow { flex-direction: column; }
+      .narrative-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Content Roadmap</h1>
+      <p class="subtitle">Qualitative content requirements and current scoring for baresquare.com</p>
+    </header>
+
+    <!-- Score Overview -->
+    <div class="score-overview">
+      <div class="score-card">
+        <div class="score-value green">16</div>
+        <div class="score-label">Pages Live</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value yellow">72%</div>
+        <div class="score-label">Content Complete</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value yellow">3</div>
+        <div class="score-label">Placeholder Quotes</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value red">2</div>
+        <div class="score-label">Metric Accuracy Issues</div>
+      </div>
+    </div>
+
+    <!-- Narrative Arc -->
+    <div class="narrative-section">
+      <h3>Narrative Arc</h3>
+      <p style="color: var(--muted); margin-top: 8px;">Every page is a chapter in one story. The visitor journey should flow naturally.</p>
+      <div class="narrative-flow">
+        <div class="narrative-step">
+          <h4>Homepage</h4>
+          <p>"AI that works. Here's proof."</p>
+        </div>
+        <span class="narrative-arrow">→</span>
+        <div class="narrative-step">
+          <h4>Service Pages</h4>
+          <p>"Here's how we do it"</p>
+        </div>
+        <span class="narrative-arrow">→</span>
+        <div class="narrative-step">
+          <h4>Case Studies</h4>
+          <p>"Here's the proof"</p>
+        </div>
+        <span class="narrative-arrow">→</span>
+        <div class="narrative-step">
+          <h4>Contact</h4>
+          <p>"Let's talk"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Critical Issues -->
+    <div class="section">
+      <h2 class="section-title">Critical Content Issues</h2>
+      <div class="issues-list">
+        <div class="issue">
+          <div class="issue-priority high"></div>
+          <div class="issue-content">
+            <h4>SONY Metrics Attribution</h4>
+            <p>Page shows "85% faster resolution" but this is from Data Accuracy program. The "40% SEO budget cut" is from a different SONY program. Need to clarify which metrics belong where, or frame as "SONY Partnership" showing multiple wins.</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="issue-priority high"></div>
+          <div class="issue-content">
+            <h4>VOGUE Quote Source Unknown</h4>
+            <p>Currently using placeholder name "Clarissa Schmidt". Need real quote source or remove the quote section entirely.</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="issue-priority high"></div>
+          <div class="issue-content">
+            <h4>adidas Quote Source Unknown</h4>
+            <p>Currently using placeholder name "Marcus Weber". Need real quote source or remove the quote section entirely.</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="issue-priority medium"></div>
+          <div class="issue-content">
+            <h4>AI Search & Marketing has no case study</h4>
+            <p>This service page has no proof point. Consider: (1) Create a case study, (2) Reference SONY SEO work, or (3) Use testimonial instead.</p>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot" style="background: var(--red);"></span> High Priority</div>
+        <div class="legend-item"><span class="legend-dot" style="background: var(--yellow);"></span> Medium Priority</div>
+        <div class="legend-item"><span class="legend-dot" style="background: var(--green);"></span> Low Priority</div>
+      </div>
+    </div>
+
+    <!-- Service Pages -->
+    <div class="section">
+      <h2 class="section-title">Service Pages</h2>
+      <div class="page-grid">
+
+        <!-- Revenue Performance -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">Revenue Performance</div>
+              <div class="page-path">/services/revenue-performance</div>
+            </div>
+            <span class="page-score complete">90%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Core Message</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  Convey: "AI finds revenue you're missing"
+                  <div class="req-note">Tywin as autonomous agent that captures opportunities</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Proof Points</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Link to VOGUE case study (+4% incremental revenue)</div>
+              </div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Mention: 60x faster detection, 10x productivity</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Voice & Tone</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Problem-solution framing (revenue leaks → Tywin fixes)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Search & Marketing -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">AI Search & Marketing</div>
+              <div class="page-path">/services/ai-search-marketing</div>
+            </div>
+            <span class="page-score partial">65%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Core Message</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  Convey: "Search that adapts, marketing that learns"
+                  <div class="req-note">AI-powered optimization that outpaces manual work</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Proof Points</div>
+              <div class="requirement">
+                <span class="req-status missing">✗</span>
+                <div class="req-text">
+                  No case study linked
+                  <div class="req-note">Consider: SONY SEO program (40% budget cut)?</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Voice & Tone</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Urgency: "Marketing is getting harder" → AI solution</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data & Operations -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">Data & Operations</div>
+              <div class="page-path">/services/data-operations</div>
+            </div>
+            <span class="page-score complete">95%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Core Message</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  Convey: "Automation that eliminates friction"
+                  <div class="req-note">Connect existing infrastructure, unlock efficiency</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Proof Points</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Link to SONY case study (85% faster resolution)</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Voice & Tone</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Technical credibility without jargon</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Learning & Development -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">Learning & Development</div>
+              <div class="page-path">/services/learning-development</div>
+            </div>
+            <span class="page-score complete">90%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Core Message</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  Convey: "AI that makes your workforce smarter"
+                  <div class="req-note">Enterprise-grade, on-premise, secure</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Proof Points</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Link to adidas case study (30K employees)</div>
+              </div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Emphasize: 100% on-premise deployment</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Voice & Tone</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Enterprise trust: security, control, compliance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Case Study Pages -->
+    <div class="section">
+      <h2 class="section-title">Case Study Pages</h2>
+      <div class="page-grid">
+
+        <!-- SONY -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">SONY</div>
+              <div class="page-path">/work/sony</div>
+            </div>
+            <span class="page-score partial">75%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Story to Tell</div>
+              <div class="requirement">
+                <span class="req-status partial">!</span>
+                <div class="req-text">
+                  Currently: Data Accuracy program (85% faster)
+                  <div class="req-note">Should clarify: 3 programs exist. Which story are we telling?</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Metrics Accuracy</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">85% faster resolution - correct for Data Accuracy</div>
+              </div>
+              <div class="requirement">
+                <span class="req-status partial">!</span>
+                <div class="req-text">
+                  40% SEO budget cut - mentioned but from different program
+                  <div class="req-note">Either remove or frame as "multiple programs"</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Quote</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Stephanie White quote - verified source</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Cross-Reference</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Links to Data & Operations service</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOGUE -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">VOGUE</div>
+              <div class="page-path">/work/vogue</div>
+            </div>
+            <span class="page-score partial">60%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Story to Tell</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  Revenue optimization with Tywin
+                  <div class="req-note">E-commerce revenue capture, autonomous monitoring</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Metrics Accuracy</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">+4% incremental revenue - verified</div>
+              </div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">60x faster detection - verified</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Quote</div>
+              <div class="requirement">
+                <span class="req-status missing">✗</span>
+                <div class="req-text">
+                  "Clarissa Schmidt" is PLACEHOLDER
+                  <div class="req-note">Need real quote source from Condé Nast/VOGUE</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Cross-Reference</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Links to Revenue Performance service</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- adidas -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">adidas</div>
+              <div class="page-path">/work/adidas</div>
+            </div>
+            <span class="page-score partial">60%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Story to Tell</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  Enterprise L&D with on-premise GenAI
+                  <div class="req-note">Scale (30K), Security (on-prem), Speed (faster onboarding)</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Metrics Accuracy</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">30,000 employees - verified</div>
+              </div>
+              <div class="requirement">
+                <span class="req-status partial">!</span>
+                <div class="req-text">
+                  50% faster onboarding - needs verification
+                  <div class="req-note">Is this metric documented?</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Quote</div>
+              <div class="requirement">
+                <span class="req-status missing">✗</span>
+                <div class="req-text">
+                  "Marcus Weber" is PLACEHOLDER
+                  <div class="req-note">Need real quote source from adidas</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Cross-Reference</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Links to Learning & Development service</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Homepage -->
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">Homepage</div>
+              <div class="page-path">/</div>
+            </div>
+            <span class="page-score complete">85%</span>
+          </div>
+          <div class="page-content">
+            <div class="content-section">
+              <div class="content-label">Core Message</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">
+                  "Agents that work for you"
+                  <div class="req-note">AI that takes action, not just reports</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Proof Points (Featured Work)</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Links to SONY, VOGUE, adidas stories</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Services Navigation</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Links to all 4 service pillars</div>
+              </div>
+            </div>
+            <div class="content-section">
+              <div class="content-label">Quote/Testimonial</div>
+              <div class="requirement">
+                <span class="req-status done">✓</span>
+                <div class="req-text">Stephanie White (SONY) - verified</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Content Voice Guidelines -->
+    <div class="section">
+      <h2 class="section-title">Content Voice Guidelines</h2>
+      <div class="page-grid">
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">Do Say</div>
+            </div>
+          </div>
+          <div class="page-content" style="color: var(--green);">
+            <ul style="list-style: none;">
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✓ "AI that takes action" (not "AI that provides insights")</li>
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✓ "Autonomous agents" (not "automation tools")</li>
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✓ "Production AI since 2018" (credibility)</li>
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✓ Specific metrics: "+4%", "85% faster", "30K employees"</li>
+              <li style="padding: 8px 0;">✓ Client names as proof: SONY, VOGUE, adidas</li>
+            </ul>
+          </div>
+        </div>
+        <div class="page-card">
+          <div class="page-header">
+            <div>
+              <div class="page-name">Don't Say</div>
+            </div>
+          </div>
+          <div class="page-content" style="color: var(--red);">
+            <ul style="list-style: none;">
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✗ "AI-powered" (overused, meaningless)</li>
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✗ "Cutting-edge" / "State-of-the-art" (empty)</li>
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✗ "Solutions" without specifics</li>
+              <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">✗ Vague claims: "improve efficiency" (how much?)</li>
+              <li style="padding: 8px 0;">✗ Unverified metrics or placeholder names</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Items -->
+    <div class="section">
+      <h2 class="section-title">Next Actions</h2>
+      <div class="issues-list">
+        <div class="issue">
+          <div class="issue-priority high"></div>
+          <div class="issue-content">
+            <h4>Get real quote sources for VOGUE and adidas</h4>
+            <p>Contact client teams to get approved quotes with real names and titles. Remove placeholders.</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="issue-priority high"></div>
+          <div class="issue-content">
+            <h4>Clarify SONY program structure</h4>
+            <p>Decide: Tell one program's story, or frame as "SONY Partnership" with multiple wins. Update page accordingly.</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="issue-priority medium"></div>
+          <div class="issue-content">
+            <h4>Find case study for AI Search & Marketing</h4>
+            <p>Options: (1) Use SONY SEO program, (2) Create new case study, (3) Use testimonial instead of case study link.</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="issue-priority medium"></div>
+          <div class="issue-content">
+            <h4>Verify adidas "50% faster onboarding" metric</h4>
+            <p>Confirm this metric is documented and approved for external use.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px;">
+      <p>Last updated: December 2024 | This page is internal-only, not indexed.</p>
+    </footer>
+  </div>
+</body>
+</html>
