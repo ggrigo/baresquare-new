@@ -6,13 +6,20 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "seo:crawl": "node scripts/seo-crawler.mjs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ggrigo/baresquare-new.git"
   },
-  "keywords": ["baresquare", "ai-agents", "ecommerce", "astro", "landing-page"],
+  "keywords": [
+    "baresquare",
+    "ai-agents",
+    "ecommerce",
+    "astro",
+    "landing-page"
+  ],
   "author": "Baresquare",
   "license": "ISC",
   "bugs": {
@@ -21,5 +28,8 @@
   "homepage": "https://github.com/ggrigo/baresquare-new#readme",
   "dependencies": {
     "astro": "^5.16.4"
+  },
+  "devDependencies": {
+    "cheerio": "^1.1.2"
   }
 }
