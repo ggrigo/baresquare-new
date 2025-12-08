@@ -37,7 +37,7 @@ export const siteConfig: SiteConfig = {
       },
     },
     approach: {
-      enabled: true,
+      enabled: false,  // Deactivated - content merged into Services intro
       elements: {
         ctaLink: { enabled: false },
       },
@@ -116,7 +116,7 @@ export const siteConfig: SiteConfig = {
         width: 140,
         height: 20,
       },
-      tagline: 'Shaping the invisible structures that power visible breakthroughs.',
+      tagline: 'Production AI since 2018.',
       columns: [
         {
           title: 'Company',

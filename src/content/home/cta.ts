@@ -22,9 +22,9 @@ export const ctaMidContent: CTAContent = {
  * Includes embedded quote panel inside the colored section
  */
 export const ctaFinalContent: CTAContent = {
-  headline: 'Ready to shape the',
-  accentWord: 'future?',
-  description: "Let's discuss how Baresquare can help accelerate your vision.",
+  headline: 'Not sure AI can work',
+  accentWord: 'for you?',
+  description: "Let's find out.",
   ctaText: 'Contact us',
   ctaHref: '/contact',
   // Quote panel that appears inside the colored CTA section

@@ -13,17 +13,17 @@ export const processContent: ProcessContent = {
     {
       number: '01',
       title: 'Human intelligence first',
-      description: 'Human intelligence maps the problem first.',
+      description: 'We map the problem with your team before technology enters the conversation.',
     },
     {
       number: '02',
       title: 'AI where it matters',
-      description: 'AI automates what humans already understand.',
+      description: 'We automate what humans already understand.',
     },
     {
       number: '03',
       title: 'Metrics that move the business',
-      description: 'Metrics the business actually cares about.',
+      description: 'Outcomes your stakeholders actually measure.',
     },
   ],
 };

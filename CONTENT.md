@@ -14,13 +14,13 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 ## Featured Work
 **File:** `src/content/home/features.ts`
 
-**Section Headline:** Faster, more confident decisions.
+**Section Headline:** Revenue. Efficiency. Scale.
 
 | Brand | Title | Description |
 |-------|-------|-------------|
-| VOGUE | +4% Incremental Revenue | What took 5 hours now takes 5 minutes. |
-| SONY | 40% Reduction in SEO Budget | 90% fewer 404 errors. Live since 2018. |
-| adidas | 30,000 Employees | On our AI coach. Global. On-premise. |
+| VOGUE | VOGUE | +4% incremental revenue. |
+| SONY | SONY | 40% cost reduction. Running since 2018. |
+| adidas | adidas | First GenAI HR solution deployed globally at a Fortune 500. 30,000 employees. One AI coach. On-premise. |
 
 ---
 
@@ -29,24 +29,20 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 
 **Badge:** About Baresquare
 
-**Headline:** We partner with science-led businesses that are shaping what's next.
+**Headline:** Not new. Fresh.
 
-**Description:** Baresquare's role is to shape the invisible structures—data, tools, thinking—that power visible breakthroughs. More possible. Focused, and flexible.
-
----
-
-## Approach Section
-**File:** `src/content/home/approach.ts`
-
-**Badge:** Our Approach
-
-**Headline:** Only ask us what strategy should happen. We'll tell you what should happen next.
-
-**Description:** We transform complex challenges into actionable strategies through rigorous analysis and creative problem-solving.
+**Description:** Baresquare is a recognized AI vendor for enterprise. We've been deploying production AI since 2018—before the hype, through the hype, after most pilots failed.
 
 ---
 
-## Services Section
+## Our Approach
+**File:** `src/config/site.config.ts` → `sections.approach`
+
+**Status:** DEACTIVATED
+
+---
+
+## Services Section (Four Pillars)
 **File:** `src/content/home/services.ts`
 
 **Headline:** Four ways we turn AI into business outcomes.
@@ -71,9 +67,9 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 
 | Step | Title | Description |
 |------|-------|-------------|
-| 01 | Human intelligence first | Human intelligence maps the problem first. |
-| 02 | AI where it matters | AI automates what humans already understand. |
-| 03 | Metrics that move the business | Metrics the business actually cares about. |
+| 01 | Human intelligence first | We map the problem with your team before technology enters the conversation. |
+| 02 | AI where it matters | We automate what humans already understand. |
+| 03 | Metrics that move the business | Outcomes your stakeholders actually measure. |
 
 ---
 
@@ -89,9 +85,9 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 ## Final CTA
 **File:** `src/content/home/cta.ts`
 
-**Headline:** Ready to shape the *future?*
+**Headline:** Not sure AI can work *for you?*
 
-**Description:** Let's discuss how Baresquare can help accelerate your vision.
+**Description:** Let's find out.
 
 **Button:** Contact us
 
@@ -99,6 +95,8 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 
 ## Footer
 **File:** `src/config/site.config.ts` → `navigation.footer`
+
+**Tagline:** Production AI since 2018.
 
 | Company | Services | Featured Work |
 |---------|----------|---------------|
@@ -112,3 +110,4 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 ## Notes
 
 - **Hero badge:** Code has "Meet Tywin" but it's not displayed on live site.
+- **Our Approach:** Section deactivated (content merged into Services intro).

@@ -6,9 +6,9 @@ import type { TwoColumnContent } from '../../config/types';
 
 export const aboutContent: TwoColumnContent = {
   badge: 'About Baresquare',
-  headline: "We partner with science-led businesses that are shaping what's next.",
-  description: "Baresquare's role is to shape the invisible structures—data, tools, thinking—that power visible breakthroughs.",
-  fadedText: 'More possible. Focused, and flexible.',
+  headline: 'Not new. Fresh.',
+  description: "Baresquare is a recognized AI vendor for enterprise. We've been deploying production AI since 2018—before the hype, through the hype, after most pilots failed.",
+  fadedText: '',
   image: '/images/about-landscape.jpg',
   imageAlt: 'Science-led business landscape',
   linkText: 'Learn about us',
