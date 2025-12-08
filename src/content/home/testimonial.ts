@@ -5,8 +5,8 @@
 import type { TestimonialContent } from '../../config/types';
 
 export const testimonialContent: TestimonialContent = {
-  quote: 'Baresquare transformed how we approach strategic decisions. Their insights helped us navigate a complex market landscape and achieve results that exceeded our expectations.',
-  author: 'Sarah Chen',
-  authorTitle: 'Chief Strategy Officer',
-  company: 'Meridian Health Systems',
+  quote: 'A human action triggers 10 AI-driven actions. The time to identify and resolve issues dropped by 85%.',
+  author: 'Stephanie White',
+  authorTitle: 'Strategy & Operations',
+  company: 'SONY',
 };
