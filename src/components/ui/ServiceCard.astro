@@ -140,10 +140,7 @@ const {
     background-color: var(--bg-accent);
   }
 
-  /* Hover: transition to dark grey */
-  .service-card:hover .service-box--dark {
-    background-color: rgb(35, 35, 35);
-  }
+  /* Hover removed - using scroll-based highlighting only */
 
   /* Touch/click feedback for mobile */
   .service-card:active {
@@ -188,10 +185,7 @@ const {
     right: -23px;
   }
 
-  /* Show blobs on hover */
-  .service-card:hover .blob {
-    opacity: 1;
-  }
+  /* Show blobs on hover - DISABLED, using scroll-based highlighting only */
 
   .service-box-icon {
     position: relative;
@@ -211,9 +205,7 @@ const {
     transition: transform var(--transition-medium);
   }
 
-  .service-card:hover .service-box-image {
-    transform: scale(1.05);
-  }
+  /* Image zoom on hover - DISABLED, using scroll-based highlighting only */
 
   /* Text content below box */
   .service-card-content {
