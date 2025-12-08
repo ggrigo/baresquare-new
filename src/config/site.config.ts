@@ -148,8 +148,8 @@ export const siteConfig: SiteConfig = {
         },
       ],
       legal: [
-        { label: 'Privacy Policy', href: '/privacy', enabled: true },
-        { label: 'Terms of Service', href: '/terms', enabled: true },
+        { label: 'Privacy Policy', href: '/privacy', enabled: false },
+        { label: 'Terms of Service', href: '/terms', enabled: false },
       ],
     },
   },
