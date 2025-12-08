@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "seo:crawl": "node scripts/seo-crawler.mjs"
+    "seo:crawl": "node scripts/seo-crawler.mjs",
+    "seo:backlinks": "node scripts/backlink-checker.mjs"
   },
   "repository": {
     "type": "git",
