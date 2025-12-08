@@ -1,9 +1,10 @@
-# Scion Landing - Project Constitution
+# Baresquare Website - Project Constitution
 
 ## Project Identity
-- **Name**: Scion Landing Page
-- **Type**: Dark-themed tech/consulting landing page
+- **Name**: Baresquare Website
+- **Type**: Dark-themed AI/SaaS consulting landing page
 - **Template Source**: Scion by Medium Rare (Craig Garner)
+- **Brand**: Baresquare - AI agents for eCommerce & strategic consulting
 - **Deployment**: Netlify
 
 ---
@@ -21,9 +22,11 @@
 - High contrast text for readability
 - Gradient accents for visual interest
 
-### 3. Typography Hierarchy
-- **Headings**: Aspekta (sans-serif) - clean, modern, tech aesthetic
+### 3. Typography Hierarchy (matches Figma exactly)
+- **Primary**: Geist (sans-serif) - Vercel's clean, modern tech font
+- **Monospace**: Geist Mono - for code-like text (e.g., `>_ SaaS`)
 - **Italic accents**: Newsreader (serif) - elegant contrast for key words
+- **Weights**: 400 (regular), 500 (medium), 600 (semibold)
 - Clear size progression across breakpoints
 - Generous line-height for readability
 
@@ -133,9 +136,9 @@
 - Gradients: CSS gradients, not images
 
 ### Fonts
-- Self-hosted for performance and privacy
-- WOFF2 format primary
+- **Google Fonts**: Geist, Geist Mono, Newsreader (matches Figma)
 - Font-display: swap for fast text rendering
+- Preconnect to fonts.googleapis.com for performance
 
 ### Images
 - Organized by type (hero, team, blog, icons)
