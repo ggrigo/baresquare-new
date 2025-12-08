@@ -1,0 +1,261 @@
+---
+/**
+ * Blog Index Page
+ *
+ * Lists all blog posts sorted by date.
+ */
+
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/layout/Navbar.astro';
+import Footer from '../../components/layout/Footer.astro';
+import DotTitle from '../../components/ui/DotTitle.astro';
+import { seoConfig } from '../../config/seo.config';
+
+// Get all non-draft posts, sorted by date (newest first)
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Blog index JSON-LD schema
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Baresquare Blog',
+  description: 'Insights on AI, analytics, and automation from the Baresquare team.',
+  url: new URL('/blog', seoConfig.siteUrl).href,
+  publisher: {
+    '@type': 'Organization',
+    name: seoConfig.organization.name,
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL(seoConfig.organization.logo, seoConfig.siteUrl).href,
+    },
+  },
+};
+---
+
+<Layout
+  title="Blog - Baresquare"
+  description="Insights on AI, analytics, and automation. Learn how to leverage data and AI to drive business results."
+  jsonLd={blogSchema}
+>
+  <Navbar slot="navbar" />
+
+  {/* Hero Section */}
+  <section class="blog-hero">
+    <div class="blog-container">
+      <DotTitle text="Blog" />
+      <h1 class="blog-headline">Insights & Updates</h1>
+      <p class="blog-description">AI, analytics, and automation insights from our team.</p>
+    </div>
+  </section>
+
+  {/* Posts Grid */}
+  <section class="blog-posts">
+    <div class="blog-container">
+      <div class="posts-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="post-card">
+            <div class="post-image-wrapper">
+              <img
+                src={post.data.image}
+                alt={post.data.imageAlt}
+                class="post-image"
+                loading="lazy"
+              />
+              <span class="post-category">{post.data.category}</span>
+            </div>
+            <div class="post-content">
+              <h2 class="post-title">{post.data.title}</h2>
+              <p class="post-excerpt">{post.data.description}</p>
+              <div class="post-meta">
+                <span class="post-date">
+                  {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                </span>
+                <span class="post-separator">·</span>
+                <span class="post-read-time">{post.data.readTime}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <div class="no-posts">
+          <p>No posts yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</Layout>
+
+<style>
+  /* Container */
+  .blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* Hero */
+  .blog-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .blog-headline {
+    font-size: var(--text-display);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin: var(--space-md) 0 var(--space-sm);
+  }
+
+  .blog-description {
+    font-size: var(--text-h4);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Posts Grid */
+  .blog-posts {
+    padding: 0 0 var(--space-xl);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  /* Post Card */
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .post-image-wrapper {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+
+  .post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .post-card:hover .post-image {
+    transform: scale(1.05);
+  }
+
+  .post-category {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    font-size: var(--text-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+
+  .post-content {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .post-title {
+    font-size: var(--text-h4);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .post-excerpt {
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-sm);
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .post-separator {
+    opacity: 0.5;
+  }
+
+  /* No Posts */
+  .no-posts {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--text-muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .blog-headline {
+      font-size: var(--text-h1);
+    }
+
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .blog-hero {
+      padding: var(--space-lg) 0 var(--space-md);
+    }
+
+    .blog-headline {
+      font-size: var(--text-h2);
+    }
+
+    .blog-description {
+      font-size: var(--text-h5);
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .blog-headline {
+      font-size: var(--text-h3);
+    }
+  }
+</style>

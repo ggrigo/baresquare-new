@@ -1,0 +1,18 @@
+# ----------------------------------------
+# User acquisition: First user primary channel group (AI Sources Group)
+# Account: Baresquare
+# Property: Baresquare website - GA4
+# ----------------------------------------
+# 
+# All Users
+# Start date: 20250909
+# End date: 20251207
+First user primary channel group (AI Sources Group),Total users,New users,Returning users,Average engagement time per active user,Engaged sessions per active user,Event count,Key events,User key event rate
+Direct,1779,1749,27,0.029295774647887324,0.08225352112676056,6557,2,0.0005633802816901409
+Organic Search,1137,1098,69,0.0009033423667570009,0.14814814814814814,4688,0,0
+Referral,144,139,5,0,0.30714285714285716,610,0,0
+Organic Social,19,19,0,0,0.2631578947368421,79,0,0
+AI Tools,12,12,1,0,0.25,52,0,0
+Unassigned,12,12,1,0,0.16666666666666666,58,0,0
+Organic Video,1,1,0,0,0,3,0,0
+Paid Other,1,1,0,0,0,3,0,0

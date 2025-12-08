@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/ggrigo/baresquare-new#readme",
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
     "astro": "^5.16.4"
   },
   "devDependencies": {

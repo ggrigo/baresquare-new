@@ -1,9 +1,8 @@
 ---
 /**
- * SONY Case Study Page
+ * VOGUE Case Study Page
  *
- * Case study for SONY campaign monitoring.
- * Receives customer-stories redirects.
+ * E-commerce revenue optimization with autonomous AI.
  */
 
 // Layout and Navigation
@@ -19,20 +18,20 @@ import DotTitle from '../../components/ui/DotTitle.astro';
 import { getCaseStudySchema } from '../../config/schemas';
 
 // Content
-import { sonyContent } from '../../content/work/sony';
+import { vogueContent } from '../../content/work/vogue';
 
 // Generate Article JSON-LD for case study
 const caseStudySchema = getCaseStudySchema({
-  headline: 'SONY Case Study - 85% Faster Issue Resolution',
-  description: 'How SONY achieved 85% faster issue resolution with AI-powered campaign intelligence. Running since 2018.',
-  url: '/work/sony',
+  headline: 'VOGUE Case Study - +4% Incremental Revenue',
+  description: 'How VOGUE achieved +4% incremental revenue with Tywin, our autonomous commerce AI.',
+  url: '/work/vogue',
   datePublished: '2024-12-08',
 });
 ---
 
 <Layout
-  title="SONY Case Study - Baresquare"
-  description="How SONY achieved 85% faster issue resolution with AI-powered campaign intelligence. Running since 2018."
+  title="VOGUE Case Study - Baresquare"
+  description="How VOGUE achieved +4% incremental revenue with Tywin, our autonomous commerce AI."
   ogType="article"
   jsonLd={caseStudySchema}
 >
@@ -42,10 +41,10 @@ const caseStudySchema = getCaseStudySchema({
   <section class="case-hero">
     <div class="case-container">
       <DotTitle text="Case Study" />
-      <h1 class="case-brand">{sonyContent.brand}</h1>
+      <h1 class="case-brand">{vogueContent.brand}</h1>
       <div class="case-metric">
-        <span class="metric-value">{sonyContent.metric}</span>
-        <span class="metric-label">{sonyContent.metricLabel}</span>
+        <span class="metric-value">{vogueContent.metric}</span>
+        <span class="metric-label">{vogueContent.metricLabel}</span>
       </div>
     </div>
   </section>
@@ -58,8 +57,8 @@ const caseStudySchema = getCaseStudySchema({
           <span class="label-text">The Challenge</span>
         </div>
         <div class="section-content">
-          <h2 class="section-headline">{sonyContent.challenge.headline}</h2>
-          <p class="section-description">{sonyContent.challenge.description}</p>
+          <h2 class="section-headline">{vogueContent.challenge.headline}</h2>
+          <p class="section-description">{vogueContent.challenge.description}</p>
         </div>
       </div>
     </div>
@@ -73,8 +72,8 @@ const caseStudySchema = getCaseStudySchema({
           <span class="label-text">The Solution</span>
         </div>
         <div class="section-content">
-          <h2 class="section-headline">{sonyContent.solution.headline}</h2>
-          <p class="section-description">{sonyContent.solution.description}</p>
+          <h2 class="section-headline">{vogueContent.solution.headline}</h2>
+          <p class="section-description">{vogueContent.solution.description}</p>
         </div>
       </div>
     </div>
@@ -85,7 +84,7 @@ const caseStudySchema = getCaseStudySchema({
     <div class="case-container">
       <h2 class="results-title">Results</h2>
       <div class="results-grid">
-        {sonyContent.results.map((result) => (
+        {vogueContent.results.map((result) => (
           <div class="result-card">
             <span class="result-value">{result.value}</span>
             <span class="result-label">{result.label}</span>
@@ -99,25 +98,25 @@ const caseStudySchema = getCaseStudySchema({
   <section class="case-quote">
     <div class="case-container">
       <div class="quote-wrapper">
-        <blockquote class="quote-text">"{sonyContent.quote.text}"</blockquote>
+        <blockquote class="quote-text">"{vogueContent.quote.text}"</blockquote>
         <div class="quote-attribution">
-          <span class="quote-author">{sonyContent.quote.author}</span>
-          <span class="quote-title">{sonyContent.quote.title}</span>
-          <span class="quote-company">{sonyContent.quote.company}</span>
+          <span class="quote-author">{vogueContent.quote.author}</span>
+          <span class="quote-title">{vogueContent.quote.title}</span>
+          <span class="quote-company">{vogueContent.quote.company}</span>
         </div>
       </div>
     </div>
   </section>
 
   {/* Related Service */}
-  {sonyContent.relatedService && (
+  {vogueContent.relatedService && (
     <section class="case-service">
       <div class="case-container">
-        <a href={sonyContent.relatedService.href} class="service-card">
+        <a href={vogueContent.relatedService.href} class="service-card">
           <span class="service-label">Related Service</span>
-          <h3 class="service-headline">{sonyContent.relatedService.headline}</h3>
+          <h3 class="service-headline">{vogueContent.relatedService.headline}</h3>
           <span class="service-link">
-            Explore {sonyContent.relatedService.title} →
+            Explore {vogueContent.relatedService.title} →
           </span>
         </a>
       </div>
@@ -128,9 +127,9 @@ const caseStudySchema = getCaseStudySchema({
   <section class="case-cta">
     <div class="case-container">
       <div class="cta-content">
-        <h2 class="cta-headline">{sonyContent.cta.headline}</h2>
-        <a href={sonyContent.cta.buttonHref} class="cta-button">
-          {sonyContent.cta.buttonText}
+        <h2 class="cta-headline">{vogueContent.cta.headline}</h2>
+        <a href={vogueContent.cta.buttonHref} class="cta-button">
+          {vogueContent.cta.buttonText}
         </a>
       </div>
     </div>

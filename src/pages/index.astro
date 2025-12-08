@@ -30,6 +30,9 @@ import CTASection from '../components/sections/CTASection.astro';
 // Configuration
 import { isSectionEnabled, isElementEnabled } from '../config/site.config';
 
+// SEO
+import { getOrganizationSchema } from '../config/schemas';
+
 // Content
 import {
   heroContent,
@@ -44,11 +47,15 @@ import {
   ctaMidContent,
   ctaFinalContent,
 } from '../content/home';
+
+// Generate Organization JSON-LD for homepage
+const organizationSchema = getOrganizationSchema();
 ---
 
 <Layout
   title="Baresquare - Agents That Work for You"
   description="AI that monitors your campaigns, inventory, pricing, and competitors—then takes action automatically."
+  jsonLd={organizationSchema}
 >
   <Navbar slot="navbar" />
 

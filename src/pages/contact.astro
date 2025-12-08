@@ -15,17 +15,24 @@ import ComingSoonModal from '../components/global/ComingSoonModal.astro';
 // Configuration
 import { siteConfig, getEnabledOffices, getEnabledSocialLinks } from '../config/site.config';
 
+// SEO
+import { getContactPageSchema } from '../config/schemas';
+
 // Content
 import { contactContent } from '../content/contact';
 
 // Get enabled offices and social links
 const offices = getEnabledOffices();
 const socialLinks = getEnabledSocialLinks();
+
+// Generate ContactPage JSON-LD
+const contactPageSchema = getContactPageSchema();
 ---
 
 <Layout
   title="Contact - Baresquare"
   description="Get in touch with Baresquare. Tell us about your challenge and we'll tell you if AI can help."
+  jsonLd={contactPageSchema}
 >
   <Navbar slot="navbar" />
 

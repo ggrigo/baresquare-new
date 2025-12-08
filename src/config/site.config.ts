@@ -202,14 +202,14 @@ export const siteConfig: SiteConfig = {
     // Main pages
     '/': { available: true },
     '/contact': { available: true },
-    '/about': { available: false, message: 'Our About page is coming soon!' },
+    '/about': { available: true },
 
-    // Services
+    // Services - all 4 pillars live
     '/services': { available: false, message: 'Services page coming soon!' },
     '/services/data-operations': { available: true },
-    '/services/revenue-performance': { available: false },
-    '/services/ai-search-marketing': { available: false },
-    '/services/learning-development': { available: false },
+    '/services/revenue-performance': { available: true },
+    '/services/ai-search-marketing': { available: true },
+    '/services/learning-development': { available: true },
     '/services/strategy': { available: false },
     '/services/infrastructure': { available: false },
     '/services/execution': { available: false },
@@ -217,16 +217,16 @@ export const siteConfig: SiteConfig = {
     '/services/regulatory': { available: false },
     '/services/ops': { available: false },
 
-    // Work/Case Studies
+    // Work/Case Studies - all 3 live
     '/work': { available: false, message: 'Case studies coming soon!' },
     '/work/sony': { available: true },
-    '/work/vogue': { available: false },
-    '/work/adidas': { available: false },
+    '/work/vogue': { available: true },
+    '/work/adidas': { available: true },
     '/work/*': { available: false },
 
-    // Blog
-    '/blog': { available: false, message: 'Blog coming soon!' },
-    '/blog/*': { available: false },
+    // Blog - live
+    '/blog': { available: true },
+    '/blog/*': { available: true },
 
     // Legal
     '/privacy': { available: false, message: 'Privacy Policy coming soon!' },

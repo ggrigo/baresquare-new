@@ -1,0 +1,393 @@
+---
+/**
+ * About Page
+ *
+ * Company story, mission, team philosophy.
+ * Uses Organization JSON-LD schema.
+ */
+
+// Layout and Navigation
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import ComingSoonModal from '../components/global/ComingSoonModal.astro';
+
+// SEO
+import { getOrganizationSchema } from '../config/schemas';
+
+// Content
+import { aboutContent } from '../content/about';
+
+// Generate Organization JSON-LD for about page
+const organizationSchema = getOrganizationSchema();
+---
+
+<Layout
+  title="About - Baresquare"
+  description="Founded in 2018, Baresquare pioneered action-driven analytics. Our autonomous AI agents help commerce teams move faster than ever."
+  jsonLd={organizationSchema}
+>
+  <Navbar slot="navbar" />
+
+  {/* Hero Section */}
+  <section class="about-hero">
+    <div class="about-container">
+      <h1 class="about-headline">{aboutContent.headline}</h1>
+      <p class="about-description">{aboutContent.description}</p>
+    </div>
+  </section>
+
+  {/* Story Section */}
+  <section class="about-section">
+    <div class="about-container">
+      <span class="section-badge">{aboutContent.story.badge}</span>
+      <h2 class="section-headline">{aboutContent.story.headline}</h2>
+      <div class="story-content">
+        {aboutContent.story.content.map((paragraph) => (
+          <p class="story-paragraph">{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Mission Section */}
+  <section class="about-section about-section--highlight">
+    <div class="about-container">
+      <span class="section-badge">{aboutContent.mission.badge}</span>
+      <h2 class="section-headline section-headline--large">{aboutContent.mission.headline}</h2>
+      <p class="mission-content">{aboutContent.mission.content}</p>
+    </div>
+  </section>
+
+  {/* Philosophy Section */}
+  <section class="about-section">
+    <div class="about-container">
+      <span class="section-badge">{aboutContent.philosophy.badge}</span>
+      <h2 class="section-headline">{aboutContent.philosophy.headline}</h2>
+      <p class="philosophy-intro">{aboutContent.philosophy.content}</p>
+      <div class="principles-grid">
+        {aboutContent.philosophy.principles.map((principle) => (
+          <div class="principle-card">
+            <h3 class="principle-title">{principle.title}</h3>
+            <p class="principle-description">{principle.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Team Section */}
+  <section class="about-section">
+    <div class="about-container">
+      <span class="section-badge">{aboutContent.team.badge}</span>
+      <h2 class="section-headline">{aboutContent.team.headline}</h2>
+      <p class="team-description">{aboutContent.team.description}</p>
+      <div class="founder-card">
+        <div class="founder-info">
+          <h3 class="founder-name">{aboutContent.team.founder.name}</h3>
+          <span class="founder-title">{aboutContent.team.founder.title}</span>
+          <p class="founder-bio">{aboutContent.team.founder.bio}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Offices Section */}
+  <section class="about-section">
+    <div class="about-container">
+      <span class="section-badge">{aboutContent.offices.badge}</span>
+      <h2 class="section-headline">{aboutContent.offices.headline}</h2>
+      <p class="offices-description">{aboutContent.offices.description}</p>
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section class="about-cta">
+    <div class="about-container">
+      <h2 class="cta-headline">{aboutContent.cta.headline}</h2>
+      <p class="cta-description">{aboutContent.cta.description}</p>
+      <a href={aboutContent.cta.buttonHref} class="cta-button">
+        {aboutContent.cta.buttonText}
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <ComingSoonModal />
+</Layout>
+
+<style>
+  /* Container */
+  .about-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* Hero Section */
+  .about-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .about-headline {
+    font-size: var(--text-display);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 var(--space-sm);
+    color: var(--text-primary);
+  }
+
+  .about-description {
+    font-size: var(--text-h4);
+    color: var(--text-muted);
+    margin: 0 auto;
+    max-width: 700px;
+    line-height: 1.5;
+  }
+
+  /* Section Base */
+  .about-section {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .about-section--highlight {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    margin: 0 2px;
+    text-align: center;
+  }
+
+  /* Section Badge */
+  .section-badge {
+    display: inline-block;
+    font-size: var(--text-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-green);
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Section Headlines */
+  .section-headline {
+    font-size: var(--text-h2);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .section-headline--large {
+    font-size: var(--text-h1);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Story Section */
+  .story-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .story-paragraph {
+    font-size: var(--text-body);
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Mission Section */
+  .mission-content {
+    font-size: var(--text-h5);
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 auto;
+    max-width: 700px;
+  }
+
+  /* Philosophy Section */
+  .philosophy-intro {
+    font-size: var(--text-body);
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .principle-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+  }
+
+  .principle-title {
+    font-size: var(--text-h5);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .principle-description {
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Team Section */
+  .team-description {
+    font-size: var(--text-body);
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .founder-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+
+  .founder-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .founder-name {
+    font-size: var(--text-h4);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .founder-title {
+    font-size: var(--text-small);
+    color: var(--accent-green);
+    font-weight: 500;
+  }
+
+  .founder-bio {
+    font-size: var(--text-body);
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: var(--space-sm) 0 0;
+  }
+
+  /* Offices Section */
+  .offices-description {
+    font-size: var(--text-body);
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .about-cta {
+    padding: var(--space-xl) 0;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .cta-headline {
+    font-size: var(--text-h2);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .cta-description {
+    font-size: var(--text-h5);
+    color: var(--text-muted);
+    margin: 0 0 var(--space-md);
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--button-height);
+    padding: 0 var(--button-padding-x);
+    font-family: var(--font-primary);
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--bg-dark);
+    background: var(--text-primary);
+    border: none;
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .cta-button:hover {
+    opacity: 0.9;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .about-headline {
+      font-size: var(--text-h1);
+    }
+
+    .about-description {
+      font-size: var(--text-h5);
+    }
+
+    .section-headline {
+      font-size: var(--text-h3);
+    }
+
+    .section-headline--large {
+      font-size: var(--text-h2);
+    }
+
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-hero {
+      padding: var(--space-lg) 0 var(--space-md);
+    }
+
+    .about-section {
+      padding: var(--space-lg) 0;
+    }
+
+    .about-headline {
+      font-size: var(--text-h2);
+    }
+
+    .about-description {
+      font-size: var(--text-body);
+    }
+
+    .founder-card {
+      padding: var(--space-md);
+    }
+  }
+
+  @media (max-width: 479px) {
+    .about-headline {
+      font-size: var(--text-h3);
+    }
+
+    .section-headline {
+      font-size: var(--text-h4);
+    }
+
+    .section-headline--large {
+      font-size: var(--text-h3);
+    }
+  }
+</style>

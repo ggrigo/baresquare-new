@@ -1,8 +1,15 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  // Site URL for canonical URLs, OG tags, and sitemap
+  site: 'https://baresquare.com',
+
   // Static output for Netlify deployment
   output: 'static',
+
+  // Sitemap integration
+  integrations: [sitemap()],
 
   // Build settings
   build: {

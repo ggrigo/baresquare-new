@@ -1,9 +1,8 @@
 ---
 /**
- * Data & Operations Service Page
+ * AI Search & Marketing Service Page
  *
- * Service page for Data & Operations pillar.
- * Receives GA4/analytics-related redirects.
+ * AI-powered search optimization and marketing automation.
  */
 
 // Layout and Navigation
@@ -19,19 +18,19 @@ import DotTitle from '../../components/ui/DotTitle.astro';
 import { getServiceSchema } from '../../config/schemas';
 
 // Content
-import { dataOperationsContent } from '../../content/services/data-operations';
+import { aiSearchMarketingContent } from '../../content/services/ai-search-marketing';
 
 // Generate Service JSON-LD
 const serviceSchema = getServiceSchema({
-  name: 'Data & Operations',
-  description: 'Automation that eliminates manual processes and fixes friction. Connecting your existing infrastructure to unlock efficiency.',
-  url: '/services/data-operations',
+  name: 'AI Search & Marketing',
+  description: 'AI-powered optimization for search, content, and campaigns. Reach the right customers with the right message—automatically.',
+  url: '/services/ai-search-marketing',
 });
 ---
 
 <Layout
-  title="Data & Operations - Baresquare"
-  description="Automation that eliminates manual processes and fixes friction. Connecting your existing infrastructure to unlock efficiency."
+  title="AI Search & Marketing - Baresquare"
+  description="AI-powered optimization for search, content, and campaigns. Reach the right customers with the right message—automatically."
   jsonLd={serviceSchema}
 >
   <Navbar slot="navbar" />
@@ -39,9 +38,9 @@ const serviceSchema = getServiceSchema({
   {/* Hero Section */}
   <section class="service-hero">
     <div class="service-container">
-      <DotTitle text={dataOperationsContent.badge} />
-      <h1 class="service-headline">{dataOperationsContent.title}</h1>
-      <p class="service-description">{dataOperationsContent.description}</p>
+      <DotTitle text={aiSearchMarketingContent.badge} />
+      <h1 class="service-headline">{aiSearchMarketingContent.title}</h1>
+      <p class="service-description">{aiSearchMarketingContent.description}</p>
     </div>
   </section>
 
@@ -49,8 +48,8 @@ const serviceSchema = getServiceSchema({
   <section class="service-section">
     <div class="service-container">
       <div class="section-content">
-        <h2 class="section-headline">{dataOperationsContent.problem.headline}</h2>
-        <p class="section-description">{dataOperationsContent.problem.description}</p>
+        <h2 class="section-headline">{aiSearchMarketingContent.problem.headline}</h2>
+        <p class="section-description">{aiSearchMarketingContent.problem.description}</p>
       </div>
     </div>
   </section>
@@ -59,8 +58,8 @@ const serviceSchema = getServiceSchema({
   <section class="service-section service-section--dark">
     <div class="service-container">
       <div class="section-content">
-        <h2 class="section-headline">{dataOperationsContent.solution.headline}</h2>
-        <p class="section-description">{dataOperationsContent.solution.description}</p>
+        <h2 class="section-headline">{aiSearchMarketingContent.solution.headline}</h2>
+        <p class="section-description">{aiSearchMarketingContent.solution.description}</p>
       </div>
     </div>
   </section>
@@ -70,7 +69,7 @@ const serviceSchema = getServiceSchema({
     <div class="service-container">
       <h2 class="features-title">What we deliver</h2>
       <div class="features-grid">
-        {dataOperationsContent.features.map((feature, index) => (
+        {aiSearchMarketingContent.features.map((feature, index) => (
           <div class="feature-card">
             <span class="feature-number">{String(index + 1).padStart(2, '0')}</span>
             <h3 class="feature-title">{feature.title}</h3>
@@ -82,14 +81,14 @@ const serviceSchema = getServiceSchema({
   </section>
 
   {/* Related Case Study */}
-  {dataOperationsContent.relatedCaseStudy && (
+  {aiSearchMarketingContent.relatedCaseStudy && (
     <section class="service-case-study">
       <div class="service-container">
-        <a href={dataOperationsContent.relatedCaseStudy.href} class="case-study-card">
+        <a href={aiSearchMarketingContent.relatedCaseStudy.href} class="case-study-card">
           <span class="case-study-label">Case Study</span>
-          <h3 class="case-study-headline">{dataOperationsContent.relatedCaseStudy.headline}</h3>
+          <h3 class="case-study-headline">{aiSearchMarketingContent.relatedCaseStudy.headline}</h3>
           <span class="case-study-link">
-            Read the {dataOperationsContent.relatedCaseStudy.brand} story →
+            Read the {aiSearchMarketingContent.relatedCaseStudy.brand} story →
           </span>
         </a>
       </div>
@@ -100,10 +99,10 @@ const serviceSchema = getServiceSchema({
   <section class="service-cta">
     <div class="service-container">
       <div class="cta-content">
-        <h2 class="cta-headline">{dataOperationsContent.cta.headline}</h2>
-        <p class="cta-description">{dataOperationsContent.cta.description}</p>
-        <a href={dataOperationsContent.cta.buttonHref} class="cta-button">
-          {dataOperationsContent.cta.buttonText}
+        <h2 class="cta-headline">{aiSearchMarketingContent.cta.headline}</h2>
+        <p class="cta-description">{aiSearchMarketingContent.cta.description}</p>
+        <a href={aiSearchMarketingContent.cta.buttonHref} class="cta-button">
+          {aiSearchMarketingContent.cta.buttonText}
         </a>
       </div>
     </div>

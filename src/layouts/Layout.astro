@@ -1,13 +1,45 @@
 ---
+/**
+ * Layout Component
+ *
+ * Main layout wrapper with SEO support:
+ * - Canonical URLs
+ * - Open Graph meta tags
+ * - Twitter Card meta tags
+ * - JSON-LD structured data
+ */
+
+import { seoConfig } from '../config/seo.config';
+import JsonLd from '../components/seo/JsonLd.astro';
+
 interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  jsonLd?: Record<string, any>;
 }
 
 const {
-  title = 'Baresquare - Strategic Consulting',
-  description = 'We partner with science-led businesses that are shaping the future. Baresquare\'s role is to shape the invisible structures—data, tools, thinking—that power visible breakthroughs.'
+  title = seoConfig.defaultTitle,
+  description = seoConfig.defaultDescription,
+  canonicalUrl,
+  ogImage = seoConfig.defaultOgImage,
+  ogType = 'website',
+  jsonLd,
 } = Astro.props;
+
+// Build canonical URL (self-referencing)
+const canonical = canonicalUrl || new URL(Astro.url.pathname, seoConfig.siteUrl).href;
+
+// Build OG image URL (must be absolute)
+const ogImageUrl = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, seoConfig.siteUrl).href;
+
+// Current page URL for OG
+const pageUrl = new URL(Astro.url.pathname, seoConfig.siteUrl).href;
 ---
 
 <!doctype html>
@@ -16,6 +48,24 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={seoConfig.siteName} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={seoConfig.twitterHandle} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
@@ -29,6 +79,9 @@ const {
     <link rel="preload" href="/textures/noise-pattern.png" as="image" />
 
     <title>{title}</title>
+
+    <!-- JSON-LD Structured Data -->
+    {jsonLd && <JsonLd schema={jsonLd} />}
 
     <!-- Global styles -->
     <style is:global>

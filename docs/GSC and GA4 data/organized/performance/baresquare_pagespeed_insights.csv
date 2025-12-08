@@ -1,0 +1,67 @@
+Device,Category,Metric,Value,Unit,Notes
+Mobile,Overview,URL,https://baresquare.com/,,
+Mobile,Overview,Report Date,Dec 8 2025 9:25:43PM,,
+Mobile,Score,Performance,37,points,
+Mobile,Score,Accessibility,91,points,
+Mobile,Score,Best Practices,77,points,
+Mobile,Score,SEO,92,points,
+Mobile,Performance Metric,First Contentful Paint,13.7,s,
+Mobile,Performance Metric,Largest Contentful Paint,16.5,s,
+Mobile,Performance Metric,Total Blocking Time,70,ms,
+Mobile,Performance Metric,Cumulative Layout Shift,0.043,,
+Mobile,Performance Metric,Speed Index,13.7,s,
+Mobile,Opportunity,Render-blocking resources,,ms,Est savings of 3.51 ms
+Mobile,Opportunity,Use efficient cache lifetime,,KB,Est savings of 0.52 KB
+Mobile,Opportunity,Remove dependency tree,,,
+Mobile,Opportunity,Properly size images,,KB,Est savings of 0.93 KB
+Mobile,Opportunity,Avoid/defer JavaScript,,s,Est savings of 4.93 s
+Mobile,Opportunity,Preload LCP element,,KB,Est savings of 2.85 KB
+Mobile,Opportunity,Lazy load off-screen,,,
+Mobile,Diagnostic,Reduce JavaScript execution time,0.7,s,
+Mobile,Diagnostic,Minimize main-thread work,4.2,s,
+Mobile,Diagnostic,Reduce unused JavaScript,,MB,Est savings of 1.1 MB
+Mobile,Diagnostic,Reduce unused CSS,,KB,Est savings of 78 KB
+Mobile,Diagnostic,Minify CSS,,KB,Est savings of 3 KB
+Mobile,Diagnostic,Avoid serving legacy JavaScript,,KB,Total size 3.02 KB
+Mobile,Diagnostic,Avoid long main-thread tasks,20,tasks,
+Mobile,Accessibility Issue,Background and foreground colors do not have sufficient contrast ratio,,,
+Mobile,Accessibility Issue,Links do not have discernible name,,,
+Mobile,Accessibility Issue,Descendent lists structure issue,,,
+Mobile,Best Practices Issue,Uses deprecated APIs,3,warnings,
+Mobile,Best Practices Issue,Issues logged to Chrome DevTools,,,
+Mobile,Best Practices Issue,Detected JavaScript libraries,,,
+Mobile,SEO Issue,Links are not crawlable,,,
+Mobile,SEO Issue,Document doesn't have meta description,,,
+Desktop,Overview,URL,https://baresquare.com/,,
+Desktop,Overview,Report Date,Dec 8 2025 9:25:43PM,,
+Desktop,Score,Performance,88,points,
+Desktop,Score,Accessibility,91,points,
+Desktop,Score,Best Practices,77,points,
+Desktop,Score,SEO,92,points,
+Desktop,Performance Metric,First Contentful Paint,0.7,s,
+Desktop,Performance Metric,Largest Contentful Paint,0.7,s,
+Desktop,Performance Metric,Total Blocking Time,320,ms,
+Desktop,Performance Metric,Cumulative Layout Shift,0.002,,
+Desktop,Performance Metric,Speed Index,2.6,s,
+Desktop,Opportunity,Render-blocking resources,,ms,Est savings of 180 ms
+Desktop,Opportunity,Use efficient cache lifetime,,KB,Est savings of 0.84 KB
+Desktop,Opportunity,Font display,,ms,Est savings of 15 ms
+Desktop,Opportunity,Properly size images,,KB,Est savings of 0.91 KB
+Desktop,Opportunity,Defer/avoid JavaScript,,KB,Est savings of 1.8 KB
+Desktop,Opportunity,Legacy JavaScript,,KB,Est savings of 0.14 KB
+Desktop,Diagnostic,Reduce JavaScript execution time,2.2,s,
+Desktop,Diagnostic,Minimize main-thread work,5.2,s,
+Desktop,Diagnostic,Reduce unused CSS,,KB,Est savings of 78.3 KB
+Desktop,Diagnostic,Minify CSS,,KB,Est savings of 3 KB
+Desktop,Diagnostic,Reduce unused JavaScript,,MB,Est savings of 1.07 MB
+Desktop,Diagnostic,Avoid enormous network payloads,,MB,Total size 2.77 MB
+Desktop,Diagnostic,Avoid long main-thread tasks,15,tasks,
+Desktop,Diagnostic,Avoid large layout shifts,4,elements,
+Desktop,Accessibility Issue,Background and foreground colors do not have sufficient contrast ratio,,,
+Desktop,Accessibility Issue,Links do not have discernible name,,,
+Desktop,Accessibility Issue,Descendent lists structure issue,,,
+Desktop,Best Practices Issue,Uses deprecated APIs,3,warnings,
+Desktop,Best Practices Issue,Issues logged to Chrome DevTools,,,
+Desktop,Best Practices Issue,Detected JavaScript libraries,,,
+Desktop,SEO Issue,Links are not crawlable,,,
+Desktop,SEO Issue,Document doesn't have meta description,,,

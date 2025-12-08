@@ -1,0 +1,18 @@
+# ----------------------------------------
+# Traffic acquisition: Session primary channel group (AI Sources Group)
+# Account: Baresquare
+# Property: Baresquare website - GA4
+# ----------------------------------------
+# 
+# All Users
+# Start date: 20250908
+# End date: 20251207
+Session primary channel group (AI Sources Group),Sessions,Engaged sessions,Engagement rate,Average engagement time per session,Events per session,Event count,Key events,Session key event rate,Total revenue
+Direct,1913,143,0.07475169890224778,0.027182435964453737,3.477260846837428,6652,2,0.0005227391531625719,0
+AI Tools,14,3,0.21428571428571427,0,3.7142857142857144,52,0,0,0
+Organic Search,1430,168,0.11748251748251748,0.0006993006993006993,3.2713286713286713,4678,0,0,0
+Organic Social,21,5,0.23809523809523808,0,3.9523809523809526,83,0,0,0
+Organic Video,1,0,0,0,3,3,0,0,0
+Paid Other,1,0,0,0,3,3,0,0,0
+Referral,165,43,0.2606060606060606,0,3.7515151515151515,619,0,0,0
+Unassigned,41,2,0.04878048780487805,0,2.1707317073170733,89,0,0,0

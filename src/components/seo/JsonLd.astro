@@ -1,0 +1,19 @@
+---
+/**
+ * JsonLd Component
+ *
+ * Renders JSON-LD structured data in a script tag.
+ * Use with schema generators from src/config/schemas.ts
+ *
+ * @example
+ * <JsonLd schema={getOrganizationSchema()} />
+ */
+
+interface Props {
+  schema: Record<string, any>;
+}
+
+const { schema } = Astro.props;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
