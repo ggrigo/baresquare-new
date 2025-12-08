@@ -11,7 +11,7 @@ export const featureSliderContent: FeatureSliderContent = {
     {
       enabled: true,
       id: 'vogue-ecommerce',
-      title: 'VOGUE',
+      title: 'Revenue',
       description: '+4% incremental revenue.',
       image: 'https://zajc.pl/upload/inspirations/1920-siedziba-vogue-polska-h-34-1682292161.webp',
       imageAlt: 'VOGUE ecommerce project',
@@ -21,7 +21,7 @@ export const featureSliderContent: FeatureSliderContent = {
     {
       enabled: true,
       id: 'sony-seo',
-      title: 'SONY',
+      title: 'Efficiency',
       description: '40% cost reduction. Running since 2018.',
       image: 'https://www.fdtimes.com/wp-content/uploads/2016/08/DSC04429-725x483@2x.jpg',
       imageAlt: 'SONY partnership project',
@@ -31,7 +31,7 @@ export const featureSliderContent: FeatureSliderContent = {
     {
       enabled: true,
       id: 'adidas-genai',
-      title: 'adidas',
+      title: 'Scale',
       description: 'First GenAI HR solution deployed globally at a Fortune 500. 30,000 employees. One AI coach. On-premise.',
       image: 'https://images.ft.com/v3/image/raw/ftcms%3Aa205f306-bea5-11e9-9381-78bab8a70848?source=next-article&fit=scale-down&quality=highest&width=700&dpr=2',
       imageAlt: 'adidas GenAI project',

@@ -18,9 +18,9 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 
 | Brand | Title | Description |
 |-------|-------|-------------|
-| VOGUE | VOGUE | +4% incremental revenue. |
-| SONY | SONY | 40% cost reduction. Running since 2018. |
-| adidas | adidas | First GenAI HR solution deployed globally at a Fortune 500. 30,000 employees. One AI coach. On-premise. |
+| VOGUE | Revenue | +4% incremental revenue. |
+| SONY | Efficiency | 40% cost reduction. Running since 2018. |
+| adidas | Scale | First GenAI HR solution deployed globally at a Fortune 500. 30,000 employees. One AI coach. On-premise. |
 
 ---
 
