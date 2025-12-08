@@ -412,6 +412,12 @@ export interface ServicePageContent {
     buttonText: string;
     buttonHref: string;
   };
+  // Cross-reference to related case study
+  relatedCaseStudy?: {
+    brand: string;
+    headline: string;
+    href: string;
+  };
 }
 
 /**
@@ -446,5 +452,11 @@ export interface CaseStudyContent {
     headline: string;
     buttonText: string;
     buttonHref: string;
+  };
+  // Cross-reference to related service
+  relatedService?: {
+    title: string;
+    headline: string;
+    href: string;
   };
 }

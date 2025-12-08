@@ -46,4 +46,10 @@ export const dataOperationsContent: ServicePageContent = {
     buttonText: 'Get in touch',
     buttonHref: '/contact',
   },
+  // Cross-reference to related case study (per spec requirement)
+  relatedCaseStudy: {
+    brand: 'SONY',
+    headline: 'See how we cut issue resolution time by 85% for SONY',
+    href: '/work/sony',
+  },
 };

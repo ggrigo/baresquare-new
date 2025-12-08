@@ -70,6 +70,21 @@ import { dataOperationsContent } from '../../content/services/data-operations';
     </div>
   </section>
 
+  {/* Related Case Study */}
+  {dataOperationsContent.relatedCaseStudy && (
+    <section class="service-case-study">
+      <div class="service-container">
+        <a href={dataOperationsContent.relatedCaseStudy.href} class="case-study-card">
+          <span class="case-study-label">Case Study</span>
+          <h3 class="case-study-headline">{dataOperationsContent.relatedCaseStudy.headline}</h3>
+          <span class="case-study-link">
+            Read the {dataOperationsContent.relatedCaseStudy.brand} story →
+          </span>
+        </a>
+      </div>
+    </section>
+  )}
+
   {/* CTA Section */}
   <section class="service-cta">
     <div class="service-container">
@@ -202,6 +217,54 @@ import { dataOperationsContent } from '../../content/services/data-operations';
     color: var(--text-muted);
     margin: 0;
     line-height: 1.6;
+  }
+
+  /* Related Case Study */
+  .service-case-study {
+    padding: var(--space-lg) 0;
+  }
+
+  .case-study-card {
+    display: block;
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 255, 136, 0.05) 100%);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .case-study-card:hover {
+    border-color: var(--accent-green);
+    transform: translateY(-2px);
+  }
+
+  .case-study-label {
+    font-size: var(--text-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-green);
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .case-study-headline {
+    font-size: var(--text-h3);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-md);
+    line-height: 1.3;
+  }
+
+  .case-study-link {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .case-study-card:hover .case-study-link {
+    color: var(--text-primary);
   }
 
   /* CTA Section */
