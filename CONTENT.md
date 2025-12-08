@@ -80,9 +80,9 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 ## Testimonial (in CTA section)
 **File:** `src/content/home/cta.ts`
 
-> "Baresquare transformed how we approach strategic decisions. Their insights helped us navigate a complex market landscape and achieve results that exceeded our expectations."
+> "A human action triggers 10 AI-driven actions. The time to identify and resolve issues dropped by 85%."
 
-— **Sarah Chen**, Chief Strategy Officer, Meridian Health Systems
+— **Stephanie White**, Strategy & Operations, SONY
 
 ---
 
@@ -111,5 +111,4 @@ All homepage content in one place. Edit the corresponding `.ts` file to update.
 
 ## Notes
 
-- **Testimonial mismatch:** The standalone testimonial file (`testimonial.ts`) has Stephanie White/SONY, but the CTA section shows Sarah Chen. Need to sync these.
 - **Hero badge:** Code has "Meet Tywin" but it's not displayed on live site.

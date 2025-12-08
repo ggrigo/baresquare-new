@@ -28,8 +28,8 @@ export const ctaFinalContent: CTAContent = {
   ctaText: 'Contact us',
   ctaHref: '/contact',
   // Quote panel that appears inside the colored CTA section
-  quote: 'Baresquare transformed how we approach strategic decisions. Their insights helped us navigate a complex market landscape and achieve results that exceeded our expectations.',
-  quoteAuthor: 'Sarah Chen',
-  quoteAuthorTitle: 'Chief Strategy Officer',
-  quoteCompany: 'Meridian Health Systems',
+  quote: 'A human action triggers 10 AI-driven actions. The time to identify and resolve issues dropped by 85%.',
+  quoteAuthor: 'Stephanie White',
+  quoteAuthorTitle: 'Strategy & Operations',
+  quoteCompany: 'SONY',
 };
