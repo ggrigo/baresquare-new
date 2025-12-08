@@ -1,0 +1,119 @@
+# Baresquare SEO Redirects
+# Phase 1: High Traffic Pages
+# Generated from seo-migration/priority-redirects.csv
+
+# =============================================================================
+# CONTACT PAGE REDIRECTS
+# =============================================================================
+/demo /contact 301
+/contact /contact 200
+
+# =============================================================================
+# DATA & OPERATIONS SERVICE REDIRECTS (GA4/Analytics content)
+# =============================================================================
+/blog/google-analytics-ga4-ua-discrepancies /services/data-operations 301
+/blog/announcing-ga4-migration-gap-hunter-app /services/data-operations 301
+/blog/boost-google-analytics-baresquare /services/data-operations 301
+/blog/ga4-bigquery-integration-for-unsampled-data-and-deeper-insights /services/data-operations 301
+/blog/ga4-ecommerce-best-practices-2024 /services/data-operations 301
+/solutions/analytics-leaders /services/data-operations 301
+/apps/ga4-migration-gap-hunter /services/data-operations 301
+
+# =============================================================================
+# SONY CASE STUDY REDIRECTS
+# =============================================================================
+/customer-stories/how-sony-overcame-campaign-challenges-with-baresquare /work/sony 301
+/customer-stories /work/sony 301
+/customer-stories/* /work/sony 301
+
+# =============================================================================
+# AI SEARCH & MARKETING SERVICE REDIRECTS (SEO/Marketing content)
+# For Phase 2 - redirecting to homepage until page is live
+# =============================================================================
+/blog/build-a-custom-seo-crawler-with-advertools /services/ai-search-marketing 301
+/blog/best-practices-on-digital-marketing-and-analytics-integration /services/ai-search-marketing 301
+/blog/can-large-language-models-supercharge-time-series-analysis-in-digital-marketing-and-ecommerce /services/ai-search-marketing 301
+/blog/merchandising-wiz-bites-4-athleisure-brand-predictions /services/ai-search-marketing 301
+
+# =============================================================================
+# BLOG REDIRECTS (to /blog when available, or / for now)
+# =============================================================================
+/blog/a-beginners-guide-to-web-crawlers-and-scrapers /blog 301
+/blog/google-looker-studio-best-practices-for-reports /blog 301
+/blog/mastering-web-scraping-with-puppeteer-a-comprehensive-tutorial /blog 301
+/blog/common-mistakes-in-adobe-analysis-workspace /blog 301
+/blog/power-of-looker-studio-why-you-need-to-make-the-switch-from-excel /blog 301
+/blog/real-time-personalization-adobe-target-guide /blog 301
+/blog/the-ultimate-metric-for-bot-traffic-detection /blog 301
+/blog/alerts-monitoring-a-quick-case-study /blog 301
+/blog/mastering-merchandising-evars-analytics-guide /blog 301
+/blog/ultimate-guide-how-to-spot-bot-traffic /blog 301
+
+# =============================================================================
+# AI CONTENT REDIRECTS (to homepage)
+# =============================================================================
+/blog/enhancing-privacy-in-ai-protecting-user-data-in-chatgpt / 301
+/blog/how-to-create-images-with-chatgpt / 301
+/blog/how-to-prepare-for-a-job-interview-with-ai / 301
+/blog/use-openai-chatgpt-with-python / 301
+/blog/ai-and-content-optimization-revolutionizing-ad-copy / 301
+/blog/digital-analytics-in-the-age-of-ai / 301
+/blog/ethics-in-ai / 301
+/blog/gpts-one-step-closer-to-wider-ai-utilization / 301
+/blog/ai-prompting / 301
+/blog/importance-of-human-expertise-in-ai / 301
+/blog/master-business-english-with-the-help-of-ai / 301
+/blog/openapi-specification / 301
+/blog/openai-assistants-vs-custom-gpts / 301
+/blog/power-and-pitfalls-of-gen-ai-assistants-in-coding / 301
+/blog/revolutionize-analytics-ai-guide-building-digital-assistant-openai-api / 301
+/blog/spot-broken-digital-campaigns-tracking-with-google-and-adobe-analytics / 301
+/blog/the-power-of-ai-in-personalized-marketing / 301
+/blog/using-claude-ai-to-build-online-game-digital-analytics / 301
+/blog/unlocking-the-black-box-the-power-of-explainable-ai-for-transparent-ai-systems / 301
+/blog/guide-for-fine-tuning-a-gpt-3-model-for-analytics / 301
+/blog/supercharge-tagging-productivity-chatgpt / 301
+/blog/unleashing-the-power-of-baresquare-campaign-diagnostics-for-optimal-marketing-success / 301
+/blog/introducing-ecom-product-analyst-custom-gpt / 301
+
+# =============================================================================
+# PLATFORM/LEGACY REDIRECTS
+# =============================================================================
+/old-platform / 301
+/platform / 301
+/old-home / 301
+/career / 301
+
+# =============================================================================
+# SOLUTIONS REDIRECTS
+# =============================================================================
+/solutions/performance-marketers / 301
+/solutions/revenue-leaders / 301
+/solutions/product-owners / 301
+
+# =============================================================================
+# APPS REDIRECTS
+# =============================================================================
+/apps / 301
+/apps/customer-acquisition-basic / 301
+/apps/customer-acquisition-business / 301
+/apps/404-error-hound / 301
+
+# =============================================================================
+# LEGAL REDIRECTS (to homepage until pages are created)
+# =============================================================================
+/privacy-policy / 301
+/terms-of-service / 301
+/cookie-policy / 301
+
+# =============================================================================
+# MISC REDIRECTS
+# =============================================================================
+/pricing / 301
+/hire-tywin / 301
+/blog/optimize-slack-efficiency-essential-apps / 301
+
+# =============================================================================
+# BLOG CATCHALL (remaining blog posts to blog index or homepage)
+# =============================================================================
+/blog/* /blog 301

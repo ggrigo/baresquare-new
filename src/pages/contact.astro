@@ -1,0 +1,421 @@
+---
+/**
+ * Contact Page
+ *
+ * Contact form with Netlify Forms integration.
+ * Office locations and social links.
+ */
+
+// Layout and Navigation
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import ComingSoonModal from '../components/global/ComingSoonModal.astro';
+
+// Configuration
+import { siteConfig, getEnabledOffices, getEnabledSocialLinks } from '../config/site.config';
+
+// Content
+import { contactContent } from '../content/contact';
+
+// Get enabled offices and social links
+const offices = getEnabledOffices();
+const socialLinks = getEnabledSocialLinks();
+---
+
+<Layout
+  title="Contact - Baresquare"
+  description="Get in touch with Baresquare. Tell us about your challenge and we'll tell you if AI can help."
+>
+  <Navbar slot="navbar" />
+
+  <section class="contact-hero">
+    <div class="contact-container">
+      <h1 class="contact-headline">{contactContent.headline}</h1>
+      <p class="contact-description">{contactContent.description}</p>
+    </div>
+  </section>
+
+  <section class="contact-content">
+    <div class="contact-container">
+      <div class="contact-grid">
+        {/* Contact Form */}
+        <div class="contact-form-wrapper">
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="contact-form"
+          >
+            {/* Honeypot field for spam protection */}
+            <p class="hidden">
+              <label>
+                Don't fill this out: <input name="bot-field" />
+              </label>
+            </p>
+
+            {/* Hidden form name for Netlify */}
+            <input type="hidden" name="form-name" value="contact" />
+
+            {contactContent.formFields.map((field) => (
+              <div class="form-field">
+                <label for={field.name} class="form-label">
+                  {field.label}
+                  {field.required && <span class="required">*</span>}
+                </label>
+                {field.type === 'textarea' ? (
+                  <textarea
+                    id={field.name}
+                    name={field.name}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    rows="5"
+                    class="form-input form-textarea"
+                  />
+                ) : (
+                  <input
+                    type={field.type}
+                    id={field.name}
+                    name={field.name}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    class="form-input"
+                  />
+                )}
+              </div>
+            ))}
+
+            <button type="submit" class="form-submit">
+              {contactContent.submitText}
+            </button>
+          </form>
+        </div>
+
+        {/* Office Locations */}
+        <div class="contact-info">
+          <div class="info-section">
+            <h3 class="info-title">Our Offices</h3>
+            <div class="offices-list">
+              {offices.map((office) => (
+                <div class="office-item">
+                  <h4 class="office-city">{office.city}</h4>
+                  <p class="office-address">{office.address}</p>
+                  <p class="office-country">{office.country}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {socialLinks.length > 0 && (
+            <div class="info-section">
+              <h3 class="info-title">Connect</h3>
+              <div class="social-links">
+                {socialLinks.map((social) => (
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="social-link"
+                    aria-label={social.label}
+                  >
+                    {social.platform === 'linkedin' && (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                    )}
+                    {social.platform === 'twitter' && (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    )}
+                    <span class="social-label">{social.platform}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div class="info-section">
+            <h3 class="info-title">Email Us</h3>
+            <a href="mailto:hello@baresquare.com" class="email-link">
+              hello@baresquare.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <ComingSoonModal />
+</Layout>
+
+<style>
+  /* Hero Section */
+  .contact-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .contact-headline {
+    font-size: var(--text-display);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 var(--space-sm);
+    color: var(--text-primary);
+  }
+
+  .contact-description {
+    font-size: var(--text-h4);
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Content Section */
+  .contact-content {
+    padding: 0 0 var(--space-xl);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* Form Wrapper */
+  .contact-form-wrapper {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .form-label {
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .required {
+    color: var(--accent-orange);
+    margin-left: 2px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: var(--font-primary);
+    font-size: var(--text-body);
+    color: var(--text-primary);
+    background: var(--bg-dark);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--button-height);
+    padding: 0 var(--button-padding-x);
+    font-family: var(--font-primary);
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--bg-dark);
+    background: var(--text-primary);
+    border: none;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    margin-top: var(--space-sm);
+  }
+
+  .form-submit:hover {
+    opacity: 0.9;
+  }
+
+  .form-submit:active {
+    transform: scale(0.98);
+  }
+
+  /* Contact Info */
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .info-section {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .info-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .info-title {
+    font-size: var(--text-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-md);
+  }
+
+  /* Offices */
+  .offices-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .office-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .office-city {
+    font-size: var(--text-h5);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .office-address {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .office-country {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Social Links */
+  .social-links {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .social-link:hover {
+    color: var(--text-primary);
+  }
+
+  .social-label {
+    font-size: var(--text-body);
+    text-transform: capitalize;
+  }
+
+  /* Email Link */
+  .email-link {
+    font-size: var(--text-h5);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .email-link:hover {
+    color: var(--accent-green);
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .contact-headline {
+      font-size: var(--text-h1);
+    }
+
+    .contact-description {
+      font-size: var(--text-h5);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .contact-hero {
+      padding: var(--space-lg) 0 var(--space-md);
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .contact-form-wrapper {
+      padding: var(--space-md);
+    }
+
+    .contact-headline {
+      font-size: var(--text-h2);
+    }
+
+    .contact-description {
+      font-size: var(--text-body);
+    }
+  }
+
+  @media (max-width: 479px) {
+    .contact-headline {
+      font-size: var(--text-h3);
+    }
+
+    .social-links {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+  }
+</style>

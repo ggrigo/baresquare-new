@@ -201,11 +201,15 @@ export const siteConfig: SiteConfig = {
   routes: {
     // Main pages
     '/': { available: true },
-    '/contact': { available: false, message: 'Contact page coming soon!' },
+    '/contact': { available: true },
     '/about': { available: false, message: 'Our About page is coming soon!' },
 
     // Services
     '/services': { available: false, message: 'Services page coming soon!' },
+    '/services/data-operations': { available: true },
+    '/services/revenue-performance': { available: false },
+    '/services/ai-search-marketing': { available: false },
+    '/services/learning-development': { available: false },
     '/services/strategy': { available: false },
     '/services/infrastructure': { available: false },
     '/services/execution': { available: false },
@@ -215,6 +219,9 @@ export const siteConfig: SiteConfig = {
 
     // Work/Case Studies
     '/work': { available: false, message: 'Case studies coming soon!' },
+    '/work/sony': { available: true },
+    '/work/vogue': { available: false },
+    '/work/adidas': { available: false },
     '/work/*': { available: false },
 
     // Blog

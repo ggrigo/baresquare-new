@@ -360,3 +360,91 @@ export interface CTAContent {
   quoteAuthorTitle?: string;
   quoteCompany?: string;
 }
+
+// =============================================================================
+// PAGE CONTENT TYPES
+// =============================================================================
+
+/**
+ * Contact page content
+ */
+export interface ContactFormField {
+  name: string;
+  label: string;
+  type: 'text' | 'email' | 'textarea' | 'select';
+  required: boolean;
+  placeholder?: string;
+  options?: string[]; // For select type
+}
+
+export interface ContactPageContent {
+  headline: string;
+  description: string;
+  formFields: ContactFormField[];
+  submitText: string;
+}
+
+/**
+ * Service page content
+ */
+export interface ServiceFeature {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+export interface ServicePageContent {
+  badge: string;
+  title: string;
+  description: string;
+  problem: {
+    headline: string;
+    description: string;
+  };
+  solution: {
+    headline: string;
+    description: string;
+  };
+  features: ServiceFeature[];
+  cta: {
+    headline: string;
+    description: string;
+    buttonText: string;
+    buttonHref: string;
+  };
+}
+
+/**
+ * Case study page content
+ */
+export interface CaseStudyResult {
+  value: string;
+  label: string;
+}
+
+export interface CaseStudyContent {
+  brand: string;
+  brandLogo?: string;
+  metric: string;
+  metricLabel: string;
+  challenge: {
+    headline: string;
+    description: string;
+  };
+  solution: {
+    headline: string;
+    description: string;
+  };
+  results: CaseStudyResult[];
+  quote: {
+    text: string;
+    author: string;
+    title: string;
+    company: string;
+  };
+  cta: {
+    headline: string;
+    buttonText: string;
+    buttonHref: string;
+  };
+}
