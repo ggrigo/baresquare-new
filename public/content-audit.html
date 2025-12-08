@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Audit - Verified vs Fabricated</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #141414;
+      --border: #2a2a2a;
+      --text: #ffffff;
+      --muted: #888888;
+      --green: #00ff88;
+      --yellow: #ffd700;
+      --red: #ff4757;
+      --blue: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { margin-bottom: 48px; }
+    h1 { font-size: 32px; font-weight: 600; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 16px; margin-bottom: 24px; }
+
+    .verdict {
+      background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 215, 0, 0.1));
+      border: 1px solid var(--yellow);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 48px;
+    }
+    .verdict h2 { color: var(--yellow); font-size: 20px; margin-bottom: 12px; }
+    .verdict p { color: var(--muted); }
+    .verdict strong { color: var(--text); }
+
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title .badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .badge.verified { background: rgba(0, 255, 136, 0.15); color: var(--green); }
+    .badge.fabricated { background: rgba(255, 71, 87, 0.15); color: var(--red); }
+    .badge.partial { background: rgba(255, 215, 0, 0.15); color: var(--yellow); }
+    .badge.question { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    tr:last-child td { border-bottom: none; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .status.verified { color: var(--green); }
+    .status.fabricated { color: var(--red); }
+    .status.partial { color: var(--yellow); }
+
+    .source {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'SF Mono', monospace;
+    }
+
+    .insight {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .insight h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .insight p { color: var(--muted); font-size: 14px; }
+    .insight .data {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-family: 'SF Mono', monospace;
+      font-size: 13px;
+    }
+
+    .action-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .action-box h3 { margin-bottom: 16px; }
+    .action-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .action-item:last-child { border-bottom: none; }
+    .action-num {
+      width: 24px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .action-text { font-size: 14px; }
+    .action-text strong { color: var(--text); }
+    .action-text span { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Content Audit</h1>
+      <p class="subtitle">Honest assessment: What's from real data vs. what was AI-generated</p>
+    </header>
+
+    <div class="verdict">
+      <h2>Assessment Verdict</h2>
+      <p>
+        <strong>16 pages are live, but only ~40% is based on verified source data.</strong><br>
+        The service pages and case study narratives were AI-generated expansions, not migrations of existing content.
+        This violates the "autocompact" principle: we should compress existing content, not fabricate new content.
+      </p>
+    </div>
+
+    <!-- VERIFIED DATA -->
+    <div class="section">
+      <h2 class="section-title">
+        Verified Data <span class="badge verified">FROM SOURCE</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Content</th>
+            <th>Value</th>
+            <th>Source</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VOGUE metric</td>
+            <td>+4% incremental revenue</td>
+            <td class="source">CONTENT.md, homepage</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>SONY metric</td>
+            <td>40% cost reduction</td>
+            <td class="source">CONTENT.md, homepage</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>SONY metric</td>
+            <td>85% faster issue resolution</td>
+            <td class="source">CONTENT.md, Stephanie White quote</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>SONY quote</td>
+            <td>Stephanie White, Strategy & Operations</td>
+            <td class="source">CONTENT.md</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>SONY tenure</td>
+            <td>Running since 2018</td>
+            <td class="source">CONTENT.md, homepage</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>adidas metric</td>
+            <td>30,000 employees</td>
+            <td class="source">CONTENT.md, homepage</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>adidas claim</td>
+            <td>First GenAI HR at Fortune 500, On-premise</td>
+            <td class="source">CONTENT.md, homepage</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>Service names</td>
+            <td>4 pillars: Revenue, Search, Data, L&D</td>
+            <td class="source">CONTENT.md, homepage</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>Service descriptions</td>
+            <td>1-2 sentence summaries</td>
+            <td class="source">CONTENT.md (homepage cards)</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+          <tr>
+            <td>Company claim</td>
+            <td>"Production AI since 2018"</td>
+            <td class="source">CONTENT.md, footer</td>
+            <td><span class="status verified">✓ Verified</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FABRICATED CONTENT -->
+    <div class="section">
+      <h2 class="section-title">
+        AI-Generated Content <span class="badge fabricated">NOT FROM SOURCE</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>Content Type</th>
+            <th>Issue</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/work/vogue</td>
+            <td>Challenge/Solution narrative</td>
+            <td>Invented story, not from existing content</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/work/vogue</td>
+            <td>"Clarissa Schmidt" quote</td>
+            <td>Fake name, no real quote source</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/work/adidas</td>
+            <td>Challenge/Solution narrative</td>
+            <td>Invented story, not from existing content</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/work/adidas</td>
+            <td>"Marcus Weber" quote</td>
+            <td>Fake name, no real quote source</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/work/adidas</td>
+            <td>"50% faster onboarding" metric</td>
+            <td>Not in any source document</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/services/*</td>
+            <td>Problem/Solution sections</td>
+            <td>Expanded from 1-sentence to full narratives</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/services/*</td>
+            <td>4 feature blocks per page</td>
+            <td>Invented, not from existing content</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/about</td>
+            <td>Story, Mission, Philosophy</td>
+            <td>Entire narrative invented</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+          <tr>
+            <td>/about</td>
+            <td>Founder bio</td>
+            <td>Written by AI, not provided</td>
+            <td><span class="status fabricated">✗ Fabricated</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGIC CONTRADICTION -->
+    <div class="section">
+      <h2 class="section-title">
+        Strategic Question <span class="badge question">DATA VS STRATEGY</span>
+      </h2>
+
+      <div class="insight">
+        <h3>📊 Blog was "deprecated" but drives most traffic</h3>
+        <p>
+          ROADMAP.md says: "Deprecated: /blog/* (72 posts) - Low conversion value"<br>
+          But GSC data shows blog posts are the TOP traffic drivers:
+        </p>
+        <div class="data">
+/blog/keep-your-data-local...    336 clicks (30% of all clicks)<br>
+/blog/decoding-time-series...     60 clicks<br>
+/blog/openai-assistants...        51 clicks<br>
+/blog/enhancing-privacy...        50 clicks<br>
+/blog/how-to-create-images...     34 clicks<br>
+─────────────────────────────────────────<br>
+Blog total:                      531 clicks (48% of site traffic)
+        </div>
+        <p style="margin-top: 12px; color: var(--yellow);">
+          <strong>Question:</strong> Should these 5 blog posts stay? The data says yes, the strategy says no.
+        </p>
+      </div>
+    </div>
+
+    <!-- WHAT'S ACTUALLY MVP -->
+    <div class="section">
+      <h2 class="section-title">
+        True MVP (What we can honestly ship)
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>Content Available</th>
+            <th>MVP Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/</td>
+            <td>Full homepage content verified</td>
+            <td><span class="status verified">✓ Ship</span></td>
+          </tr>
+          <tr>
+            <td>/contact</td>
+            <td>Form + office addresses</td>
+            <td><span class="status verified">✓ Ship</span></td>
+          </tr>
+          <tr>
+            <td>/work/sony</td>
+            <td>Metrics + quote verified, narrative okay</td>
+            <td><span class="status partial">~ Partial</span></td>
+          </tr>
+          <tr>
+            <td>/work/vogue</td>
+            <td>Only metric (+4%) verified, rest fabricated</td>
+            <td><span class="status fabricated">✗ Needs work</span></td>
+          </tr>
+          <tr>
+            <td>/work/adidas</td>
+            <td>Only scale (30K) verified, rest fabricated</td>
+            <td><span class="status fabricated">✗ Needs work</span></td>
+          </tr>
+          <tr>
+            <td>/services/*</td>
+            <td>Only names + 1-sentence descriptions verified</td>
+            <td><span class="status fabricated">✗ Needs work</span></td>
+          </tr>
+          <tr>
+            <td>/about</td>
+            <td>Almost entirely fabricated</td>
+            <td><span class="status fabricated">✗ Needs work</span></td>
+          </tr>
+          <tr>
+            <td>/blog/*</td>
+            <td>Real content migrated from old site</td>
+            <td><span class="status partial">~ Decision needed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RECOMMENDED ACTIONS -->
+    <div class="section">
+      <h2 class="section-title">Recommended Actions</h2>
+      <div class="action-box">
+        <div class="action-item">
+          <span class="action-num">1</span>
+          <div class="action-text">
+            <strong>Roll back service pages to "Coming Soon"</strong><br>
+            <span>Until real content is provided, these pages are fabricated marketing copy.</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <span class="action-num">2</span>
+          <div class="action-text">
+            <strong>Strip VOGUE/adidas case studies to verified facts only</strong><br>
+            <span>Show metric + claim, remove fake quotes and invented narratives.</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <span class="action-num">3</span>
+          <div class="action-text">
+            <strong>Decide on blog strategy</strong><br>
+            <span>Data says keep top 5 posts (48% of traffic). Strategy says deprecate. Which wins?</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <span class="action-num">4</span>
+          <div class="action-text">
+            <strong>Get real content for expansion</strong><br>
+            <span>Service pages need real copy from team. Case studies need real quotes from clients.</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <span class="action-num">5</span>
+          <div class="action-text">
+            <strong>Update ROADMAP.md with honest assessment</strong><br>
+            <span>Document what's MVP vs what needs human input before publishing.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px;">
+      <p>Audit generated: December 2024 | This page is internal-only.</p>
+    </footer>
+  </div>
+</body>
+</html>
