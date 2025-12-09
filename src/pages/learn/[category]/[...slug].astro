@@ -1,0 +1,376 @@
+---
+/**
+ * Dynamic Learn Article Page
+ *
+ * Renders individual knowledge base articles.
+ */
+
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/layout/Navbar.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import DotTitle from '../../../components/ui/DotTitle.astro';
+import { seoConfig } from '../../../config/seo.config';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('learn');
+  return articles.map((article) => {
+    const slugParts = article.slug.split('/');
+    const category = slugParts[0];
+    const articleSlug = slugParts.slice(1).join('/') || slugParts[0];
+    return {
+      params: {
+        category,
+        slug: articleSlug,
+      },
+      props: { article },
+    };
+  });
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+
+const categoryNames: Record<string, string> = {
+  ai: 'AI & Machine Learning',
+  data: 'Data & Analytics',
+  search: 'Search & Technical SEO',
+  revenue: 'Revenue & Commerce',
+};
+
+// Article JSON-LD schema
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  dateModified: article.data.lastmod,
+  author: {
+    '@type': 'Organization',
+    name: seoConfig.organization.name,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: seoConfig.organization.name,
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL(seoConfig.organization.logo, seoConfig.siteUrl).href,
+    },
+  },
+  keywords: article.data.keywords.join(', '),
+};
+---
+
+<Layout
+  title={`${article.data.title} | Baresquare Learn`}
+  description={article.data.description}
+  jsonLd={articleSchema}
+>
+  <Navbar slot="navbar" />
+
+  <article class="article-page">
+    <div class="article-container">
+      {/* Breadcrumb */}
+      <nav class="breadcrumb">
+        <a href="/learn">Learn</a>
+        <span class="separator">/</span>
+        <a href={`/learn/${article.data.category}`}>{categoryNames[article.data.category]}</a>
+        <span class="separator">/</span>
+        <span class="current">{article.data.title.split(':')[0]}</span>
+      </nav>
+
+      {/* Header */}
+      <header class="article-header">
+        <DotTitle text={categoryNames[article.data.category]} />
+        <h1 class="article-title">{article.data.title}</h1>
+        <p class="article-description">{article.data.description}</p>
+        <div class="article-meta">
+          <span class="meta-item">Updated: {article.data.lastmod}</span>
+          {article.data.highValue && <span class="featured-badge">Featured Guide</span>}
+        </div>
+      </header>
+
+      {/* Keywords */}
+      <div class="keywords-section">
+        {article.data.keywords.map((keyword: string) => (
+          <span class="keyword-tag">{keyword}</span>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div class="article-content prose">
+        <Content />
+      </div>
+
+      {/* Source Posts */}
+      {article.data.sourcePosts.length > 0 && (
+        <aside class="source-posts">
+          <h3>This guide consolidates insights from:</h3>
+          <ul>
+            {article.data.sourcePosts.map((slug: string) => (
+              <li>{slug.replace(/-/g, ' ')}</li>
+            ))}
+          </ul>
+        </aside>
+      )}
+
+      {/* Navigation */}
+      <nav class="article-nav">
+        <a href={`/learn/${article.data.category}`} class="nav-link">
+          ← Back to {categoryNames[article.data.category]}
+        </a>
+        <a href="/learn" class="nav-link">
+          All Categories →
+        </a>
+      </nav>
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</Layout>
+
+<style>
+  .article-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    padding: var(--space-lg) 0 var(--space-md);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--text-primary);
+  }
+
+  .breadcrumb .separator {
+    margin: 0 var(--space-xs);
+    opacity: 0.5;
+  }
+
+  .breadcrumb .current {
+    color: var(--text-primary);
+  }
+
+  /* Header */
+  .article-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .article-title {
+    font-size: var(--text-h1);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin: var(--space-md) 0 var(--space-sm);
+  }
+
+  .article-description {
+    font-size: var(--text-h5);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .featured-badge {
+    background: var(--accent);
+    color: var(--bg-primary);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: var(--text-tiny);
+  }
+
+  /* Keywords */
+  .keywords-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .keyword-tag {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* Content */
+  .article-content {
+    margin-bottom: var(--space-xl);
+  }
+
+  .article-content :global(h2) {
+    font-size: var(--text-h3);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: var(--space-lg) 0 var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .article-content :global(h2:first-child) {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .article-content :global(h3) {
+    font-size: var(--text-h4);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: var(--space-md) 0 var(--space-sm);
+  }
+
+  .article-content :global(p) {
+    font-size: var(--text-body);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin: 0 0 var(--space-md);
+    padding-left: var(--space-md);
+    color: var(--text-secondary);
+  }
+
+  .article-content :global(li) {
+    margin-bottom: var(--space-xs);
+    line-height: 1.6;
+  }
+
+  .article-content :global(code) {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    font-size: 0.9em;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .article-content :global(pre) {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    overflow-x: auto;
+    margin: 0 0 var(--space-md);
+  }
+
+  .article-content :global(pre code) {
+    background: none;
+    padding: 0;
+    font-size: var(--text-small);
+  }
+
+  .article-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 var(--space-md);
+    font-size: var(--text-small);
+  }
+
+  .article-content :global(th),
+  .article-content :global(td) {
+    padding: var(--space-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+  }
+
+  .article-content :global(th) {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .article-content :global(strong) {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .article-content :global(a) {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .article-content :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  /* Source Posts */
+  .source-posts {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .source-posts h3 {
+    font-size: var(--text-body);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .source-posts ul {
+    margin: 0;
+    padding-left: var(--space-md);
+    color: var(--text-muted);
+    font-size: var(--text-small);
+  }
+
+  .source-posts li {
+    margin-bottom: var(--space-xs);
+    text-transform: capitalize;
+  }
+
+  /* Navigation */
+  .article-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-lg) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: var(--space-xl);
+  }
+
+  .nav-link {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  /* Responsive */
+  @media (max-width: 767px) {
+    .article-title {
+      font-size: var(--text-h2);
+    }
+
+    .article-description {
+      font-size: var(--text-body);
+    }
+  }
+</style>

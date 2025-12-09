@@ -1,119 +1,159 @@
-# Baresquare SEO Redirects
-# Phase 1: High Traffic Pages
-# Generated from seo-migration/priority-redirects.csv
+# Baresquare Redirects
+# Generated: 2025-12-09
+# 67 blog posts → 13 KB articles in /learn/
 
 # =============================================================================
-# CONTACT PAGE REDIRECTS
+# CONTACT & DEMO
 # =============================================================================
 /demo /contact 301
 /contact /contact 200
 
 # =============================================================================
-# DATA & OPERATIONS SERVICE REDIRECTS (GA4/Analytics content)
+# AI CATEGORY REDIRECTS (blog → /learn/ai/)
 # =============================================================================
-/blog/google-analytics-ga4-ua-discrepancies /services/data-operations 301
-/blog/announcing-ga4-migration-gap-hunter-app /services/data-operations 301
-/blog/boost-google-analytics-baresquare /services/data-operations 301
-/blog/ga4-bigquery-integration-for-unsampled-data-and-deeper-insights /services/data-operations 301
-/blog/ga4-ecommerce-best-practices-2024 /services/data-operations 301
-/solutions/analytics-leaders /services/data-operations 301
-/apps/ga4-migration-gap-hunter /services/data-operations 301
+# AI Implementation Guide
+/blog/keep-your-data-local-using-ollama-and-anythingllm-for-private-ai-interactions /learn/ai/ai-implementation-guide 301
+/blog/enhancing-privacy-in-ai-protecting-user-data-in-chatgpt /learn/ai/ai-implementation-guide 301
+/blog/gpts-one-step-closer-to-wider-ai-utilization /learn/ai/ai-implementation-guide 301
+
+# AI Prompting Techniques
+/blog/how-to-create-images-with-chatgpt /learn/ai/ai-prompting-techniques 301
+/blog/how-to-prepare-for-a-job-interview-with-ai /learn/ai/ai-prompting-techniques 301
+/blog/master-business-english-with-the-help-of-ai /learn/ai/ai-prompting-techniques 301
+/blog/ai-and-content-optimization-revolutionizing-ad-copy /learn/ai/ai-prompting-techniques 301
+
+# Building AI Applications
+/blog/use-openai-chatgpt-with-python /learn/ai/building-ai-applications 301
+/blog/guide-for-fine-tuning-a-gpt-3-model-for-analytics /learn/ai/building-ai-applications 301
+/blog/openapi-specification /learn/ai/building-ai-applications 301
+/blog/introducing-ecom-product-analyst-custom-gpt /learn/ai/building-ai-applications 301
+/blog/revolutionize-analytics-ai-guide-building-digital-assistant-openai-api /learn/ai/building-ai-applications 301
+/blog/supercharge-tagging-productivity-chatgpt /learn/ai/building-ai-applications 301
+/blog/power-and-pitfalls-of-gen-ai-assistants-in-coding /learn/ai/building-ai-applications 301
+
+# AI Analytics Marketing
+/blog/digital-analytics-in-the-age-of-ai /learn/ai/ai-analytics-marketing 301
+/blog/spot-broken-digital-campaigns-tracking-with-google-and-adobe-analytics /learn/ai/ai-analytics-marketing 301
+/blog/unleashing-the-power-of-baresquare-campaign-diagnostics-for-optimal-marketing-success /learn/ai/ai-analytics-marketing 301
+/blog/the-power-of-ai-in-personalized-marketing /learn/ai/ai-analytics-marketing 301
+/blog/404-error-hound-hunting-down-fixing-website-errors-with-ai-power /learn/ai/ai-analytics-marketing 301
+/blog/fix-the-html-errors-of-your-website-it-matters /learn/ai/ai-analytics-marketing 301
+/blog/query-function-google-sheets-streamline-data-analysis /learn/ai/ai-analytics-marketing 301
+/blog/using-claude-ai-to-build-online-game-digital-analytics /learn/ai/ai-analytics-marketing 301
+
+# AI Ethics Future
+/blog/ethics-in-ai /learn/ai/ai-ethics-future 301
+/blog/unlocking-the-black-box-the-power-of-explainable-ai-for-transparent-ai-systems /learn/ai/ai-ethics-future 301
+/blog/importance-of-human-expertise-in-ai /learn/ai/ai-ethics-future 301
+/blog/tedx-talk-how-to-avoid-the-rise-of-inequality-in-our-ai-future /learn/ai/ai-ethics-future 301
+
+# AI category index (generic AI posts)
+/blog/openai-assistants-vs-custom-gpts /learn/ai 301
+/blog/ai-prompting /learn/ai 301
 
 # =============================================================================
-# SONY CASE STUDY REDIRECTS
+# DATA CATEGORY REDIRECTS (blog → /learn/data/)
+# =============================================================================
+# Google Analytics Mastery
+/blog/ga4-bigquery-integration-for-unsampled-data-and-deeper-insights /learn/data/google-analytics-mastery 301
+/blog/boost-google-analytics-baresquare /learn/data/google-analytics-mastery 301
+/blog/announcing-ga4-migration-gap-hunter-app /learn/data/google-analytics-mastery 301
+/blog/google-analytics-ga4-ua-discrepancies /learn/data/google-analytics-mastery 301
+/blog/google-analytics-alerts-and-baresquare /learn/data/google-analytics-mastery 301
+
+# Adobe Analytics Guide
+/blog/common-mistakes-in-adobe-analysis-workspace /learn/data/adobe-analytics-guide 301
+/blog/the-ultimate-metric-for-bot-traffic-detection /learn/data/adobe-analytics-guide 301
+/blog/ultimate-guide-how-to-spot-bot-traffic /learn/data/adobe-analytics-guide 301
+/blog/decoding-time-series-an-in-depth-look-at-definitions-types-and-challenges /learn/data/adobe-analytics-guide 301
+
+# Data Visualization Reporting
+/blog/effective-data-storytelling-unleashing-insights-for-informed-decision-making /learn/data/data-visualization-reporting 301
+/blog/google-looker-studio-best-practices-for-reports /learn/data/data-visualization-reporting 301
+/blog/power-of-looker-studio-why-you-need-to-make-the-switch-from-excel /learn/data/data-visualization-reporting 301
+/blog/the-problem-with-dashboards /learn/data/data-visualization-reporting 301
+
+# Analytics Team Success
+/blog/a-tale-of-2-digital-analysts /learn/data/analytics-team-success 301
+/blog/work-life-balance-tips-for-data-analysts /learn/data/analytics-team-success 301
+/blog/effective-communication-in-web-analytics-projects /learn/data/analytics-team-success 301
+/blog/one-team-one-vision-how-effective-communication-can-eliminate-organizational-silos /learn/data/analytics-team-success 301
+/blog/create-jira-issues-for-new-baresquare-tickets /learn/data/analytics-team-success 301
+/blog/introducing-new-zapier-actions-for-effortless-ticket-management /learn/data/analytics-team-success 301
+/blog/introducing-our-new-feature-share-a-baresquare-ticket-on-slack /learn/data/analytics-team-success 301
+/blog/automate-actions-using-zapier /learn/data/analytics-team-success 301
+/blog/optimize-slack-efficiency-essential-apps /learn/data/analytics-team-success 301
+
+# Monitoring Anomaly Detection
+/blog/alerts-monitoring-a-quick-case-study /learn/data/monitoring-anomaly-detection 301
+/blog/introducing-visual-description-feature /learn/data/monitoring-anomaly-detection 301
+/blog/baresquare-auth0-secure-easy-user-authentication /learn/data/monitoring-anomaly-detection 301
+/blog/dive-deeper-with-a-follow-up-analysis /learn/data/monitoring-anomaly-detection 301
+
+# Data category index (generic data posts)
+/blog/real-time-personalization-adobe-target-guide /learn/data 301
+
+# =============================================================================
+# SEARCH CATEGORY REDIRECTS (blog → /learn/search/)
+# =============================================================================
+/blog/a-beginners-guide-to-web-crawlers-and-scrapers /learn/search/web-scraping-seo-crawling 301
+/blog/build-a-custom-seo-crawler-with-advertools /learn/search/web-scraping-seo-crawling 301
+
+# =============================================================================
+# REVENUE CATEGORY REDIRECTS (blog → /learn/revenue/)
+# =============================================================================
+# Ecommerce Analytics
+/blog/mastering-merchandising-evars-analytics-guide /learn/revenue/ecommerce-analytics 301
+/blog/ga4-ecommerce-best-practices-2024 /learn/revenue/ecommerce-analytics 301
+/blog/best-practices-on-digital-marketing-and-analytics-integration /learn/revenue/ecommerce-analytics 301
+
+# Merchandising Insights
+/blog/merchandising-wiz-bites-7-home-furnishing-trends-spring-2025 /learn/revenue/merchandising-insights 301
+/blog/merchandising-wiz-bites-6-premium-athleisure-marketing-2025-reality-analysis /learn/revenue/merchandising-insights 301
+/blog/merchandising-wiz-bites-retailers-smart-split-clearing-winter-while-promoting-spring /learn/revenue/merchandising-insights 301
+/blog/merchandising-wiz-bites-4-athleisure-brand-predictions /learn/revenue/merchandising-insights 301
+/blog/merchandising-wiz-bites-3-unwinding-the-holiday-strategies-of-timepiece-giants /learn/revenue/merchandising-insights 301
+/blog/merchandising-wiz-bites-2-apparel-and-pop-culture-leaders-stitched-up-2024 /learn/revenue/merchandising-insights 301
+/blog/marketing-wiz-bites-01-black-friday-and-the-holiday-sprint /learn/revenue/merchandising-insights 301
+
+# =============================================================================
+# CASE STUDY REDIRECTS
 # =============================================================================
 /customer-stories/how-sony-overcame-campaign-challenges-with-baresquare /work/sony 301
 /customer-stories /work/sony 301
 /customer-stories/* /work/sony 301
 
 # =============================================================================
-# AI SEARCH & MARKETING SERVICE REDIRECTS (SEO/Marketing content)
-# For Phase 2 - redirecting to homepage until page is live
+# LEGACY SERVICE REDIRECTS
 # =============================================================================
-/blog/build-a-custom-seo-crawler-with-advertools /services/ai-search-marketing 301
-/blog/best-practices-on-digital-marketing-and-analytics-integration /services/ai-search-marketing 301
-/blog/can-large-language-models-supercharge-time-series-analysis-in-digital-marketing-and-ecommerce /services/ai-search-marketing 301
-/blog/merchandising-wiz-bites-4-athleisure-brand-predictions /services/ai-search-marketing 301
+/solutions/analytics-leaders /services/data-operations 301
+/solutions/performance-marketers /services/ai-search-marketing 301
+/solutions/revenue-leaders /services/revenue-performance 301
+/solutions/product-owners /services/data-operations 301
+/apps/ga4-migration-gap-hunter /services/data-operations 301
 
 # =============================================================================
-# BLOG REDIRECTS (to /blog when available, or / for now)
-# =============================================================================
-/blog/a-beginners-guide-to-web-crawlers-and-scrapers /blog 301
-/blog/google-looker-studio-best-practices-for-reports /blog 301
-/blog/mastering-web-scraping-with-puppeteer-a-comprehensive-tutorial /blog 301
-/blog/common-mistakes-in-adobe-analysis-workspace /blog 301
-/blog/power-of-looker-studio-why-you-need-to-make-the-switch-from-excel /blog 301
-/blog/real-time-personalization-adobe-target-guide /blog 301
-/blog/the-ultimate-metric-for-bot-traffic-detection /blog 301
-/blog/alerts-monitoring-a-quick-case-study /blog 301
-/blog/mastering-merchandising-evars-analytics-guide /blog 301
-/blog/ultimate-guide-how-to-spot-bot-traffic /blog 301
-
-# =============================================================================
-# AI CONTENT REDIRECTS (to homepage)
-# =============================================================================
-/blog/enhancing-privacy-in-ai-protecting-user-data-in-chatgpt / 301
-/blog/how-to-create-images-with-chatgpt / 301
-/blog/how-to-prepare-for-a-job-interview-with-ai / 301
-/blog/use-openai-chatgpt-with-python / 301
-/blog/ai-and-content-optimization-revolutionizing-ad-copy / 301
-/blog/digital-analytics-in-the-age-of-ai / 301
-/blog/ethics-in-ai / 301
-/blog/gpts-one-step-closer-to-wider-ai-utilization / 301
-/blog/ai-prompting / 301
-/blog/importance-of-human-expertise-in-ai / 301
-/blog/master-business-english-with-the-help-of-ai / 301
-/blog/openapi-specification / 301
-/blog/openai-assistants-vs-custom-gpts / 301
-/blog/power-and-pitfalls-of-gen-ai-assistants-in-coding / 301
-/blog/revolutionize-analytics-ai-guide-building-digital-assistant-openai-api / 301
-/blog/spot-broken-digital-campaigns-tracking-with-google-and-adobe-analytics / 301
-/blog/the-power-of-ai-in-personalized-marketing / 301
-/blog/using-claude-ai-to-build-online-game-digital-analytics / 301
-/blog/unlocking-the-black-box-the-power-of-explainable-ai-for-transparent-ai-systems / 301
-/blog/guide-for-fine-tuning-a-gpt-3-model-for-analytics / 301
-/blog/supercharge-tagging-productivity-chatgpt / 301
-/blog/unleashing-the-power-of-baresquare-campaign-diagnostics-for-optimal-marketing-success / 301
-/blog/introducing-ecom-product-analyst-custom-gpt / 301
-
-# =============================================================================
-# PLATFORM/LEGACY REDIRECTS
+# PLATFORM & LEGACY REDIRECTS
 # =============================================================================
 /old-platform / 301
 /platform / 301
 /old-home / 301
 /career / 301
-
-# =============================================================================
-# SOLUTIONS REDIRECTS
-# =============================================================================
-/solutions/performance-marketers / 301
-/solutions/revenue-leaders / 301
-/solutions/product-owners / 301
-
-# =============================================================================
-# APPS REDIRECTS
-# =============================================================================
+/pricing / 301
+/hire-tywin / 301
 /apps / 301
 /apps/customer-acquisition-basic / 301
 /apps/customer-acquisition-business / 301
 /apps/404-error-hound / 301
 
 # =============================================================================
-# LEGAL REDIRECTS (to homepage until pages are created)
+# LEGAL REDIRECTS
 # =============================================================================
 /privacy-policy / 301
 /terms-of-service / 301
 /cookie-policy / 301
 
 # =============================================================================
-# MISC REDIRECTS
+# BLOG CATCHALL (remaining blog posts → learn hub)
 # =============================================================================
-/pricing / 301
-/hire-tywin / 301
-/blog/optimize-slack-efficiency-essential-apps / 301
-
-# =============================================================================
-# BLOG CATCHALL (remaining blog posts to blog index or homepage)
-# =============================================================================
-/blog/* /blog 301
+/blog/* /learn 301

@@ -1,0 +1,293 @@
+---
+/**
+ * Learn Hub Index Page
+ *
+ * Lists all knowledge base categories with article counts.
+ */
+
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/layout/Navbar.astro';
+import Footer from '../../components/layout/Footer.astro';
+import DotTitle from '../../components/ui/DotTitle.astro';
+import { seoConfig } from '../../config/seo.config';
+
+// Get all learn articles
+const articles = await getCollection('learn');
+
+// Group by category
+const categories = {
+  ai: {
+    name: 'AI & Machine Learning',
+    description: 'From local AI deployments to enterprise solutions, prompt engineering to ethics.',
+    icon: '🤖',
+    slug: 'ai',
+    articles: articles.filter(a => a.data.category === 'ai'),
+  },
+  data: {
+    name: 'Data & Analytics',
+    description: 'Google Analytics, Adobe Analytics, visualization, and team workflows.',
+    icon: '📊',
+    slug: 'data',
+    articles: articles.filter(a => a.data.category === 'data'),
+  },
+  search: {
+    name: 'Search & Technical SEO',
+    description: 'Web crawling, scraping, and search engine optimization techniques.',
+    icon: '🔍',
+    slug: 'search',
+    articles: articles.filter(a => a.data.category === 'search'),
+  },
+  revenue: {
+    name: 'Revenue & Commerce',
+    description: 'Ecommerce analytics, merchandising strategies, and performance optimization.',
+    icon: '💰',
+    slug: 'revenue',
+    articles: articles.filter(a => a.data.category === 'revenue'),
+  },
+};
+
+// Learn hub JSON-LD schema
+const learnSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Baresquare Knowledge Base',
+  description: 'Comprehensive guides on AI, analytics, and commerce for data-driven teams.',
+  url: new URL('/learn', seoConfig.siteUrl).href,
+  publisher: {
+    '@type': 'Organization',
+    name: seoConfig.organization.name,
+  },
+};
+---
+
+<Layout
+  title="Learn - Knowledge Base | Baresquare"
+  description="Comprehensive guides on AI, analytics, and commerce. Master Google Analytics, Adobe Analytics, AI implementation, and ecommerce optimization."
+  jsonLd={learnSchema}
+>
+  <Navbar slot="navbar" />
+
+  {/* Hero Section */}
+  <section class="learn-hero">
+    <div class="learn-container">
+      <DotTitle text="Knowledge Base" />
+      <h1 class="learn-headline">Learn</h1>
+      <p class="learn-description">
+        Comprehensive guides for data-driven teams. From AI implementation to analytics mastery.
+      </p>
+    </div>
+  </section>
+
+  {/* Categories Grid */}
+  <section class="learn-categories">
+    <div class="learn-container">
+      <div class="categories-grid">
+        {Object.values(categories).map((category) => (
+          <a href={`/learn/${category.slug}`} class="category-card">
+            <span class="category-icon">{category.icon}</span>
+            <h2 class="category-name">{category.name}</h2>
+            <p class="category-description">{category.description}</p>
+            <span class="category-count">{category.articles.length} articles</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* All Articles */}
+  <section class="learn-all-articles">
+    <div class="learn-container">
+      <h2 class="section-title">All Articles</h2>
+      <div class="articles-list">
+        {articles
+          .sort((a, b) => (b.data.highValue ? 1 : 0) - (a.data.highValue ? 1 : 0))
+          .map((article) => (
+            <a href={`/learn/${article.data.category}/${article.slug.split('/').pop()}`} class="article-item">
+              <span class="article-category">{article.data.category.toUpperCase()}</span>
+              <h3 class="article-title">{article.data.title}</h3>
+              <p class="article-description">{article.data.description}</p>
+              {article.data.highValue && <span class="high-value-badge">Featured</span>}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</Layout>
+
+<style>
+  .learn-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* Hero */
+  .learn-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    text-align: center;
+  }
+
+  .learn-headline {
+    font-size: var(--text-display);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin: var(--space-md) 0 var(--space-sm);
+  }
+
+  .learn-description {
+    font-size: var(--text-h4);
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Categories Grid */
+  .learn-categories {
+    padding: 0 0 var(--space-xl);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .category-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .category-name {
+    font-size: var(--text-h3);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .category-description {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    margin: 0 0 var(--space-sm);
+    flex: 1;
+  }
+
+  .category-count {
+    font-size: var(--text-small);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* All Articles */
+  .learn-all-articles {
+    padding: 0 0 var(--space-xl);
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .article-item {
+    display: block;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    text-decoration: none;
+    transition: background 0.2s ease;
+    position: relative;
+  }
+
+  .article-item:hover {
+    background: var(--bg-card-hover, rgba(255, 255, 255, 0.05));
+  }
+
+  .article-category {
+    font-size: var(--text-tiny);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: var(--space-xs);
+    display: block;
+  }
+
+  .article-title {
+    font-size: var(--text-h4);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .article-description {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .high-value-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    font-size: var(--text-tiny);
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--bg-primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .learn-headline {
+      font-size: var(--text-h1);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .learn-hero {
+      padding: var(--space-lg) 0 var(--space-md);
+    }
+
+    .learn-headline {
+      font-size: var(--text-h2);
+    }
+
+    .learn-description {
+      font-size: var(--text-h5);
+    }
+
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

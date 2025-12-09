@@ -22,6 +22,20 @@ const blogCollection = defineCollection({
   }),
 });
 
+const learnCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum(['ai', 'data', 'search', 'revenue']),
+    keywords: z.array(z.string()),
+    sourcePosts: z.array(z.string()),
+    lastmod: z.string(),
+    highValue: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
+  learn: learnCollection,
 };

@@ -1,0 +1,157 @@
+---
+/**
+ * Search Category Index Page
+ */
+
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/layout/Navbar.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import DotTitle from '../../../components/ui/DotTitle.astro';
+
+const articles = (await getCollection('learn'))
+  .filter(a => a.data.category === 'search')
+  .sort((a, b) => (b.data.highValue ? 1 : 0) - (a.data.highValue ? 1 : 0));
+---
+
+<Layout
+  title="Search & Technical SEO Guides | Baresquare Learn"
+  description="Learn web crawling, scraping, and search engine optimization techniques. Build custom SEO crawlers and audit your sites."
+>
+  <Navbar slot="navbar" />
+
+  <section class="category-hero">
+    <div class="container">
+      <a href="/learn" class="back-link">← All Categories</a>
+      <DotTitle text="Search & Technical SEO" />
+      <h1 class="category-headline">Search & Technical SEO</h1>
+      <p class="category-description">
+        Web crawling, scraping, and search engine optimization techniques.
+      </p>
+    </div>
+  </section>
+
+  <section class="articles-section">
+    <div class="container">
+      <div class="articles-grid">
+        {articles.map((article) => (
+          <a href={`/learn/search/${article.slug.split('/').pop()}`} class="article-card">
+            <h2 class="article-title">{article.data.title}</h2>
+            <p class="article-description">{article.data.description}</p>
+            <div class="article-meta">
+              <span class="keywords">{article.data.keywords.slice(0, 3).join(' · ')}</span>
+              {article.data.highValue && <span class="featured">Featured</span>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .category-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .back-link {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: var(--space-md);
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
+  }
+
+  .category-headline {
+    font-size: var(--text-display);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: var(--space-md) 0 var(--space-sm);
+  }
+
+  .category-description {
+    font-size: var(--text-h4);
+    color: var(--text-muted);
+    max-width: 600px;
+  }
+
+  .articles-section {
+    padding: 0 0 var(--space-xl);
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .article-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .article-title {
+    font-size: var(--text-h4);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .article-description {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    margin: 0 0 var(--space-md);
+    line-height: 1.6;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .keywords {
+    font-size: var(--text-small);
+    color: var(--text-muted);
+  }
+
+  .featured {
+    font-size: var(--text-tiny);
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--bg-primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 767px) {
+    .category-headline {
+      font-size: var(--text-h2);
+    }
+
+    .articles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
